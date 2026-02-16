@@ -1,0 +1,55 @@
+{
+    "name": "mpietrucha/filament-essentials",
+    "description": "Filament essentials.",
+    "license": "MIT",
+    "type": "library",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Michał Pietrucha",
+            "email": "michal.pietrucha@off-site.pl"
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "composer-runtime-api": "^2.2",
+        "mpietrucha/utility": "^1.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "dev-main",
+        "mpietrucha/pint": "^1.0",
+        "phpstan/phpstan": "2.1.31",
+        "symfony/var-dumper": "^7.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Mpietrucha\\Filament\\Essentials\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "@composer normalize"
+        ],
+        "post-create-project-cmd": [
+            "@prettier:config"
+        ],
+        "lint": "pint --verbose --parallel",
+        "prettier:config": "curl -sSLO https://raw.githubusercontent.com/mpietrucha/prettier/refs/heads/main/dist/.prettierrc",
+        "test": [
+            "@test:lint",
+            "@test:types"
+        ],
+        "test:lint": "@lint --test",
+        "test:types": "phpstan analyse --ansi"
+    },
+    "$schema": "https://getcomposer.org/schema.json"
+}
