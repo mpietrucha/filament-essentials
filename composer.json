@@ -13,10 +13,14 @@
     "require": {
         "php": "^8.5",
         "composer-runtime-api": "^2.2",
+        "bezhansalleh/filament-shield": "^4.0",
+        "guava/filament-modal-relation-managers": "^2.0",
         "mpietrucha/utility": "^1.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "dev-main",
+        "filament/filament": "^4.0",
+        "laravel/framework": "^12.51",
         "mpietrucha/pint": "^1.0",
         "phpstan/phpstan": "2.1.31",
         "symfony/var-dumper": "^7.2"
