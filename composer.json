@@ -15,6 +15,7 @@
         "composer-runtime-api": "^2.2",
         "bezhansalleh/filament-shield": "^4.0",
         "guava/filament-modal-relation-managers": "^2.0",
+        "mpietrucha/laravel-essentials": "^1.0",
         "mpietrucha/utility": "^1.0"
     },
     "require-dev": {
@@ -38,6 +39,13 @@
         },
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mpietrucha\\Filament\\Essentials\\Providers\\EssentialsServiceProvider"
+            ]
+        }
     },
     "scripts": {
         "post-update-cmd": [
