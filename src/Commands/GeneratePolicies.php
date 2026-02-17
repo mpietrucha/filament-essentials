@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Filament\Facades\Filament;
 use Illuminate\Console\Command;
+use Mpietrucha\Laravel\Essentials\Commands\Concerns\InteractsWithLint;
 use Mpietrucha\Utility\Filesystem;
 use Mpietrucha\Utility\Finder;
 use Mpietrucha\Utility\Str;
@@ -11,6 +12,8 @@ use Mpietrucha\Utility\Type;
 
 class GeneratePolicies extends Command
 {
+    use InteractsWithLint;
+
     /**
      * The name and signature of the console command.
      *
@@ -87,5 +90,7 @@ class GeneratePolicies extends Command
                 ],
                 $policy
             ));
+
+        $this->lint($directory);
     }
 }

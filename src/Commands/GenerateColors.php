@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Illuminate\Console\Command;
+use Mpietrucha\Laravel\Essentials\Commands\Concerns\InteractsWithLint;
 use Mpietrucha\Utility\Collection;
 use Mpietrucha\Utility\Enum;
 use Mpietrucha\Utility\Enums\Contracts\InteractsWithEnumInterface;
@@ -11,6 +12,8 @@ use Mpietrucha\Utility\Str;
 
 class GenerateColors extends Command
 {
+    use InteractsWithLint;
+
     /**
      * The name and signature of the console command.
      *
@@ -47,9 +50,9 @@ class GenerateColors extends Command
 
         $output = $this->option('output') |> resource_path(...);
 
-        $this->lint($output);
-
         Filesystem::put($output, $colors);
+
+        $this->lint($output);
 
         Str::sprintf('Colors generated successfully in [%s]', $output) |> $this->info(...);
 
@@ -63,10 +66,5 @@ class GenerateColors extends Command
         $value = $color->value();
 
         return Str::sprintf('--color-%s: %s', $name, $value);
-    }
-
-    protected function lint(string $output): void
-    {
-
     }
 }

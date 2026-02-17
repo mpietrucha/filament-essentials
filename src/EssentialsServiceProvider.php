@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Providers;
+namespace Mpietrucha\Filament\Essentials;
 
 use Mpietrucha\Filament\Essentials\Commands\GenerateColors;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
