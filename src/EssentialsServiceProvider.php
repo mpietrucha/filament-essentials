@@ -13,6 +13,7 @@ use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
 use Mpietrucha\Laravel\Essentials\Mixin;
 use Mpietrucha\Laravel\Essentials\Package\Builder;
 use Mpietrucha\Laravel\Essentials\Package\ServiceProvider;
+use Mpietrucha\Utility\Filesystem\Path;
 
 class EssentialsServiceProvider extends ServiceProvider
 {
