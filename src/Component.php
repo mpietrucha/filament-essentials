@@ -42,7 +42,7 @@ abstract class Component
             'avatar' => $avatar,
         ];
 
-        $component = '<x-essentials::select-option-with-avatar :avatar="$avatar">{{ $option }}</x-essentials::select-option-with-avatar>';
+        $component = '<x-filament-essentials::select-option-with-avatar :avatar="$avatar">{{ $option }}</x-filament-essentials::select-option-with-avatar>';
 
         return Blade::render($component, $attributes);
     }
