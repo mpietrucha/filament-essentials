@@ -3,7 +3,8 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\View;
+use Mpietrucha\Filament\Essentials\Component;
+use Mpietrucha\Filament\Essentials\Html;
 use Mpietrucha\Utility\Collection;
 use Mpietrucha\Utility\Data;
 use Mpietrucha\Utility\Type;
@@ -35,9 +36,9 @@ trait TextColumnMixin
                 return $name;
             }
 
-            $badge = $resuls->count() - 1 |> View::textColumnBadge(...);
+            $badge = $results->count() - 1 |> Component::renderTextColumnBadge(...);
 
-            return View::html($name, $badge);
+            return Html::join($name, $badge);
         });
     }
 }

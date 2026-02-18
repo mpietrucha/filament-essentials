@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\View;
+use Mpietrucha\Filament\Essentials\Component;
 use Mpietrucha\Utility\Data;
 use Mpietrucha\Utility\Type;
 
@@ -25,7 +25,7 @@ trait SelectMixin
                 return $title;
             }
 
-            return View::selectTitleWithAvatar($title, $avatar);
+            return Component::renderSelectOptionWithAvatar($title, $avatar);
         });
     }
 }

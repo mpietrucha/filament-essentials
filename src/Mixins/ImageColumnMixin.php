@@ -11,10 +11,6 @@ trait ImageColumnMixin
 {
     public function avatar(): static
     {
-        $this->width('1%');
-
-        $this->circular();
-
-        return Str::none() |> $this->label(...);
+        return Str::none() |> $this->width('1%')->circular()->label(...);
     }
 }
