@@ -54,7 +54,7 @@
         "post-create-project-cmd": [
             "@prettier:config"
         ],
-        "lint": "pint --verbose --parallel",
+        "lint": "pint --verbose",
         "prettier:config": "curl -sSLO https://raw.githubusercontent.com/mpietrucha/prettier/refs/heads/main/dist/.prettierrc",
         "test": [
             "@test:lint",
