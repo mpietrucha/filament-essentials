@@ -13,7 +13,7 @@ use Mpietrucha\Utility\Type;
  */
 trait TextColumnMixin
 {
-    public function limitWithBadge(): static
+    public function firstWithLimitBadge(): static
     {
         return $this->state(function (Model $record) {
             $results = $this->getRelationshipResults($record) |> Collection::create(...);

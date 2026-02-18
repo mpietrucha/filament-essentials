@@ -28,10 +28,25 @@ class EssentialsServiceProvider extends ServiceProvider
 
     public function bootingPackage(): void
     {
+        $this->bootMixins();
+        $this->bootBladeComponents();
+    }
+
+    protected function bootMixins(): void
+    {
         Mixin::use(Select::class, SelectMixin::class);
 
         Mixin::use(TextColumn::class, TextColumnMixin::class);
 
         Mixin::use(ImageColumn::class, ImageColumnMixin::class);
+    }
+
+    protected function bootBladeComponents(): void
+    {
+        $components = Path::get('../resources/views/components');
+
+        $prefix = $this->package()->tag();
+
+        Blade::anonymousComponentPath($components, $prefix);
     }
 }
