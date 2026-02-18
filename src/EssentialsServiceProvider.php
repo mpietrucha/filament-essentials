@@ -45,7 +45,7 @@ class EssentialsServiceProvider extends ServiceProvider
 
     protected function bootBladeComponents(): void
     {
-        $components = Path::get('../resources/views/components');
+        $components = Path::build('../resources/views/components', __DIR__);
 
         $prefix = $this->package()->tag();
 

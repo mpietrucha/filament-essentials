@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials;
 
 use Illuminate\Support\Facades\Blade;
-use Mpietrucha\Utility\Arr;
+use Illuminate\View\ComponentAttributeBag;
 use Mpietrucha\Utility\Str;
 
 /**
@@ -16,7 +16,10 @@ abstract class Component
      */
     public static function renderBadge(string $badge, array $attributes): string
     {
-        $attributes = Arr::prepend($attributes, $badge, 'badge');
+        $attributes = [
+            'badge' => $badge,
+            'attributes' => new ComponentAttributeBag($attributes),
+        ];
 
         $component = '<x-filament::badge {{ $attributes }}>{{ $badge }}</x-filament::badge>';
 
