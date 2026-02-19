@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials;
 use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
+use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Blade;
@@ -13,6 +14,7 @@ use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
+use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
 use Mpietrucha\Laravel\Essentials\Mixin;
@@ -51,6 +53,8 @@ class EssentialsServiceProvider extends ServiceProvider
         Mixin::use(ImageColumn::class, ImageColumnMixin::class);
 
         Mixin::use(AttachAction::class, AttachActionMixin::class);
+
+        Mixin::use(IsRelatedToOperator::class, IsRelatedToOperatorMixin::class);
     }
 
     protected function bootBladeComponents(): void
