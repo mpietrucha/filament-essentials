@@ -16,7 +16,8 @@
         "bezhansalleh/filament-shield": "^4.0",
         "guava/filament-modal-relation-managers": "^2.0",
         "mpietrucha/laravel-essentials": "^1.0",
-        "mpietrucha/utility": "^1.0"
+        "mpietrucha/utility": "^1.0",
+        "outerweb/filament-translatable-fields": "^4.1"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "dev-main",

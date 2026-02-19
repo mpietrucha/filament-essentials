@@ -2,12 +2,14 @@
 
 namespace Mpietrucha\Filament\Essentials;
 
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Blade;
 use Mpietrucha\Filament\Essentials\Commands\GenerateColors;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
+use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
@@ -36,6 +38,8 @@ class EssentialsServiceProvider extends ServiceProvider
 
     protected function bootMixins(): void
     {
+        Mixin::use(Field::class, FieldMixin::class);
+
         Mixin::use(Select::class, SelectMixin::class);
 
         Mixin::use(TextColumn::class, TextColumnMixin::class);
