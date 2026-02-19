@@ -17,7 +17,7 @@ trait AttachActionMixin
     public function avatars(?string $attribute = null): static
     {
         $this->recordSelect(function (Select $select) {
-            $select->allowHtml();
+            return $select->allowHtml();
         });
 
         return $this->recordTitle(function (Model $record) use ($attribute) {
