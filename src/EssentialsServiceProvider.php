@@ -24,6 +24,8 @@ class EssentialsServiceProvider extends ServiceProvider
     {
         $package->name('filament-essentials');
 
+        $package->hasConfigFile();
+
         $package->hasConsoleCommands([
             GenerateColors::class,
             GeneratePolicies::class,

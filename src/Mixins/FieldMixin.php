@@ -14,21 +14,29 @@ use Filament\Schemas\Components\Component;
  */
 trait FieldMixin
 {
-    public function translate(): Component
+    public function translate(bool $all = false): Component
     {
+        $defaultLocale = config('filament-essentials.translations.locale') ?? config('app.fallback_locale');
+
         return $this->translatable(
-            defaultLocale: config('app.fallback_locale'),
-            modifyLocalizedFieldUsing: function (Field $field, string $locale) {
+            defaultLocale: $defaultLocale,
+            modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($all, $defaultLocale) {
+                if ($all) {
+                    return $field->required();
+                }
+
                 $required = (fn () => $this->isRequired)->call($field);
 
-                $field->required(function () use ($field, $required, $locale) {
-                    if ($field->evaluate($required)) {
-                        return true;
-                    }
-
-                    return config('app.fallback_locale') === $locale;
+                return $field->required(fn () => match (true) {
+                    $field->evaluate($required) => $defaultLocale === $locale,
+                    default => false
                 });
             }
         );
+    }
+
+    public function translateAllLocales(): Component
+    {
+        return $this->translate(true);
     }
 }
