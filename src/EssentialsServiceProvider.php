@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials;
 
+use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\ImageColumn;
@@ -9,6 +10,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Blade;
 use Mpietrucha\Filament\Essentials\Commands\GenerateColors;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
+use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
@@ -47,6 +49,8 @@ class EssentialsServiceProvider extends ServiceProvider
         Mixin::use(TextColumn::class, TextColumnMixin::class);
 
         Mixin::use(ImageColumn::class, ImageColumnMixin::class);
+
+        Mixin::use(AttachAction::class, AttachActionMixin::class);
     }
 
     protected function bootBladeComponents(): void

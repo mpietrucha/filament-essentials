@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Component;
 use Mpietrucha\Filament\Essentials\Record;
@@ -9,22 +10,30 @@ use Mpietrucha\Utility\Data;
 use Mpietrucha\Utility\Type;
 
 /**
- * @phpstan-require-extends \Filament\Forms\Components\Select
+ * @phpstan-require-extends \Filament\Actions\AttachAction
  */
-trait SelectMixin
+trait AttachActionMixin
 {
     public function avatars(?string $attribute = null): static
     {
-        $this->allowHtml();
+        $this->recordSelect(function (Select $select) {
+            $select->allowHtml();
+        });
 
-        return $this->getOptionLabelFromRecordUsing(function (Model $record) use ($attribute) {
-            $title = Data::get($record, $this->getRelationshipTitleAttribute());
-
+        return $this->recordTitle(function (Model $record) use ($attribute) {
             $avatar = Record::avatar($record, $attribute);
 
             if (Type::null($avatar)) {
-                return $title;
+                return null;
             }
+
+            $table = $this->getTable();
+
+            if (Type::null($table)) {
+                return null;
+            }
+
+            $title = Data::get($record, $table->getRecordTitleAttribute());
 
             return Component::renderSelectOptionWithAvatar($title, $avatar);
         });
