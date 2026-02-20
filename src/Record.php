@@ -9,6 +9,8 @@ use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
+ *
+ *  @mixin \Mpietrucha\Filament\Essentials\Record\Context
  */
 abstract class Record
 {
