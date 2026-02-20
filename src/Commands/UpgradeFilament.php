@@ -6,23 +6,24 @@ use Illuminate\Console\Command;
 use Mpietrucha\Utility\Filesystem;
 use Mpietrucha\Utility\Str;
 
-class PatchComponents extends Command
+class UpgradeFilament extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'essentials:patch-components';
+    protected $signature = 'essentials:upgrade-filament';
 
     /**
      * @var string
      */
-    protected $description = '';
+    protected $description = 'Patch Filament source to enabled additional features';
 
     public function handle(): void
     {
         $this->select();
+        $this->isRelatedToOperator();
 
-        $this->info('Components patched successfully.');
+        $this->info('Filament upgraded successfully.');
     }
 
     protected function select(): void
@@ -40,5 +41,16 @@ class PatchComponents extends Command
             Str::sprintf('%s,this.isHtmlAllowed?o.innerHTML=t:o.textContent=t', $indicator),
             $select
         );
+    }
+
+    protected function isRelatedToOperator(): void
+    {
+        $file = app_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
+
+        if (Filesystem::unexists($file)) {
+            return;
+        }
+
+        Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $file);
     }
 }

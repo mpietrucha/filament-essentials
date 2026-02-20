@@ -11,7 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Blade;
 use Mpietrucha\Filament\Essentials\Commands\GenerateColors;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
-use Mpietrucha\Filament\Essentials\Commands\PatchComponents;
+use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
@@ -34,7 +34,7 @@ class EssentialsServiceProvider extends ServiceProvider
         $package->hasConsoleCommands([
             GenerateColors::class,
             GeneratePolicies::class,
-            PatchComponents::class,
+            UpgradeFilament::class,
         ]);
     }
 

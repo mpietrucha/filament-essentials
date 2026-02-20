@@ -6,19 +6,21 @@ use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Component;
 use Mpietrucha\Filament\Essentials\Record;
-use Mpietrucha\Utility\Data;
 use Mpietrucha\Utility\Type;
 
+/**
+ * @phpstan-require-extends \Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator
+ */
 trait IsRelatedToOperatorMixin
 {
     public function avatars(?string $attribute = null): static
     {
         return $this->getOptionLabelFromRecordUsing(function (Select $component, Model $record) use ($attribute) {
-            $component->allowHtml();
+            $context = Record::context($record);
 
-            $title = Data::get($record, $this->getTitleAttribute());
+            $avatar = $context->avatar($attribute);
 
-            $avatar = Record::avatar($record, $attribute);
+            $title = $this->getTitleAttribute() |> $context->get(...);
 
             if (Type::null($avatar)) {
                 return $title;
