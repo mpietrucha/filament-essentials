@@ -15,8 +15,6 @@ class GenerateColors extends Command
     use InteractsWithLint;
 
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'essentials:generate-colors
@@ -24,8 +22,6 @@ class GenerateColors extends Command
                             {--output=css/colors.css : The resource file to write the generated CSS to}';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = 'Generate CSS color variables';

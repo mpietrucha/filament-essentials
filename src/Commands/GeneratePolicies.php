@@ -15,8 +15,6 @@ class GeneratePolicies extends Command
     use InteractsWithLint;
 
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = 'essentials:generate-policies
@@ -24,8 +22,6 @@ class GeneratePolicies extends Command
                             {--panel=default : The panel ID to generate policies for}';
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = 'Generate and configure Shield policies';
