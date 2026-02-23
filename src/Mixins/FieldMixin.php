@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Field;
-use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Tabs;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
@@ -14,10 +14,11 @@ use Filament\Schemas\Components\Component;
  */
 trait FieldMixin
 {
-    public function translate(bool $all = false): Component
+    public function translate(bool $all = false): Tabs
     {
         $defaultLocale = config('filament-essentials.translations.locale') ?? config('app.fallback_locale');
 
+        /** @var \Filament\Schemas\Components\Tabs */
         return $this->translatable(
             defaultLocale: $defaultLocale,
             modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($all, $defaultLocale) {
@@ -35,7 +36,7 @@ trait FieldMixin
         );
     }
 
-    public function translateAllLocales(): Component
+    public function translateAllLocales(): Tabs
     {
         return $this->translate(true);
     }
