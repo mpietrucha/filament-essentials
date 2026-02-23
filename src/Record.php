@@ -24,7 +24,7 @@ abstract class Record
         return function (Model $record) use ($method, $arguments) {
             $context = static::context($record);
 
-            return static::bridge($context)->get($method, $arguments);
+            return static::bridge($context)->eval($method, $arguments);
         };
     }
 
