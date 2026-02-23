@@ -45,7 +45,7 @@ class UpgradeFilament extends Command
 
     protected function isRelatedToOperator(): void
     {
-        $file = app_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
+        $file = base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
 
         if (Filesystem::unexists($file)) {
             return;
