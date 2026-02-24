@@ -17,6 +17,8 @@ trait GuessesResource
             return static::$resource;
         }
 
-        return static::$resource = Path::name(__CLASS__) |> Guesser::guess(...);
+        $namespace = Path::namespace(__CLASS__, 2);
+
+        return static::$resource = Path::name($namespace) |> Guesser::guess(...);
     }
 }
