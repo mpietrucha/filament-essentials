@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
+use Mpietrucha\Utility\Instance\Path;
 use Mpietrucha\Utility\Str;
 
 /**
@@ -11,6 +12,12 @@ trait GuessesRelationship
 {
     public static function getRelationshipName(): string
     {
-        return static::$relationship ??= Str::of(static::class)->classBasename()->before('RelationManager')->lower();
+        if (isset(static::$relationship)) {
+            return static::$relationship;
+        }
+
+        $indicator = __CLASS__ |> Path::name(...);
+
+        return static::$relationship = Str::of($indicator)->before('RelationManager')->lower();
     }
 }

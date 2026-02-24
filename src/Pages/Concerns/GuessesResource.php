@@ -2,8 +2,8 @@
 
 namespace Mpietrucha\Filament\Essentials\Pages\Concerns;
 
+use Mpietrucha\Filament\Essentials\Resources\Guesser;
 use Mpietrucha\Utility\Instance\Path;
-use Mpietrucha\Utility\Str;
 
 /**
  * @phpstan-require-extends \Filament\Resources\Pages\Page
@@ -12,11 +12,11 @@ trait GuessesResource
 {
     public static function getResource(): string
     {
-        $namespace = Path::namespace(static::class, 2);
+        if (isset(static::$resource)) {
+            /** @var class-string */
+            return static::$resource;
+        }
 
-        $resource = Str::sprintf('%sResource', Path::name($namespace) |> Str::singular(...));
-
-        /** @var class-string */
-        return Path::join($namespace, $resource);
+        return static::$resource = Path::name(__CLASS__) |> Guesser::guess(...);
     }
 }

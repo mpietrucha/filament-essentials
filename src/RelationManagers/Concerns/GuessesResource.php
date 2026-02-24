@@ -2,10 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
-use Filament\Facades\Filament;
-use Mpietrucha\Utility\Arr;
-use Mpietrucha\Utility\Normalizer;
-use Mpietrucha\Utility\Str;
+use Mpietrucha\Filament\Essentials\Resources\Guesser;
 
 /**
  * @phpstan-require-extends \Filament\Resources\RelationManagers\RelationManager
@@ -18,16 +15,6 @@ trait GuessesResource
             return static::$relatedResource;
         }
 
-        $name = Str::sprintf(
-            '*%sResource',
-            static::getRelationshipName() |> Str::singular(...) |> Str::ucFirst(...)
-        );
-
-        $resource = Arr::first(
-            Filament::getResources(),
-            fn (string $resource) => Str::is($name, $resource)
-        );
-
-        return static::$relatedResource = Normalizer::string($resource);
+        return static::$relatedResource = static::getRelationshipName() |> Guesser::guess(...);
     }
 }
