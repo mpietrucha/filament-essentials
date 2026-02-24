@@ -11,6 +11,6 @@ trait GuessesRelationship
 {
     public static function getRelationshipName(): string
     {
-        return static::$relationship ?? Str::of(static::class)->classBasename()->before('RelationManager')->lower();
+        return static::$relationship ??= Str::of(static::class)->classBasename()->before('RelationManager')->lower();
     }
 }

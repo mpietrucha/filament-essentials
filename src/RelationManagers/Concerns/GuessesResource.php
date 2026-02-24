@@ -20,7 +20,7 @@ trait GuessesResource
 
         $name = Str::sprintf(
             '*%sResource',
-            static::getRelationshipName() |> Str::singular(...)
+            static::getRelationshipName() |> Str::singular(...) |> Str::ucFirst(...)
         );
 
         $resource = Arr::first(
