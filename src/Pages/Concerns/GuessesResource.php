@@ -10,6 +10,8 @@ use Mpietrucha\Utility\Instance\Path;
  */
 trait GuessesResource
 {
+    protected static string $resource;
+
     public static function getResource(): string
     {
         if (isset(static::$resource)) {
