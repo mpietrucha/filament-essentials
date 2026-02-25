@@ -31,6 +31,8 @@ class EssentialsServiceProvider extends ServiceProvider
 
         $package->hasConfigFile();
 
+        $package->hasTranslations();
+
         $package->hasConsoleCommands([
             GenerateColors::class,
             GeneratePolicies::class,
