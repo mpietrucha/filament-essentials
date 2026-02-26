@@ -2,8 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
-use Mpietrucha\Utility\Instance\Path;
-use Mpietrucha\Utility\Str;
+use Mpietrucha\Filament\Essentials\Instance;
 
 /**
  * @phpstan-require-extends \Filament\Resources\RelationManagers\RelationManager
@@ -16,8 +15,6 @@ trait GuessesRelationship
             return static::$relationship;
         }
 
-        $indicator = __CLASS__ |> Path::name(...);
-
-        return static::$relationship = Str::of($indicator)->before('RelationManager')->lower();
+        return static::$relationship = Instance::name(__CLASS__, 'RelationManager');
     }
 }

@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Imports\Concerns;
 
 use Filament\Actions\Imports\Models\Import;
+use Mpietrucha\Filament\Essentials\Instance;
 use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
 
 trait HasCompletedNotificationBody
@@ -11,8 +12,18 @@ trait HasCompletedNotificationBody
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = static::__('Your :name import has compleded and :successful :rows imported.');
+        $parameters = [
+            'name' => Instance::name(__CLASS__, 'Importer'),
+        ];
 
-        $body = static::__(':Failed :rows failed to import.');
+        $body = static::tc('importer.completed', $import->successful_rows, $parameters);
+
+        $failed = $import->getFailedRowsCount();
+
+        if ($failed === 0) {
+            return $body;
+        }
+
+        return Str::sprintf('%s %s', $body, static::tc('importer.failed', $failed));
     }
 }
