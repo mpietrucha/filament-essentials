@@ -1,10 +1,11 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Imports\Concerns;
+namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
 use Filament\Actions\Imports\Models\Import;
 use Mpietrucha\Filament\Essentials\Instance;
 use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
+use Mpietrucha\Utility\Str;
 
 trait HasCompletedNotificationBody
 {
