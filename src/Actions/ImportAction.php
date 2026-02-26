@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Imports;
+namespace Mpietrucha\Filament\Essentials\Actions;
 
 use League\Csv\Bom;
 use League\Csv\Reader;
