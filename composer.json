@@ -15,6 +15,7 @@
         "composer-runtime-api": "^2.2",
         "bezhansalleh/filament-shield": "^4.1",
         "guava/filament-modal-relation-managers": "^3.0",
+        "livewire/blaze": "^1.0",
         "mpietrucha/laravel-essentials": "^1.0",
         "mpietrucha/utility": "^1.0",
         "outerweb/filament-translatable-fields": "^4.1"

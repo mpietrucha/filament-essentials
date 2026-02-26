@@ -1,3 +1,5 @@
+@blaze
+
 @props(['avatar'])
 
 <div class="flex items-center gap-x-2">
