@@ -3,21 +3,18 @@
 namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
 use Mpietrucha\Filament\Essentials\Actions\ImportAction;
-use Mpietrucha\Filament\Essentials\Instance;
-use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
+use Mpietrucha\Filament\Essentials\Name;
 
 /**
  * @phpstan-require-extends \Filament\Actions\Imports\Importer
  */
 trait InteractsWithAction
 {
-    use InteractsWithTranslations;
-
     public static function action(): ImportAction
     {
-        $name = Instance::name($importer = static::class, 'Importer');
+        $name = Name::get($importer = static::class, 'Importer');
 
-        $label = static::__('import.action.label', [
+        $label = __('filament-essentials::import.action.label', [
             'name' => $name,
         ]);
 

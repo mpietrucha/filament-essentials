@@ -1,5 +1,6 @@
 includes:
     - vendor/mpietrucha/utility/extension.neon
+    - vendor/larastan/larastan/extension.neon
     - vendor/mpietrucha/laravel-essentials/extension.neon
 parameters:
     level: 8

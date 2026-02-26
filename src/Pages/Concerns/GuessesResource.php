@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Pages\Concerns;
 
-use Mpietrucha\Filament\Essentials\Instance;
+use Mpietrucha\Filament\Essentials\Name;
 use Mpietrucha\Filament\Essentials\Resources\Guesser;
 
 /**
@@ -19,6 +19,6 @@ trait GuessesResource
             return static::$resource;
         }
 
-        return static::$resource = Instance::name(static::class, level: 2) |> Guesser::guess(...);
+        return static::$resource = Name::get(static::class, level: 2) |> Guesser::guess(...);
     }
 }

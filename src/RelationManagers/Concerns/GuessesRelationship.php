@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
-use Mpietrucha\Filament\Essentials\Instance;
+use Mpietrucha\Filament\Essentials\Name;
 
 /**
  * @phpstan-require-extends \Filament\Resources\RelationManagers\RelationManager
@@ -15,6 +15,6 @@ trait GuessesRelationship
             return static::$relationship;
         }
 
-        return static::$relationship = Instance::name(static::class, 'RelationManager');
+        return static::$relationship = Name::get(static::class, 'RelationManager');
     }
 }

@@ -3,8 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
 use Filament\Actions\Imports\Models\Import;
-use Mpietrucha\Filament\Essentials\Instance;
-use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
+use Mpietrucha\Filament\Essentials\Name;
 use Mpietrucha\Utility\Str;
 
 /**
@@ -12,15 +11,13 @@ use Mpietrucha\Utility\Str;
  */
 trait InteractsWithCompletedNotificationBody
 {
-    use InteractsWithTranslations;
-
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $parameters = [
-            'name' => Instance::name(static::class, 'Importer'),
-        ];
+        $name = Name::get(static::class, 'Importer');
 
-        $body = static::tc('import.completed', $import->successful_rows, $parameters);
+        $body = trans_choice('filament-essentials::import.completed', $import->successful_rows, [
+            'name' => $name,
+        ]);
 
         $failed = $import->getFailedRowsCount();
 
@@ -28,6 +25,6 @@ trait InteractsWithCompletedNotificationBody
             return $body;
         }
 
-        return Str::sprintf('%s %s', $body, static::tc('import.failed', $failed));
+        return Str::sprintf('%s %s', $body, trans_choice('filament-essentials::import.failed', $failed));
     }
 }
