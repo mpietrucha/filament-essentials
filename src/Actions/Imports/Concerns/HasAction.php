@@ -4,12 +4,15 @@ namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
 use Mpietrucha\Filament\Essentials\Actions\ImportAction;
 use Mpietrucha\Filament\Essentials\Instance;
+use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
 
 /**
  * @phpstan-require-extends \Filament\Actions\Imports\Importer
  */
 trait HasAction
 {
+    use InteractsWithTranslations;
+
     public static function action(): ImportAction
     {
         $name = Instance::name($importer = static::class, 'Importer');
