@@ -19,6 +19,6 @@ trait GuessesResource
             return static::$resource;
         }
 
-        return static::$resource = Instance::name(__CLASS__, level: 2) |> Guesser::guess(...);
+        return static::$resource = Instance::name(static::class, level: 2) |> Guesser::guess(...);
     }
 }

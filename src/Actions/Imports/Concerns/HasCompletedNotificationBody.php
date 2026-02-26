@@ -7,6 +7,9 @@ use Mpietrucha\Filament\Essentials\Instance;
 use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTranslations;
 use Mpietrucha\Utility\Str;
 
+/**
+ * @phpstan-require-extends \Filament\Actions\Imports\Importer
+ */
 trait HasCompletedNotificationBody
 {
     use InteractsWithTranslations;
@@ -14,10 +17,10 @@ trait HasCompletedNotificationBody
     public static function getCompletedNotificationBody(Import $import): string
     {
         $parameters = [
-            'name' => Instance::name(__CLASS__, 'Importer'),
+            'name' => Instance::name(static::class, 'Importer'),
         ];
 
-        $body = static::tc('importer.completed', $import->successful_rows, $parameters);
+        $body = static::tc('import.completed', $import->successful_rows, $parameters);
 
         $failed = $import->getFailedRowsCount();
 
@@ -25,6 +28,6 @@ trait HasCompletedNotificationBody
             return $body;
         }
 
-        return Str::sprintf('%s %s', $body, static::tc('importer.failed', $failed));
+        return Str::sprintf('%s %s', $body, static::tc('import.failed', $failed));
     }
 }

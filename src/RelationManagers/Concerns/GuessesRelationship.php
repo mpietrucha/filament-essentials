@@ -15,6 +15,6 @@ trait GuessesRelationship
             return static::$relationship;
         }
 
-        return static::$relationship = Instance::name(__CLASS__, 'RelationManager');
+        return static::$relationship = Instance::name(static::class, 'RelationManager');
     }
 }
