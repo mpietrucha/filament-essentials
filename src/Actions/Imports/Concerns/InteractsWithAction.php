@@ -9,7 +9,7 @@ use Mpietrucha\Laravel\Essentials\Package\Translations\Concerns\InteractsWithTra
 /**
  * @phpstan-require-extends \Filament\Actions\Imports\Importer
  */
-trait HasAction
+trait InteractsWithAction
 {
     use InteractsWithTranslations;
 

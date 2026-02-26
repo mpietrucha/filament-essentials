@@ -10,7 +10,7 @@ use Mpietrucha\Utility\Str;
 /**
  * @phpstan-require-extends \Filament\Actions\Imports\Importer
  */
-trait HasCompletedNotificationBody
+trait InteractsWithCompletedNotificationBody
 {
     use InteractsWithTranslations;
 
