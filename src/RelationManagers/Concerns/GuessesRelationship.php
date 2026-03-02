@@ -2,19 +2,17 @@
 
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
-use Mpietrucha\Filament\Essentials\Identifier;
+use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 
 /**
  * @phpstan-require-extends \Filament\Resources\RelationManagers\RelationManager
  */
 trait GuessesRelationship
 {
+    use Identifiable;
+
     public static function getRelationshipName(): string
     {
-        if (isset(static::$relationship)) {
-            return static::$relationship;
-        }
-
-        return static::$relationship = Identifier::identify('RelationManager');
+        return static::$relationship ??= static::identify();
     }
 }

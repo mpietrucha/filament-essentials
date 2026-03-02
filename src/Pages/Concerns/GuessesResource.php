@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Pages\Concerns;
 
-use Mpietrucha\Filament\Essentials\Identifier;
+use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 use Mpietrucha\Filament\Essentials\Resources\Guesser;
 
 /**
@@ -10,15 +10,12 @@ use Mpietrucha\Filament\Essentials\Resources\Guesser;
  */
 trait GuessesResource
 {
+    use Identifiable;
+
     protected static string $resource;
 
     public static function getResource(): string
     {
-        if (isset(static::$resource)) {
-            /** @var class-string */
-            return static::$resource;
-        }
-
-        return static::$resource = Identifier::identify(null, 2) |> Guesser::guess(...);
+        return static::$resource ??= static::identify(2) |> Guesser::guess(...);
     }
 }

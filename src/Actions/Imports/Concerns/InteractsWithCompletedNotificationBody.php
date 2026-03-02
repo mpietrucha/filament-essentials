@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
 use Filament\Actions\Imports\Models\Import;
-use Mpietrucha\Filament\Essentials\Identifier;
+use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 use Mpietrucha\Utility\Str;
 
 /**
@@ -11,9 +11,11 @@ use Mpietrucha\Utility\Str;
  */
 trait InteractsWithCompletedNotificationBody
 {
+    use Identifiable;
+
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $name = Identifier::identify('Importer');
+        $name = static::identify();
 
         $body = trans_choice('filament-essentials::import.completed', $import->successful_rows, [
             'name' => $name,
