@@ -9,7 +9,7 @@ use Mpietrucha\Filament\Essentials\Name;
 /**
  * @phpstan-require-extends \Filament\Actions\Imports\Importer
  */
-trait InteractsWithAction
+trait InteractsWithActions
 {
     public static function action(): ImportAction
     {

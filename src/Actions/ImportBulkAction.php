@@ -2,7 +2,6 @@
 
 namespace Mpietrucha\Filament\Essentials\Actions;
 
-use Filament\Actions\ImportAction;
 use Filament\Schemas\Schema;
 use Mpietrucha\Filament\Essentials\Actions\Imports\Merger;
 use Mpietrucha\Utility\Arr;
