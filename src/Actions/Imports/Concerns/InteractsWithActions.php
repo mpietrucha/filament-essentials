@@ -25,7 +25,7 @@ trait InteractsWithActions
 
     protected static function configureAction(ImportAction $action): ImportAction
     {
-        $name = static::identify();
+        $name = static::identify('Importer');
 
         $label = __('filament-essentials::import.action.label', [
             'name' => $name,

@@ -2,6 +2,13 @@
 
 namespace Mpietrucha\Filament\Essentials\Concerns;
 
+use Mpietrucha\Utility\Instance\Path;
+use Mpietrucha\Utility\Str;
+use Mpietrucha\Utility\Type;
+
+/**
+ * @internal
+ */
 trait Identifiable
 {
     public static function identify(?string $suffix = null, ?int $level = null): string

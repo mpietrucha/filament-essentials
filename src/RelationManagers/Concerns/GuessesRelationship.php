@@ -13,6 +13,6 @@ trait GuessesRelationship
 
     public static function getRelationshipName(): string
     {
-        return static::$relationship ??= static::identify();
+        return static::$relationship ??= static::identify('RelationManager');
     }
 }

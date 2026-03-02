@@ -15,7 +15,7 @@ trait InteractsWithCompletedNotificationBody
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $name = static::identify();
+        $name = static::identify('Importer');
 
         $body = trans_choice('filament-essentials::import.completed', $import->successful_rows, [
             'name' => $name,

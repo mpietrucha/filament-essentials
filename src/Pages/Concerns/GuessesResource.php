@@ -16,6 +16,6 @@ trait GuessesResource
 
     public static function getResource(): string
     {
-        return static::$resource ??= static::identify(2) |> Guesser::guess(...);
+        return static::$resource ??= static::identify(null, 2) |> Guesser::guess(...);
     }
 }
