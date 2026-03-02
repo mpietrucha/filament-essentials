@@ -6,4 +6,7 @@ return [
     'action' => [
         'label' => 'Import :Name',
     ],
+    'bulk_action' => [
+        'placeholder' => 'Upload a CSV files',
+    ],
 ];

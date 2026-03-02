@@ -19,7 +19,8 @@
         "livewire/blaze": "^1.0",
         "mpietrucha/laravel-essentials": "^1.0",
         "mpietrucha/utility": "^1.0",
-        "outerweb/filament-translatable-fields": "^4.1"
+        "outerweb/filament-translatable-fields": "^4.1",
+        "spatie/invade": "^2.1"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "dev-main",
