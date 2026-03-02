@@ -19,7 +19,7 @@ class ImportBulkAction extends ImportAction
 
         $upload = $schema->getComponents() |> Arr::first(...);
 
-        $upload->multiple();
+        Merger::pending(...) |> $upload->multiple(...);
 
         __('filament-essentials::import.bulk_action.placeholder') |> $upload->placeholder(...);
 

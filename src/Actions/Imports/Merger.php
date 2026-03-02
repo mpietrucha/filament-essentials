@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Actions\Imports;
 
 use Closure;
 use Filament\Forms\Components\FileUpload;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use League\Csv\Reader;
 use League\Csv\Writer;
@@ -15,6 +16,7 @@ use Mpietrucha\Utility\Collection;
 use Mpietrucha\Utility\Concerns\Creatable;
 use Mpietrucha\Utility\Contracts\CreatableInterface;
 use Mpietrucha\Utility\Filesystem\Extension;
+use Mpietrucha\Utility\Normalizer;
 use Mpietrucha\Utility\Str;
 use Mpietrucha\Utility\Type;
 use Mpietrucha\Utility\Value;
@@ -78,6 +80,21 @@ class Merger implements CreatableInterface
         return static::create($action, $handler) |> Closure::fromCallable(...);
     }
 
+    public static function indicator(): string
+    {
+        return '_merged';
+    }
+
+    public static function pending(Get $get): bool
+    {
+        return static::indicator() |> $get->blank(...);
+    }
+
+    final public static function done(Get $get): bool
+    {
+        return static::pending($get) |> Normalizer::not(...);
+    }
+
     protected function propagate(FileUpload $component, Component $livewire, Set $set, string $file): void
     {
         $upload = TemporaryUploadedFile::createFromLivewire($file);
@@ -85,6 +102,8 @@ class Merger implements CreatableInterface
         $handler = $this->handler();
 
         Value::for($handler)->get($component, $livewire, $set, $upload);
+
+        $set(static::indicator(), true);
     }
 
     protected function save(Writer $writer): string
