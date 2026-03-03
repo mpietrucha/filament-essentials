@@ -104,7 +104,9 @@ class ImportBulkAction extends ImportAction
 
         $response ?? ImportMergeException::create()->throw();
 
-        Filesystem::put($response->getPath(), $writer);
+        $file = $response->getRealPath();
+
+        Filesystem::put($file, $writer);
 
         return $response;
     }
