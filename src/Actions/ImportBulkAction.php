@@ -11,12 +11,12 @@ use Filament\Schemas\Schema;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use Livewire\Component as Livewire;
-use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Mpietrucha\Filament\Essentials\Actions\Exception\ImportMergeException;
 use Mpietrucha\Utility\Arr;
 use Mpietrucha\Utility\Collection;
-use Mpietrucha\Utility\Filesystem\Extension;
-use Mpietrucha\Utility\Str;
+use Mpietrucha\Utility\Enumerable\LazyCollection;
+use Mpietrucha\Utility\Filesystem;
 use Mpietrucha\Utility\Type;
 use Mpietrucha\Utility\Value;
 use SplTempFileObject;
@@ -54,7 +54,9 @@ class ImportBulkAction extends ImportAction
 
             $file = Arr::get($data, $property) |> $this->merge(...);
 
-            Value::for($handler)->get($action, Arr::set($data, $property, $file));
+            $data = Arr::set($data, $property, $file);
+
+            Value::for($handler)->get($action, $data);
         });
     }
 
@@ -74,19 +76,22 @@ class ImportBulkAction extends ImportAction
         $headers = true;
 
         while ($files->isNotEmpty()) {
-            $stream = $files->shift() |> $this->getUploadedFileStream(...);
+            $stream = $files->first() |> $this->getUploadedFileStream(...);
 
             if (Type::null($stream)) {
                 continue;
             }
 
+            $response = $files->shift();
+
             $reader = Reader::createFromStream($stream);
 
-            $this->getCsvDelimiter($reader);
-
-            $reader->setHeaderOffset($this->getHeaderOffset() ?? 0);
+            $this->synchronizeCsvDelimiter($reader);
+            $this->synchronizeHeaderOffset($reader);
 
             if ($headers) {
+                $reader->getDelimiter() |> $writer->setDelimiter(...);
+
                 $reader->getHeader() |> $writer->insertOne(...);
 
                 $headers = false;
@@ -94,14 +99,14 @@ class ImportBulkAction extends ImportAction
 
             $records = $reader->getRecords();
 
-            $writer->insertOne(...) |> Collection::create($records)->each(...);
+            $writer->insertOne(...) |> LazyCollection::create($records)->each(...);
         }
 
-        $file = Extension::set(Str::uuid(), 'csv');
+        $response ?? ImportMergeException::create()->throw();
 
-        FileUploadConfiguration::storage()->put(FileUploadConfiguration::path($file), $writer);
+        Filesystem::put($response->getPath(), $writer);
 
-        return TemporaryUploadedFile::createFromLivewire($file);
+        return $response;
     }
 
     protected function applyUploadConfiguration(FileUpload $upload): void
