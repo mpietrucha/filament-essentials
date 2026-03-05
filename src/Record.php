@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Record\Context;
 use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
+use Mpietrucha\Utility\Str;
+use Mpietrucha\Utility\Type;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
@@ -31,5 +33,14 @@ abstract class Record
     public static function context(Model $record): Context
     {
         return Context::create($record);
+    }
+
+    public static function relation(string $attribute, ?string $relation = null): string
+    {
+        if (Type::null($relation)) {
+            return $attribute;
+        }
+
+        return Str::sprintf('%s.%s', $relation, $attribute);
     }
 }
