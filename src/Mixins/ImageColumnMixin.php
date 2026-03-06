@@ -15,7 +15,7 @@ trait ImageColumnMixin
     {
         $this->label(function () use ($label) {
             if (Type::null($label)) {
-                return null;
+                return Str::none();
             }
 
             $visible = Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 10)
