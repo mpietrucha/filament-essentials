@@ -19,6 +19,7 @@
         "livewire/blaze": "^1.0",
         "mpietrucha/laravel-essentials": "^1.0",
         "mpietrucha/utility": "^1.0",
+        "nesbot/carbon": "^3.11",
         "outerweb/filament-translatable-fields": "^4.1",
         "spatie/invade": "^2.1"
     },

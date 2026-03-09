@@ -3,44 +3,63 @@
 namespace Mpietrucha\Filament\Essentials;
 
 use Closure;
-use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\Record\Context;
+use Filament\Support\Components\Component;
+use Mpietrucha\Filament\Essentials\Record\Adapter;
+use Mpietrucha\Filament\Essentials\Record\Concerns\InteractsWithComponent;
+use Mpietrucha\Utility\Concerns\Creatable;
+use Mpietrucha\Utility\Contracts\CreatableInterface;
 use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
-use Mpietrucha\Utility\Str;
-use Mpietrucha\Utility\Type;
+use Mpietrucha\Utility\Value;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
  *
- *  @mixin \Mpietrucha\Filament\Essentials\Record\Context
+ * @phpstan-type RecordComponent \Filament\Schemas\Components\Component|\Filament\Tables\Columns\Column
+ *
+ * @mixin \Mpietrucha\Filament\Essentials\Record\Adapter
  */
-abstract class Record
+class Record implements CreatableInterface
 {
-    use Bridgeable;
+    use Bridgeable, Creatable, InteractsWithComponent;
+
+    protected ?Adapter $adapter = null;
 
     /**
      * @param  MixedArray  $arguments
      */
     public static function __callStatic(string $method, array $arguments): Closure
     {
-        return function (Model $record) use ($method, $arguments) {
-            $context = static::context($record);
+        return static::use(function (self $record) use ($method, $arguments) {
+            $bridge = static::bridge($record);
 
-            return static::bridge($context)->eval($method, $arguments);
+            return $bridge->eval($method, $arguments);
+        });
+    }
+
+    /**
+     * @param  MixedArray  $arguments
+     */
+    public function __call(string $method, array $arguments): mixed
+    {
+        $adapter = $this->adapter();
+
+        return static::bridge($adapter)->eval($method, $arguments);
+    }
+
+    /**
+     * @return \Closure(RecordComponent): mixed
+     */
+    public static function use(Closure $handler): Closure
+    {
+        return /** @param RecordComponent $component **/ function (Component $component) use ($handler) {
+            $record = static::create($component);
+
+            return Value::for($handler)->get($record);
         };
     }
 
-    public static function context(Model $record): Context
+    public function adapter(): Adapter
     {
-        return Context::create($record);
-    }
-
-    public static function relation(string $attribute, ?string $relation = null): string
-    {
-        if (Type::null($relation)) {
-            return $attribute;
-        }
-
-        return Str::sprintf('%s.%s', $relation, $attribute);
+        return $this->adapter ??= $this->component() |> Adapter::create(...);
     }
 }

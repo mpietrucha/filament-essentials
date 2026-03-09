@@ -3,7 +3,6 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Select;
-use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Component;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Utility\Type;
@@ -19,10 +18,8 @@ trait AttachActionMixin
             return $select->allowHtml();
         });
 
-        return $this->recordTitle(function (Model $record) use ($attribute) {
-            $context = Record::context($record);
-
-            $avatar = $context->avatar($attribute);
+        return Record::use(function (Record $record) use ($attribute) {
+            $avatar = $record->avatar($attribute);
 
             if (Type::null($avatar)) {
                 return null;
@@ -34,9 +31,9 @@ trait AttachActionMixin
                 return null;
             }
 
-            $title = $table->getRecordTitleAttribute() |> $context->get(...);
+            $title = $table->getRecordTitleAttribute() |> $record->get(...);
 
             return Component::renderSelectOptionWithAvatar($title, $avatar);
-        });
+        }) |> $this->recordTitle(...);
     }
 }

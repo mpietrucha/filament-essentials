@@ -2,7 +2,6 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Component;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Utility\Type;
@@ -16,18 +15,16 @@ trait SelectMixin
     {
         $this->allowHtml();
 
-        return $this->getOptionLabelFromRecordUsing(function (Model $record) use ($attribute) {
-            $context = Record::context($record);
+        return Record::use(function (Record $record) use ($attribute) {
+            $avatar = $record->avatar($attribute);
 
-            $avatar = $context->avatar($attribute);
-
-            $title = $this->getRelationshipTitleAttribute() |> $context->get(...);
+            $title = $this->getRelationshipTitleAttribute() |> $record->get(...);
 
             if (Type::null($avatar)) {
                 return $title;
             }
 
             return Component::renderSelectOptionWithAvatar($title, $avatar);
-        });
+        }) |> $this->getOptionLabelFromRecordUsing(...);
     }
 }
