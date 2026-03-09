@@ -16,6 +16,10 @@ use Mpietrucha\Utility\Type;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
+ *
+ * @mixin \Mpietrucha\Filament\Essentials\Record\State
+ * @mixin \Filament\Tables\Columns\TextColumn
+ * @mixin \Filament\Infolists\Components\TextEntry
  */
 class Adapter implements CreatableInterface
 {
