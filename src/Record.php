@@ -9,6 +9,8 @@ use Mpietrucha\Filament\Essentials\Record\Concerns\InteractsWithComponent;
 use Mpietrucha\Utility\Concerns\Creatable;
 use Mpietrucha\Utility\Contracts\CreatableInterface;
 use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
+use Mpietrucha\Utility\Str;
+use Mpietrucha\Utility\Type;
 use Mpietrucha\Utility\Value;
 
 /**
@@ -56,6 +58,15 @@ class Record implements CreatableInterface
 
             return Value::for($handler)->get($record);
         };
+    }
+
+    public static function relation(string $attribute, ?string $relation = null): string
+    {
+        if (Type::null($relation)) {
+            return $attribute;
+        }
+
+        return Str::sprintf('%s.%s', $relation, $attribute);
     }
 
     public function adapter(): Adapter
