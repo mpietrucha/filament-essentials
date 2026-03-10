@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Table;
+use Mpietrucha\Utility\Enum;
 
 /**
  * @phpstan-require-implements \BackedEnum
@@ -64,7 +65,14 @@ trait InteractsWithLocale
 
     public function currency(): ?string
     {
-        return null;
+        /** @phpstan-ignore class.notFound */
+        $currency = \App\Enums\Currency::class;
+
+        if (Enum::incompatible($currency)) {
+            return null;
+        }
+
+        return $currency::default()->value();
     }
 
     public function timezone(): ?string
