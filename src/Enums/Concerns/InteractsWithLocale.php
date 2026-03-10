@@ -5,16 +5,18 @@ namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Table;
-use Mpietrucha\Utility\Enum;
+use Mpietrucha\Laravel\Essentials\Locale\Currency;
 
 /**
- * @phpstan-require-implements \BackedEnum
+ * @phpstan-require-implements \Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface
  */
 trait InteractsWithLocale
 {
+    use \Mpietrucha\Laravel\Essentials\Enums\Concerns\InteractsWithLocale;
+
     public static function configure(): void
     {
-        $locale = app()->getLocale() |> static::from(...);
+        $locale = static::current();
 
         $handler = $locale->bootstrap(...);
 
@@ -65,14 +67,7 @@ trait InteractsWithLocale
 
     public function currency(): ?string
     {
-        /** @phpstan-ignore class.notFound */
-        $currency = \App\Enums\Currency::class;
-
-        if (Enum::incompatible($currency)) {
-            return null;
-        }
-
-        return $currency::default()->value();
+        return Currency::get();
     }
 
     public function timezone(): ?string
