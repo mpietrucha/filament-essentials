@@ -42,13 +42,12 @@ trait FieldMixin
         return $this->translatable(
             defaultLocale: $requiredLocales->first() ?? Locale::get(),
             supportedLocales: function () {
-                $enum = Locale::enum();
+                $locale = Locale::enum();
 
-                if (Type::null($enum)) {
-                    return null;
-                }
-
-                return $enum::collection()->map->value();
+                return match (true) {
+                    Type::null($locale) => null,
+                    default => $locale::collection()->map->value()->all()
+                };
             },
             modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($requiredLocales) {
                 if ($requiredLocales->isEmpty()) {
