@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Mpietrucha\Filament\Essentials\Component;
+use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Utility\Type;
 
@@ -13,7 +13,7 @@ trait IsRelatedToOperatorMixin
 {
     public function avatars(?string $attribute = null): static
     {
-        return Record::use(function (Record $record) use ($attribute) {
+        return Record::pipe(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             $title = $this->getTitleAttribute() |> $record->get(...);
@@ -22,7 +22,7 @@ trait IsRelatedToOperatorMixin
                 return $title;
             }
 
-            return Component::renderSelectOptionWithAvatar($title, $avatar);
+            return Blade::renderSelectOptionWithAvatar($title, $avatar);
         }) |> $this->getOptionLabelFromRecordUsing(...);
     }
 }

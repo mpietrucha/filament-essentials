@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Mpietrucha\Filament\Essentials\Component;
+use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Utility\Type;
 
@@ -15,7 +15,7 @@ trait SelectMixin
     {
         $this->allowHtml();
 
-        return Record::use(function (Record $record) use ($attribute) {
+        return Record::pipe(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             $title = $this->getRelationshipTitleAttribute() |> $record->get(...);
@@ -24,7 +24,7 @@ trait SelectMixin
                 return $title;
             }
 
-            return Component::renderSelectOptionWithAvatar($title, $avatar);
+            return Blade::renderSelectOptionWithAvatar($title, $avatar);
         }) |> $this->getOptionLabelFromRecordUsing(...);
     }
 }

@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Select;
-use Mpietrucha\Filament\Essentials\Component;
+use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Utility\Type;
 
@@ -18,7 +18,7 @@ trait AttachActionMixin
             return $select->allowHtml();
         });
 
-        return Record::use(function (Record $record) use ($attribute) {
+        return Record::pipe(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             if (Type::null($avatar)) {
@@ -33,7 +33,7 @@ trait AttachActionMixin
 
             $title = $table->getRecordTitleAttribute() |> $record->get(...);
 
-            return Component::renderSelectOptionWithAvatar($title, $avatar);
+            return Blade::renderSelectOptionWithAvatar($title, $avatar);
         }) |> $this->recordTitle(...);
     }
 }

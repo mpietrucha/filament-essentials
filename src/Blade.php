@@ -2,14 +2,13 @@
 
 namespace Mpietrucha\Filament\Essentials;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\View\ComponentAttributeBag;
 use Mpietrucha\Utility\Str;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
  */
-abstract class Component
+class Blade extends \Illuminate\Support\Facades\Blade
 {
     /**
      * @param  MixedArray  $attributes
@@ -23,7 +22,7 @@ abstract class Component
 
         $component = '<x-filament::badge {{ $attributes }}>{{ $badge }}</x-filament::badge>';
 
-        return Blade::render($component, $attributes);
+        return static::render($component, $attributes);
     }
 
     public static function renderTextColumnBadge(string $badge): string
@@ -47,6 +46,6 @@ abstract class Component
 
         $component = '<x-filament-essentials::select-option-with-avatar :avatar="$avatar">{{ $option }}</x-filament-essentials::select-option-with-avatar>';
 
-        return Blade::render($component, $attributes);
+        return static::render($component, $attributes);
     }
 }

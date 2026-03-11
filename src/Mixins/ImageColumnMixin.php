@@ -31,7 +31,5 @@ trait ImageColumnMixin
         });
 
         return $this->circular()->width('1%');
-
-        // return Str::none() |> $this->width('1%')->circular()->label(...);
     }
 }
