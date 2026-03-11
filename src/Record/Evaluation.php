@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Support\Components\Component;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Record\Exception\EvaluationBindException;
+use Mpietrucha\Filament\Essentials\Record\Exception\EvaluationBuildException;
 use Mpietrucha\Utility\Concerns\Creatable;
 use Mpietrucha\Utility\Contracts\CreatableInterface;
 use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
@@ -25,6 +26,20 @@ abstract class Evaluation implements CreatableInterface
      */
     public function __construct(protected Component $component, protected Model $model)
     {
+    }
+
+    /**
+     * @param  EvaluationComponent  $component
+     */
+    public static function build(Component $component): static
+    {
+        $model = $component->getRecord();
+
+        if ($model instanceof Model) {
+            return static::create($component, $model);
+        }
+
+        EvaluationBuildException::create()->throw();
     }
 
     public static function replicate(self $evaluation): static
