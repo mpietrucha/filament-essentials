@@ -22,7 +22,7 @@ trait FieldMixin
     /**
      * @param  null|MixedArray|string|\Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface  $requiredLocales
      */
-    public function translate(null|array|InteractsWithEnumInterface|string $requiredLocales = null): Tabs
+    public function translate(null|array|InteractsWithEnumInterface|string $requiredLocales = null, null|InteractsWithEnumInterface|string $defaultLocale = null): Tabs
     {
         $requiredLocales = Collection::create($requiredLocales)
             ->map(function (mixed $requiredLocale) {
@@ -40,7 +40,13 @@ trait FieldMixin
 
         /** @var \Filament\Schemas\Components\Tabs */
         return $this->translatable(
-            defaultLocale: $requiredLocales->first() ?? Locale::get(),
+            defaultLocale: function () use ($defaultLocale, $requiredLocales) {
+                if ($defaultLocale instanceof InteractsWithEnumInterface) {
+                    return $defaultLocale->value();
+                }
+
+                return $defaultLocale ?? $requiredLocales->first() ?? Locale::get();
+            },
             supportedLocales: function () {
                 $locale = Locale::enum();
 
