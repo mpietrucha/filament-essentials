@@ -16,49 +16,49 @@ trait InteractsWithLocale
 
     public static function configure(): void
     {
-        $locale = static::current();
-
-        $handler = $locale->bootstrap(...);
+        $handler = static::bootstrap(...);
 
         Table::configureUsing($handler);
         Schema::configureUsing($handler);
     }
 
-    public function bootstrap(Schema|Table $component): Schema|Table
+    public static function bootstrap(Schema|Table $component): Schema|Table
     {
-        if ($value = $this->currency()) {
+        $locale = static::current();
+
+        if ($value = $locale->currency()) {
             $component->defaultCurrency($value);
         }
 
-        if ($value = $this->timezone()) {
+        if ($value = $locale->timezone()) {
             FilamentTimezone::set($value);
         }
 
-        if ($value = $this->numberLocale()) {
+        if ($value = $locale->numberLocale()) {
             $component->defaultNumberLocale($value);
         }
 
-        if ($value = $this->timeDisplayFormat()) {
+        if ($value = $locale->timeDisplayFormat()) {
             $component->defaultTimeDisplayFormat($value);
         }
 
-        if ($value = $this->dateDisplayFormat()) {
+        if ($value = $locale->dateDisplayFormat()) {
             $component->defaultDateDisplayFormat($value);
         }
 
-        if ($value = $this->isoTimeDisplayFormat()) {
+        if ($value = $locale->isoTimeDisplayFormat()) {
             $component->defaultIsoTimeDisplayFormat($value);
         }
 
-        if ($value = $this->isoDateDisplayFormat()) {
+        if ($value = $locale->isoDateDisplayFormat()) {
             $component->defaultIsoDateDisplayFormat($value);
         }
 
-        if ($value = $this->dateTimeDisplayFormat()) {
+        if ($value = $locale->dateTimeDisplayFormat()) {
             $component->defaultDateTimeDisplayFormat($value);
         }
 
-        if ($value = $this->isoDateTimeDisplayFormat()) {
+        if ($value = $locale->isoDateTimeDisplayFormat()) {
             $component->defaultIsoDateTimeDisplayFormat($value);
         }
 
