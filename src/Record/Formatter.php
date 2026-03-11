@@ -14,7 +14,7 @@ use Mpietrucha\Utility\Str;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
- * @phpstan-import-type EvaluationComponent from \Mpietrucha\Filament\Essentials\Record\Evaluation
+ * @phpstan-import-type RecordComponent from \Mpietrucha\Filament\Essentials\Record
  */
 class Formatter implements CompatibleInterface
 {
@@ -36,7 +36,7 @@ class Formatter implements CompatibleInterface
     ];
 
     /**
-     * @param  EvaluationComponent  $component
+     * @param  RecordComponent  $component
      * @param  MixedArray  $arguments
      */
     public static function format(Component $component, string $using, mixed $value, array $arguments): mixed
@@ -49,7 +49,7 @@ class Formatter implements CompatibleInterface
     }
 
     /**
-     * @param  EvaluationComponent  $component
+     * @param  RecordComponent  $component
      */
     public static function handler(Component $component): TextColumn|TextEntry
     {

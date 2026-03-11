@@ -11,6 +11,8 @@ use Mpietrucha\Utility\Type;
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
  *
+ * @phpstan-type RecordComponent \Filament\Schemas\Components\Component|\Filament\Tables\Columns\Column
+ *
  * @mixin \Mpietrucha\Filament\Essentials\Record\Adapter
  */
 class Record extends Evaluation

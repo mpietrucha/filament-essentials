@@ -15,21 +15,21 @@ use Mpietrucha\Utility\Type;
 use Mpietrucha\Utility\Value;
 
 /**
- * @phpstan-type EvaluationComponent \Filament\Schemas\Components\Component|\Filament\Tables\Columns\Column
+ * @phpstan-import-type RecordComponent from \Mpietrucha\Filament\Essentials\Record
  */
 abstract class Evaluation implements CreatableInterface
 {
     use Bridgeable, Creatable;
 
     /**
-     * @param  EvaluationComponent  $component
+     * @param  RecordComponent  $component
      */
     public function __construct(protected Component $component, protected Model $model)
     {
     }
 
     /**
-     * @param  EvaluationComponent  $component
+     * @param  RecordComponent  $component
      */
     public static function build(Component $component): static
     {
@@ -53,7 +53,7 @@ abstract class Evaluation implements CreatableInterface
 
     public static function bind(Closure $handler): Closure
     {
-        return /** @param null|EvaluationComponent $component **/ function (?Component $component, ?Action $action, Model $record) use ($handler) {
+        return /** @param null|RecordComponent $component **/ function (?Component $component, ?Action $action, Model $record) use ($handler) {
             if (Type::null($component)) {
                 $component = $action ?? EvaluationBindException::create()->throw();
             }
@@ -63,7 +63,7 @@ abstract class Evaluation implements CreatableInterface
     }
 
     /**
-     * @return EvaluationComponent
+     * @return RecordComponent
      */
     protected function component(): Component
     {
