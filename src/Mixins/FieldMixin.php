@@ -41,6 +41,15 @@ trait FieldMixin
         /** @var \Filament\Schemas\Components\Tabs */
         return $this->translatable(
             defaultLocale: $requiredLocales->first() ?? Locale::get(),
+            supportedLocales: function () {
+                $enum = Locale::enum();
+
+                if (Type::null($enum)) {
+                    return null;
+                }
+
+                return $enum::collection()->map->value();
+            },
             modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($requiredLocales) {
                 if ($requiredLocales->isEmpty()) {
                     return $field->required();
