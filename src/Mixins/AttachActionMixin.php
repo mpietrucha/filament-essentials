@@ -18,7 +18,7 @@ trait AttachActionMixin
             return $select->allowHtml();
         });
 
-        return Record::pipe(function (Record $record) use ($attribute) {
+        return Record::bind(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             if (Type::null($avatar)) {

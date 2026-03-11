@@ -13,7 +13,7 @@ trait IsRelatedToOperatorMixin
 {
     public function avatars(?string $attribute = null): static
     {
-        return Record::pipe(function (Record $record) use ($attribute) {
+        return Record::bind(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             $title = $this->getTitleAttribute() |> $record->get(...);

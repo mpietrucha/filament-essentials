@@ -15,7 +15,7 @@ trait SelectMixin
     {
         $this->allowHtml();
 
-        return Record::pipe(function (Record $record) use ($attribute) {
+        return Record::bind(function (Record $record) use ($attribute) {
             $avatar = $record->avatar($attribute);
 
             $title = $this->getRelationshipTitleAttribute() |> $record->get(...);

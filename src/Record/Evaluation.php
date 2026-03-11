@@ -33,7 +33,7 @@ abstract class Evaluation implements CreatableInterface
         return static::create($component, $model);
     }
 
-    public static function pipe(Closure $handler): Closure
+    public static function bind(Closure $handler): Closure
     {
         return /** @param EvaluationComponent $component **/ function (Component $component, Model $model) use ($handler) {
             $evaluation = static::create($component, $model);

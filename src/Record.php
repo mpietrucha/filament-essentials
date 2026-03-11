@@ -22,7 +22,7 @@ class Record extends Evaluation
      */
     public static function __callStatic(string $method, array $arguments): Closure
     {
-        return static::pipe(function (self $record) use ($method, $arguments) {
+        return static::bind(function (self $record) use ($method, $arguments) {
             $bridge = static::bridge($record);
 
             return $bridge->eval($method, $arguments);
@@ -39,7 +39,7 @@ class Record extends Evaluation
         return static::bridge($adapter)->eval($method, $arguments);
     }
 
-    public static function relation(string $attribute, ?string $relation = null): string
+    public static function attribute(string $attribute, ?string $relation = null): string
     {
         if (Type::null($relation)) {
             return $attribute;
