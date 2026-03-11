@@ -8,6 +8,7 @@ use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Utility\Collection;
 use Mpietrucha\Utility\Enum;
 use Mpietrucha\Utility\Enums\Contracts\InteractsWithEnumInterface;
+use Mpietrucha\Utility\Str;
 use Mpietrucha\Utility\Type;
 
 /**
@@ -55,7 +56,7 @@ trait FieldMixin
                 }
 
                 return $locale::collection()->mapWithKeys(fn (InteractsWithEnumInterface $locale) => [
-                    $locale->value() => $locale->label(),
+                    $locale->value() => $locale->value() |> Str::upper(...),
                 ])->all();
             },
             modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($requiredLocales) {
