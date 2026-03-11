@@ -1,7 +1,9 @@
 <?php
 
 return [
-    'translations' => [
-        'locale' => env('ESSENTIALS_TRANSLATIONS_LOCALE'),
+    'field' => [
+        'translate' => [
+            'locale' => env('ESSENTIALS_FIELD_TRANSLATE_LOCALE'),
+        ],
     ],
 ];

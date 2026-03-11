@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
+use Mpietrucha\Laravel\Essentials\Locale;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
@@ -16,7 +17,7 @@ trait FieldMixin
 {
     public function translate(bool $all = false): Tabs
     {
-        $defaultLocale = config('filament-essentials.translations.locale') ?? config('app.fallback_locale');
+        $defaultLocale = config('filament-essentials.field.translate.locale') ?? Locale::get();
 
         /** @var \Filament\Schemas\Components\Tabs */
         return $this->translatable(
@@ -26,7 +27,7 @@ trait FieldMixin
                     return $field->required();
                 }
 
-                $required = (fn () => $this->isRequired)->call($field);
+                $required = $this->isRequired;
 
                 return $field->required(fn () => match (true) {
                     $field->evaluate($required) => $defaultLocale === $locale,
