@@ -3,11 +3,14 @@
 namespace Mpietrucha\Filament\Essentials\Record;
 
 use Closure;
+use Filament\Actions\Action;
 use Filament\Support\Components\Component;
 use Illuminate\Database\Eloquent\Model;
+use Mpietrucha\Filament\Essentials\Record\Exception\EvaluationBindException;
 use Mpietrucha\Utility\Concerns\Creatable;
 use Mpietrucha\Utility\Contracts\CreatableInterface;
 use Mpietrucha\Utility\Forward\Concerns\Bridgeable;
+use Mpietrucha\Utility\Type;
 use Mpietrucha\Utility\Value;
 
 /**
@@ -35,10 +38,12 @@ abstract class Evaluation implements CreatableInterface
 
     public static function bind(Closure $handler): Closure
     {
-        return /** @param EvaluationComponent $component **/ function (Component $component, Model $model) use ($handler) {
-            $evaluation = static::create($component, $model);
+        return /** @param null|EvaluationComponent $component **/ function (?Component $component, ?Action $action, Model $record) use ($handler) {
+            if (Type::null($component)) {
+                $component = $action ?? EvaluationBindException::create()->throw();
+            }
 
-            return Value::for($handler)->get($evaluation);
+            return static::create($component, $record) |> Value::for($handler)->get(...);
         };
     }
 

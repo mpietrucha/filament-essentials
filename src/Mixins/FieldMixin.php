@@ -4,10 +4,10 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
-use Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Utility\Collection;
 use Mpietrucha\Utility\Enum;
+use Mpietrucha\Utility\Enums\Contracts\InteractsWithEnumInterface;
 use Mpietrucha\Utility\Type;
 
 /**
@@ -44,14 +44,17 @@ trait FieldMixin
             supportedLocales: function () {
                 $locale = Locale::enum();
 
-                return match (true) {
-                    Type::null($locale) => null,
-                    default => $locale::collection()->map->value()->all()
-                };
+                if (Type::null($locale)) {
+                    return null;
+                }
+
+                return $locale::collection()->mapWithKeys(fn (InteractsWithEnumInterface $locale) => [
+                    $locale->value() => $locale->label(),
+                ])->all();
             },
             modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($requiredLocales) {
                 if ($requiredLocales->isEmpty()) {
-                    return $field->required();
+                    return;
                 }
 
                 $required = $this->isRequired;
