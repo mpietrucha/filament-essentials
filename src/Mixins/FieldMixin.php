@@ -4,7 +4,11 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
+use Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Utility\Collection;
+use Mpietrucha\Utility\Enum;
+use Mpietrucha\Utility\Type;
 
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
@@ -15,30 +19,40 @@ use Mpietrucha\Laravel\Essentials\Locale;
  */
 trait FieldMixin
 {
-    public function translate(bool $all = false): Tabs
+    /**
+     * @param  null|MixedArray|string|\Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface  $requiredLocales
+     */
+    public function translate(null|array|InteractsWithEnumInterface|string $requiredLocales = null): Tabs
     {
-        $defaultLocale = config('filament-essentials.field.translate.locale') ?? Locale::get();
+        $requiredLocales = Collection::create($requiredLocales)
+            ->map(function (mixed $requiredLocale) {
+                if (Type::string($requiredLocale)) {
+                    return $requiredLocale;
+                }
+
+                if (Enum::compatible($requiredLocale)) {
+                    return $requiredLocale->value();
+                }
+
+                return null;
+            })
+            ->filter();
 
         /** @var \Filament\Schemas\Components\Tabs */
         return $this->translatable(
-            defaultLocale: $defaultLocale,
-            modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($all, $defaultLocale) {
-                if ($all) {
+            defaultLocale: $requiredLocales->first() ?? Locale::get(),
+            modifyLocalizedFieldUsing: function (Field $field, string $locale) use ($requiredLocales) {
+                if ($requiredLocales->isEmpty()) {
                     return $field->required();
                 }
 
                 $required = $this->isRequired;
 
                 return $field->required(fn () => match (true) {
-                    $field->evaluate($required) => $defaultLocale === $locale,
+                    $field->evaluate($required) => $requiredLocales->contains($locale),
                     default => false
                 });
             }
         );
-    }
-
-    public function translateAllLocales(): Tabs
-    {
-        return $this->translate(true);
     }
 }
