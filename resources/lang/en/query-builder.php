@@ -1,16 +1,22 @@
 <?php
 
 return [
-    'trashed_constraint' => [
-        'label' => 'Deleted',
-        'operators' => [
-            'with_trashed_operator' => [
-                'label' => 'Includes deleted',
-                'summary' => 'Deleted: includes deleted',
+    'constraints' => [
+        'trashed' => [
+            'label' => 'Trashed',
+        ],
+    ],
+
+    'operators' => [
+        'trashed' => [
+            'label' => [
+                'inverse' => 'With trashed',
+                'direct' => 'Only trashed',
             ],
-            'only_trashed_operator' => [
-                'label' => 'Only deleted',
-                'summary' => 'Deleted: only deleted',
+
+            'summary' => [
+                'inverse' => 'Trashed: with trashed',
+                'direct' => 'Trashed: only trashed',
             ],
         ],
     ],
