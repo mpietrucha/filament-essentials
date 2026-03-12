@@ -18,17 +18,14 @@ class TrashedOperator extends Operator
     public function getLabel(): string
     {
         return match (true) {
-            $this->isInverse() => __('filament-essentials::query-builder.operators.trashed.label.inverse'),
-            default => __('filament-essentials::query-builder.operators.trashed.label.direct')
+            $this->isInverse() => __('filament-tables::table.filters.trashed.with_trashed'),
+            default => __('filament-tables::table.filters.trashed.only_trashed')
         };
     }
 
     public function getSummary(): string
     {
-        return match (true) {
-            $this->isInverse() => __('filament-essentials::query-builder.operators.trashed.summary.inverse'),
-            default => __('filament-essentials::query-builder.operators.trashed.summary.direct')
-        };
+        return $this->getLabel();
     }
 
     /**

@@ -12,7 +12,7 @@ class TrashedConstraint extends Constraint
     {
         parent::setUp();
 
-        __('filament-essentials::query-builder.constraints.trashed.label') |> $this->label(...);
+        __('filament-tables::table.filters.trashed.label') |> $this->label(...);
 
         $this->icon(Heroicon::Trash);
 
