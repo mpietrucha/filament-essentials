@@ -38,8 +38,8 @@ class TrashedOperator extends Operator
     public function applyToBaseFilterQuery(Builder $query): Builder
     {
         return match (true) {
-            $this->isInverse() => $query->onlyTrashed(), /** @phpstan-ignore method.notFound */
-            default => $query->withTrashed(), /** @phpstan-ignore method.notFound */
+            $this->isInverse() => $query->withTrashed(), /** @phpstan-ignore method.notFound */
+            default => $query->onlyTrashed(), /** @phpstan-ignore method.notFound */
         };
     }
 }
