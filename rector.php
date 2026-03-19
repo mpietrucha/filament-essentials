@@ -10,27 +10,35 @@ use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
+use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
+use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
+use RectorFilament\Rector\MethodCall\ModelToRecordClosureParamRector;
 use RectorLaravel\Set\LaravelLevelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
         'src',
         'analyze',
+        'resources',
     ])
     ->withSkip([
-        // RemoveDeadStmtRector::class,
+        RemoveDeadStmtRector::class,
         RemoveNonExistingVarAnnotationRector::class,
         RemoveUselessParamTagRector::class,
-        ClosureToArrowFunctionRector::class => [
-            'src/Record/Context.php',
-        ],
+        ClosureToArrowFunctionRector::class,
         RenameParamToMatchTypeRector::class => [
             'src/Record/Context.php',
+            'src/Resources/Concerns/HasNumberedTitle.php',
+            'src/Resources/Concerns/InteractsWithActions.php',
+            'src/Mixins/TextColumnMixin.php',
         ],
     ])
     ->withRules([
         StaticClosureRector::class,
         StaticArrowFunctionRector::class,
+        ModelToRecordClosureParamRector::class,
+        LivewireComponentParamNameRector::class,
+        FilamentUtilityInjectionTypeRector::class,
     ])
     ->withSets([
         LaravelLevelSetList::UP_TO_LARAVEL_120,

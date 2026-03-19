@@ -22,13 +22,11 @@ abstract class Context implements Arrayable
     use Forwardable;
     use Makeable;
 
-    public function __construct(
-        /**
-         * @var RecordComponent
-         */
-        public readonly Component $component,
-        public readonly Model $model
-    ) {
+    /**
+     * @param  RecordComponent  $component
+     */
+    public function __construct(public readonly Component $component, public readonly Model $model)
+    {
     }
 
     /**
