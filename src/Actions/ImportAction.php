@@ -45,7 +45,7 @@ class ImportAction extends \Filament\Actions\ImportAction
     {
         $bom = Bom::tryFromSequence($resource);
 
-        if (!$bom instanceof \League\Csv\Bom) {
+        if (! $bom instanceof Bom) {
             return null;
         }
 
