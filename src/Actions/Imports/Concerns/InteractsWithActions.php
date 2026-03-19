@@ -33,14 +33,12 @@ trait InteractsWithActions
 
     protected static function configureAction(ImportAction $importAction): ImportAction
     {
-        $name = static::identify('Importer');
+        $importAction->name($name = static::identify('Importer'));
 
-        $label = __('filament-essentials::import.action.label', [
+        __('filament-essentials::import.action.label', [
             'name' => $name,
-        ]);
+        ]) |> $importAction->label(...);
 
-        $importer = static::class;
-
-        return $importAction->name($name)->label($label)->importer($importer);
+        return $importAction->importer(static::class);
     }
 }
