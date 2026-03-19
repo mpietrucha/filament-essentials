@@ -129,20 +129,18 @@ class ImportBulkAction extends ImportAction
                 return;
             }
 
-            if ($handler instanceof Closure) {
-                $handler($fileUpload, $livewire, $set, Arr::first($state));
-            }
+            value($handler, $fileUpload, $livewire, $set, Arr::first($state));
         });
     }
 
     protected function applyFieldsetConfiguration(Fieldset $fieldset): void
     {
-        /**
-         * @var Closure $schema
-         *
-         * @phpstan-ignore-next-line property.notFound
-         */
+        /** @phpstan-ignore-next-line property.notFound */
         $schema = invade($fieldset)->childComponents |> Arr::first(...);
+
+        if (! $schema instanceof Closure) {
+            return;
+        }
 
         $property = static::property();
 

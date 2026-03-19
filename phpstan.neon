@@ -3,3 +3,4 @@ parameters:
     paths:
         - src
         - analyze
+        - vendor/mpietrucha/laravel-essentials/phpstan/cache

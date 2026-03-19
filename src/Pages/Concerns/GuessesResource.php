@@ -21,6 +21,6 @@ trait GuessesResource
     public static function getResource(): string
     {
         /** @var GuessedResource */
-        return static::$resource ??= static::identify(null, 2) |> Guesser::guess(...);
+        return static::$resource ??= static::identify(level: 2) |> Guesser::guess(...);
     }
 }
