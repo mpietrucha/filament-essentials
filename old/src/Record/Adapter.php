@@ -2,7 +2,9 @@
 
 namespace Mpietrucha\Filament\Essentials\Record;
 
+use Filament\Infolists\Components\TextEntry;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Tables\Columns\TextColumn;
 use Mpietrucha\Filament\Essentials\Record\Exception\FormatterMethodException;
 use Mpietrucha\Utility\Arr;
 use Mpietrucha\Utility\Data;
@@ -12,8 +14,8 @@ use Mpietrucha\Utility\Type;
 /**
  * @phpstan-import-type MixedArray from \Mpietrucha\Utility\Arr
  *
- * @mixin \Filament\Tables\Columns\TextColumn
- * @mixin \Filament\Infolists\Components\TextEntry
+ * @mixin TextColumn
+ * @mixin TextEntry
  */
 class Adapter extends Evaluation
 {

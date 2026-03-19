@@ -13,7 +13,7 @@ use Mpietrucha\Utility\Type;
  *
  * @phpstan-type RecordComponent \Filament\Schemas\Components\Component|\Filament\Tables\Columns\Column
  *
- * @mixin \Mpietrucha\Filament\Essentials\Record\Adapter
+ * @mixin Adapter
  */
 class Record extends Evaluation
 {

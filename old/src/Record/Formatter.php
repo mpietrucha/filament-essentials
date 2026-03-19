@@ -18,7 +18,8 @@ use Mpietrucha\Utility\Str;
  */
 class Formatter implements CompatibleInterface
 {
-    use Bridgeable, Compatible;
+    use Bridgeable;
+    use Compatible;
 
     /**
      * @var list<string>

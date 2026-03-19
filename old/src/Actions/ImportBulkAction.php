@@ -61,7 +61,7 @@ class ImportBulkAction extends ImportAction
     }
 
     /**
-     * @param  list<\Livewire\Features\SupportFileUploads\TemporaryUploadedFile>  $files
+     * @param  list<TemporaryUploadedFile>  $files
      */
     protected function merge(array $files): TemporaryUploadedFile
     {

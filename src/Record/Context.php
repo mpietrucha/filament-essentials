@@ -22,11 +22,13 @@ abstract class Context implements Arrayable
     use Forwardable;
     use Makeable;
 
-    /**
-     * @param  RecordComponent  $component
-     */
-    public function __construct(public readonly Component $component, public readonly Model $model)
-    {
+    public function __construct(
+        /**
+         * @var RecordComponent
+         */
+        public readonly Component $component,
+        public readonly Model $model
+    ) {
     }
 
     /**
@@ -45,7 +47,7 @@ abstract class Context implements Arrayable
 
     public static function pipe(Closure $handler): Closure
     {
-        return /** @param null|RecordComponent $component **/ function (?Component $component, ?Action $action, Model $record) use ($handler) {
+        return /** @param null|RecordComponent $component **/ static function (?Component $component, ?Action $action, Model $record) use ($handler): mixed {
             return static::make(
                 $component ?? $action ?? RuntimeException::throw('A component or action must be avaliable in this evaluation'),
                 $record

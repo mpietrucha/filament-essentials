@@ -8,5 +8,7 @@ use Mpietrucha\Filament\Essentials\RelationManagers\Concerns\InteractsWithAction
 
 abstract class RelationManager extends \Filament\Resources\RelationManagers\RelationManager
 {
-    use GuessesRelationship, GuessesResource, InteractsWithActions;
+    use GuessesRelationship;
+    use GuessesResource;
+    use InteractsWithActions;
 }

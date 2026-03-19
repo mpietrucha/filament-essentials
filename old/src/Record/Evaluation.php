@@ -19,7 +19,8 @@ use Mpietrucha\Utility\Value;
  */
 abstract class Evaluation implements CreatableInterface
 {
-    use Bridgeable, Creatable;
+    use Bridgeable;
+    use Creatable;
 
     /**
      * @param  RecordComponent  $component

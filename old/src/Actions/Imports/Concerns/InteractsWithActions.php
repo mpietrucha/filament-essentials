@@ -2,12 +2,13 @@
 
 namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
+use Filament\Actions\Imports\Importer;
 use Mpietrucha\Filament\Essentials\Actions\ImportAction;
 use Mpietrucha\Filament\Essentials\Actions\ImportBulkAction;
 use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 
 /**
- * @phpstan-require-extends \Filament\Actions\Imports\Importer
+ * @phpstan-require-extends Importer
  */
 trait InteractsWithActions
 {

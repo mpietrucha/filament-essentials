@@ -7,5 +7,6 @@ use Mpietrucha\Filament\Essentials\Actions\Imports\Concerns\InteractsWithComplet
 
 abstract class Importer extends \Filament\Actions\Imports\Importer
 {
-    use InteractsWithActions, InteractsWithCompletedNotificationBody;
+    use InteractsWithActions;
+    use InteractsWithCompletedNotificationBody;
 }

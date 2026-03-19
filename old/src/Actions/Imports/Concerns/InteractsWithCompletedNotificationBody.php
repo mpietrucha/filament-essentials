@@ -2,12 +2,13 @@
 
 namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 
+use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 use Mpietrucha\Utility\Str;
 
 /**
- * @phpstan-require-extends \Filament\Actions\Imports\Importer
+ * @phpstan-require-extends Importer
  */
 trait InteractsWithCompletedNotificationBody
 {

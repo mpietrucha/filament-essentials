@@ -8,5 +8,6 @@ use Mpietrucha\Filament\Essentials\Resources\Concerns\InteractsWithActions;
 
 abstract class Resource extends FilamentResource
 {
-    use HasNumberedTitle, InteractsWithActions;
+    use HasNumberedTitle;
+    use InteractsWithActions;
 }
