@@ -156,7 +156,7 @@ class ImportBulkAction extends ImportAction
             {
                 $value = parent::__invoke($property, $absolute);
 
-                /** @phpstan-ignore-next-line argument.templateType */
+                /** @var array<mixed> $value */
                 return $property === $this->property ? Arr::first($value) : $value;
             }
         } |> $schema);
