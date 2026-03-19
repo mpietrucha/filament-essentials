@@ -18,12 +18,8 @@ trait Identifiable
             $class = Path::namespace($class, $level);
         }
 
-        $name = Path::name($class);
-
-        if ($suffix === null) {
-            return Str::lower($name);
-        }
-
-        return Str::of($name)->before($suffix)->lower();
+        return str(
+            Path::name($class)
+        )->before($suffix ?? Str::none())->lower();
     }
 }

@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Resources\Concerns;
 
 use Filament\Resources\Resource;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,13 +16,18 @@ trait HasNumberedTitle
         return 'id';
     }
 
-    public static function getRecordTitle(?Model $record): string
+    public static function getRecordTitle(?Model $record): ?string
     {
-        $label = static::getTitleCaseModelLabel();
-
-        /** @var string $title */
         $title = parent::getRecordTitle($record);
 
-        return sprintf('%s #%s', $label, $title);
+        if ($title === null) {
+            return null;
+        }
+
+        if ($title instanceof Htmlable) {
+            $title = $title->toHtml();
+        }
+
+        return sprintf('%s #%s', static::getTitleCaseModelLabel(), $title);
     }
 }
