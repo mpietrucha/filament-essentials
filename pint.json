@@ -4,6 +4,7 @@
         "single_line_empty_body": false,
         "ordered_class_elements": true,
         "ordered_types": true,
+        "single_trait_insert_per_statement": true,
         "concat_space": {
             "spacing": "one"
         }

@@ -1,6 +1,8 @@
 <?php
 
-enum InteractsWithEnum implements \Mpietrucha\Filament\Essentials\Enums\Contracts\InteractsWithEnumInterface
+use Mpietrucha\Filament\Essentials\Enums\Contracts\EnumInterface;
+
+enum InteractsWithEnum implements EnumInterface
 {
-    use \Mpietrucha\Filament\Essentials\Enums\Concerns\InteractsWithEnum;
+    use Mpietrucha\Filament\Essentials\Enums\Concerns\InteractsWithEnum;
 }
