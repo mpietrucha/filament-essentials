@@ -28,7 +28,7 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         RenameParamToMatchTypeRector::class => [
             'src/Record/Context.php',
-            'src/Resources/Concerns/HasNumberedTitle.php',
+            'src/Resources/Concerns/TitlesRecordById.php',
             'src/Resources/Concerns/InteractsWithActions.php',
             'src/Mixins/TextColumnMixin.php',
         ],

@@ -7,9 +7,13 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Resource as FilamentResource;
 use Filament\Tables\Table;
 use Guava\FilamentModalRelationManagers\Actions\RelationManagerAction;
 use Illuminate\Database\Eloquent\Model;
+use Mpietrucha\Filament\Essentials\Resources\Concerns\InteractsWithActions as ResourceActions;
+use Mpietrucha\Support\Exception\RuntimeException;
+use Mpietrucha\Support\Instance;
 use Mpietrucha\Support\Str;
 
 /**
@@ -33,6 +37,25 @@ trait InteractsWithActions
         return $table;
     }
 
+    /**
+     * @return class-string<FilamentResource>
+     */
+    public static function getDecoratedActionsResource(): string
+    {
+        $resource = static::getRelatedResource();
+
+        if ($resource === null) {
+            RuntimeException::throw('RelationManager resource is required');
+        }
+
+        if (Instance::traits($resource)->doesntContain(ResourceActions::class)) {
+            RuntimeException::throw('RelationManager resource must use `%s` trait', ResourceActions::class);
+        }
+
+        /** @var class-string<FilamentResource> $resource */
+        return $resource;
+    }
+
     public static function getEditAction(): RelationManagerAction
     {
         $relationManagerAction = RelationManagerAction::make();
@@ -48,7 +71,8 @@ trait InteractsWithActions
 
         $relationManagerAction->compact();
 
-        static::getRelatedResource()::applyActionModalIcon($relationManagerAction);
+        /** @phpstan-ignore staticMethod.notFound */
+        static::getDecoratedActionsResource()::applyActionModalIcon($relationManagerAction);
 
         $relationManagerAction->label(static function (Model $record, Page $page): string {
             $title = $page::getResource()::getRecordTitleAttribute();
@@ -59,7 +83,7 @@ trait InteractsWithActions
                 $record = Str::none();
             }
 
-            $records = static::getRelatedResource()::getPluralModelLabel();
+            $records = static::getDecoratedActionsResource()::getPluralModelLabel();
 
             return __('filament-essentials::actions.relation_managers.modal.label', ['records' => $records, 'record' => $record]);
         });
@@ -69,7 +93,8 @@ trait InteractsWithActions
 
     public static function getCreateAction(): CreateAction
     {
-        return static::getRelatedResource()::getCreateAction() |> static::configureCreateAction(...);
+        /** @phpstan-ignore staticMethod.notFound, argument.type */
+        return static::getDecoratedActionsResource()::getCreateAction() |> static::configureCreateAction(...);
     }
 
     public static function configureCreateAction(CreateAction $createAction): CreateAction

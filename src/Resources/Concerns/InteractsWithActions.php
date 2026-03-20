@@ -79,7 +79,7 @@ trait InteractsWithActions
 
     public static function applyActionModalHeading(Action $action, Operation $operation, ?string $relation = null): void
     {
-        $action->modalHeading(static function (?Model $record) use ($relation, $operation): string {
+        $action->modalHeading(static function (?Model $record) use ($relation, $operation): string|Htmlable {
             $operation = $operation->value;
 
             $label = match (true) {
@@ -88,7 +88,7 @@ trait InteractsWithActions
             };
 
             if ($label instanceof Htmlable) {
-                $label = $label->toHtml();
+                return $label;
             }
 
             return __(sprintf('filament-actions::%s.single.modal.heading', $operation), ['label' => $label]);
@@ -122,7 +122,7 @@ trait InteractsWithActions
         $record = Record::make($record)->get($relation);
 
         if (! $record instanceof Model) {
-            InvalidArgumentException::throw('Action return must be %s', Model::class);
+            InvalidArgumentException::throw('Action record must be %s', Model::class);
         }
 
         return $record;

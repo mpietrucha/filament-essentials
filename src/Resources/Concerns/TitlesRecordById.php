@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @phpstan-require-extends Resource
  */
-trait HasNumberedTitle
+trait TitlesRecordById
 {
     public static function getRecordTitleAttribute(): ?string
     {
         return 'id';
     }
 
-    public static function getRecordTitle(?Model $record): ?string
+    public static function getRecordTitle(?Model $record): null|Htmlable|string
     {
         $title = parent::getRecordTitle($record);
 
@@ -25,7 +25,7 @@ trait HasNumberedTitle
         }
 
         if ($title instanceof Htmlable) {
-            $title = $title->toHtml();
+            return $title;
         }
 
         return sprintf('%s #%s', static::getTitleCaseModelLabel(), $title);

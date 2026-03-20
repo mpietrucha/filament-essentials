@@ -8,19 +8,14 @@ use Mpietrucha\Filament\Essentials\Resources\Guesser;
 
 /**
  * @phpstan-require-extends Page
- *
- * @phpstan-import-type GuessedResource from Guesser
  */
 trait GuessesResource
 {
     use Identifiable;
 
-    /**
-     * @return GuessedResource
-     */
     public static function getResource(): string
     {
-        /** @var GuessedResource */
+        /** @var class-string */
         return static::$resource ??= static::identify(level: 2) |> Guesser::guess(...);
     }
 }
