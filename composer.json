@@ -13,14 +13,19 @@
     "require": {
         "php": "^8.5",
         "composer-runtime-api": "^2.2",
+        "bezhansalleh/filament-shield": "^4.1",
         "guava/filament-modal-relation-managers": "^3.0",
         "illuminate/console": "^13.0",
         "illuminate/contracts": "^13.0",
         "illuminate/database": "^13.0",
         "illuminate/support": "^13.0",
         "illuminate/view": "^13.0",
+        "league/csv": "^9.28",
+        "livewire/blaze": "^1.0",
         "mpietrucha/laravel-essentials": "^1.0",
-        "mpietrucha/support": "^1.0"
+        "mpietrucha/support": "^1.0",
+        "outerweb/filament-translatable-fields": "^4.1",
+        "spatie/invade": "^2.1"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.1",
@@ -37,7 +42,8 @@
         "symfony/var-dumper": "^8.0"
     },
     "provide": {
-        "illuminate/contracts": "^12.0"
+        "illuminate/contracts": "^12.0",
+        "illuminate/support": "^12.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
