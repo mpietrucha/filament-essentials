@@ -19,7 +19,7 @@ return RectorConfig::configure()
     ->withPaths([
         'src',
         'analyze',
-        'resources',
+        'resources/lang',
     ])
     ->withSkip([
         RemoveDeadStmtRector::class,
