@@ -13,7 +13,7 @@ use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
 use RectorFilament\Rector\MethodCall\ModelToRecordClosureParamRector;
-use RectorLaravel\Set\LaravelLevelSetList;
+use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -41,7 +41,7 @@ return RectorConfig::configure()
         FilamentUtilityInjectionTypeRector::class,
     ])
     ->withSets([
-        LaravelLevelSetList::UP_TO_LARAVEL_120,
+        LaravelSetList::LARAVEL_130,
     ])
     ->withPreparedSets(
         deadCode: true,
