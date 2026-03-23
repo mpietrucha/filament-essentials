@@ -2,11 +2,9 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Filament\Schemas\Components\Component;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
-use Mpietrucha\Filament\Essentials\Record;
 
 /**
  * @phpstan-require-extends TextColumn
@@ -15,25 +13,27 @@ trait TextColumnMixin
 {
     public function limitWithBadge(): static
     {
-        return $this->state(function (Component $component, Model $record): null|HtmlString|string {
+        return $this->state(function (Model $record): null|HtmlString|string {
             $results = $this->getRelationshipResults($record) |> collect(...);
 
             if ($results->isEmpty()) {
                 return null;
             }
 
-            $name = Record::make(
-                $component,
-                $results->first()
-            )->get($this->getFullAttributeName($record));
+            /** @var mixed $name */
+            $name = $this->getFullAttributeName($record) |> $results->value(...);
 
-            if ($results->containsOneItem()) {
+            $results->shift();
+
+            if (! is_string($name)) {
+                return null;
+            }
+
+            if ($results->isEmpty()) {
                 return $name;
             }
 
-            $remaning = $results->count() - 1;
-
-            return new HtmlString(sprintf('%s%s', $name, $remaning));
+            return new HtmlString(sprintf('%s%s', $name, $results->count()));
         });
     }
 }
