@@ -8,6 +8,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Arr;
 use Mpietrucha\Support\Exception\BadMethodCallException;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
+use Mpietrucha\Support\Instance;
 use Mpietrucha\Support\Str;
 
 /**
@@ -39,7 +40,7 @@ class Adapter extends Context
         }
 
         if (! is_string($value)) {
-            InvalidArgumentException::throw('%s::$%s must be a string', $model, $attribute);
+            InvalidArgumentException::throw('%s::$%s must be a string', Instance::namespace($model), $attribute);
         }
 
         return $value;
