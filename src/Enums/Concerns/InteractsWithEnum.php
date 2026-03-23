@@ -24,20 +24,22 @@ trait InteractsWithEnum
 
     public function getLabel(): string
     {
-        /** @var int|string $value */
+        /** @var string $value */
         $value = match (true) {
             $this instanceof BackedEnum => $this->value,
             default => $this->name
         };
 
-        $locale = Locale::get()->code();
+        if (Str::upper($value) === $value) {
+            return $value;
+        }
 
-        $headline = Str::headline((string) $value);
+        $headline = Str::headline($value);
 
-        if (Str::startsWith($locale, 'en')) {
+        if (Str::startsWith(Locale::get()->code(), 'en')) {
             return $headline;
         }
 
-        return Str::lower($headline) |> Str::ucFirst(...);
+        return Str::lower($headline) |> Str::ucfirst(...);
     }
 }
