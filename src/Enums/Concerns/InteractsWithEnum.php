@@ -11,6 +11,14 @@ trait InteractsWithEnum
 {
     use \Mpietrucha\Support\Enums\Concerns\InteractsWithEnum;
 
+    /**
+     * @return class-string<static>
+     */
+    public static function use(): string
+    {
+        return static::class;
+    }
+
     public function getLabel(): string
     {
         return '';
