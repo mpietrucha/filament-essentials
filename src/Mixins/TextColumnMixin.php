@@ -11,7 +11,7 @@ use Illuminate\Support\HtmlString;
  */
 trait TextColumnMixin
 {
-    public function limitWithBadge(): static
+    public function withLimitBadge(): static
     {
         return $this->state(function (Model $record): null|HtmlString|string {
             $results = $this->getRelationshipResults($record) |> collect(...);
