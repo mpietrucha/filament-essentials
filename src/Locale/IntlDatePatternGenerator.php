@@ -2,8 +2,12 @@
 
 namespace Mpietrucha\Filament\Essentials\Locale;
 
+use Mpietrucha\Support\Concerns\Makeable;
+
 class IntlDatePatternGenerator extends \IntlDatePatternGenerator
 {
+    use Makeable;
+
     public function toPHPDateFormat(string $skeleton): ?string
     {
         $pattern = $this->getBestPattern($skeleton);

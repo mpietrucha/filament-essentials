@@ -122,6 +122,6 @@ trait InteractsWithLocale
         $code = $this->code();
 
         /** @var IntlDatePatternGenerator */
-        return $generators->getOrPut($code, static fn (): IntlDatePatternGenerator => IntlDatePatternGenerator::create($code));
+        return $generators->getOrPut($code, static fn (): IntlDatePatternGenerator => IntlDatePatternGenerator::make($code));
     }
 }
