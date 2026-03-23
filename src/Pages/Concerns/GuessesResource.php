@@ -13,6 +13,11 @@ trait GuessesResource
 {
     use Identifiable;
 
+    /**
+     * @var class-string
+     */
+    protected static string $resource;
+
     public static function getResource(): string
     {
         /** @var class-string */
