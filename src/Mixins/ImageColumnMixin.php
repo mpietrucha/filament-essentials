@@ -19,10 +19,8 @@ trait ImageColumnMixin
                 return Str::none();
             }
 
-            $visible = Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 10)->first(static function (Frame $frame): bool {
-                $function = $frame->getFunction();
-
-                return Str::contains($function, 'mapTableColumnToArray');
+            $visible = Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 5)->first(static function (Frame $frame): bool {
+                return $frame->getFunction() === 'mapTableColumnToArray';
             });
 
             if ($visible) {
