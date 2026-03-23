@@ -8,6 +8,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
+use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
@@ -30,6 +31,9 @@ return RectorConfig::configure()
             'src/Record/Context.php',
             'src/Resources/Concerns/TitlesRecordById.php',
             'src/Resources/Concerns/InteractsWithActions.php',
+            'src/Mixins/TextColumnMixin.php',
+        ],
+        RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
         ],
     ])

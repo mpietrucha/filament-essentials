@@ -57,7 +57,7 @@ class StateFormatter
             $value = $state;
         }
 
-        return (string) $state;
+        return (string) $value;
     }
 
     /**

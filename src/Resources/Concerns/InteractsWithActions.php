@@ -27,8 +27,8 @@ trait InteractsWithActions
 
         $action = Action::make($relation);
 
-        $action->infolist(static function (Model $record, Schema $schema) use ($relation): void {
-            static::getActionRecord($record, $relation) |> $schema->model(...) |> static::infolist(...);
+        $action->infolist(static function (Model $record, Schema $schema) use ($relation): Schema {
+            return static::getActionRecord($record, $relation) |> $schema->model(...) |> static::infolist(...);
         });
 
         return static::configureViewAction($action, $relation);
