@@ -68,7 +68,7 @@ class StateFormatter
         $name = Str::random(6);
 
         if ($component instanceof Column) {
-            return TextColumn::make($name);
+            return $component->getTable() |> TextColumn::make($name)->table(...);
         }
 
         return $component->getContainer() |> TextEntry::make($name)->container(...);
