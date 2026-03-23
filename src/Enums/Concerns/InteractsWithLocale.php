@@ -5,7 +5,9 @@ namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Enums\Contracts\LocaleInterface;
+use Mpietrucha\Filament\Essentials\Locale\IntlDatePatternGenerator;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 
 /**
@@ -79,17 +81,17 @@ trait InteractsWithLocale
 
     public function numberLocale(): ?string
     {
-        return null;
+        return $this->code();
     }
 
     public function timeDisplayFormat(): ?string
     {
-        return null;
+        return $this->getIntlDatePatternGenerator()->toPHPDateFormat('Hm');
     }
 
     public function dateDisplayFormat(): ?string
     {
-        return null;
+        return $this->getIntlDatePatternGenerator()->toPHPDateFormat('yMd');
     }
 
     public function isoTimeDisplayFormat(): ?string
@@ -104,11 +106,22 @@ trait InteractsWithLocale
 
     public function dateTimeDisplayFormat(): ?string
     {
-        return null;
+        return $this->getIntlDatePatternGenerator()->toPHPDateFormat('yMdHm');
     }
 
     public function isoDateTimeDisplayFormat(): ?string
     {
         return null;
+    }
+
+    protected function getIntlDatePatternGenerator(): IntlDatePatternGenerator
+    {
+        /** @var Collection<int, IntlDatePatternGenerator> */
+        static $generators = collect();
+
+        $code = $this->code();
+
+        /** @var IntlDatePatternGenerator */
+        return $generators->getOrPut($code, static fn (): IntlDatePatternGenerator => IntlDatePatternGenerator::create($code));
     }
 }
