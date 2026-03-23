@@ -45,14 +45,19 @@ class StateFormatter
      * @param  RecordComponent  $component
      * @param  array<mixed>  $arguments
      */
-    public static function format(Component $component, string $method, mixed $value, array $arguments): string
+    public static function format(Component $component, string $method, string $state, array $arguments): string
     {
         static::forward(
             $component = static::component($component)
         )->eval($method, $arguments);
 
-        /** @var string */
-        return $component->formatState($value);
+        $value = $component->formatState($state);
+
+        if (! is_scalar($value)) {
+            $value = $state;
+        }
+
+        return (string) $state;
     }
 
     /**

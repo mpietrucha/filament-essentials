@@ -27,9 +27,9 @@ class Adapter extends Context
             BadMethodCallException::throw('Call to undefined method %s::%s', static::class, $method);
         }
 
-        $value = Arr::string($arguments, 0);
+        $state = Arr::string($arguments, 0) |> $this->get(...);
 
-        return StateFormatter::format($this->component, $method, $value, array_slice($arguments, 1));
+        return StateFormatter::format($this->component, $method, $state, array_slice($arguments, 1));
     }
 
     public function get(string $attribute): string
