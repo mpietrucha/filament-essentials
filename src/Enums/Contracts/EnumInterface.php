@@ -9,5 +9,5 @@ interface EnumInterface extends \Mpietrucha\Support\Enums\Contracts\EnumInterfac
     /**
      * @return class-string<static>
      */
-    public static function use(): string;
+    public static function options(): string;
 }

@@ -12,7 +12,6 @@ use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Operation;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
 
 /**
@@ -119,7 +118,7 @@ trait InteractsWithActions
             return $record;
         }
 
-        $record = Record::make($record)->get($relation);
+        $record = $record->$relation;
 
         if (! $record instanceof Model) {
             InvalidArgumentException::throw('Action record must be %s', Model::class);

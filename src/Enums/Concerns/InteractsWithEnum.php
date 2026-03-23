@@ -14,7 +14,7 @@ trait InteractsWithEnum
     /**
      * @return class-string<static>
      */
-    public static function use(): string
+    public static function options(): string
     {
         return static::class;
     }

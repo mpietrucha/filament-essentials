@@ -22,7 +22,7 @@ trait SelectMixin
                 (string) $this->getRelationshipTitleAttribute()
             );
 
-            if (! is_string($avatar) || ! is_string($title)) {
+            if (! is_string($avatar)) {
                 return null;
             }
 

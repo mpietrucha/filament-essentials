@@ -25,10 +25,6 @@ trait TextColumnMixin
                 $results->first()
             )->get($this->getFullAttributeName($record));
 
-            if (! is_string($name)) {
-                return null;
-            }
-
             if ($results->containsOneItem()) {
                 return $name;
             }

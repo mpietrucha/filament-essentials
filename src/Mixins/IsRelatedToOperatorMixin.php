@@ -13,7 +13,7 @@ trait IsRelatedToOperatorMixin
 {
     public function avatars(?string $attribute = null): static
     {
-        return Record::pipe(function (Record $record) use ($attribute): ?string {
+        return Record::pipe(function (Record $record) use ($attribute): string {
             $avatar = $record->avatar($attribute);
 
             $title = $record->get(
@@ -21,11 +21,7 @@ trait IsRelatedToOperatorMixin
             );
 
             if (! is_string($avatar)) {
-                return is_string($title) ? $title : null;
-            }
-
-            if (! is_string($title)) {
-                return null;
+                return $title;
             }
 
             return Blade::renderSelectOptionWithAvatar($title, $avatar);

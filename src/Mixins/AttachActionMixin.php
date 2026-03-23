@@ -25,7 +25,7 @@ trait AttachActionMixin
                 (string) $this->getTable()?->getRecordTitleAttribute()
             );
 
-            if (! is_string($avatar) || ! is_string($title)) {
+            if (! is_string($avatar)) {
                 return null;
             }
 
