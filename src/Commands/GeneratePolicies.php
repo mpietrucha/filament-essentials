@@ -72,6 +72,7 @@ class GeneratePolicies extends Command
 
         Finder::make()
             ->in($directory)
+            ->files()
             ->get()
             ->keys()
             ->each(static fn (string $policy): null => Filesystem::replaceInFile(
