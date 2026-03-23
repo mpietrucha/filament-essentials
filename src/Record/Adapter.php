@@ -39,11 +39,11 @@ class Adapter extends Context
             return Str::none();
         }
 
-        if (! is_string($value)) {
-            InvalidArgumentException::throw('%s::$%s must be a string', Instance::namespace($model), $attribute);
+        if (! is_scalar($value)) {
+            InvalidArgumentException::throw('%s::$%s must be a int|float|string|bool', Instance::namespace($model), $attribute);
         }
 
-        return $value;
+        return (string) $value;
     }
 
     public function avatar(?string $attribute = null): ?string
