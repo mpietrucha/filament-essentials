@@ -11,7 +11,7 @@ use Mpietrucha\Filament\Essentials\Record;
  */
 trait IsRelatedToOperatorMixin
 {
-    public function avatars(?string $attribute = null): static
+    public function withAvatars(?string $attribute = null): static
     {
         return Record::pipe(function (Record $record) use ($attribute): string {
             $avatar = $record->avatar($attribute);

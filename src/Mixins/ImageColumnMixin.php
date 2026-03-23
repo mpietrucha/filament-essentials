@@ -12,7 +12,7 @@ use Mpietrucha\Support\Str;
  */
 trait ImageColumnMixin
 {
-    public function avatar(?string $label = null): static
+    public function withAvatar(?string $label = null): static
     {
         $this->label(static function () use ($label): string {
             if ($label === null) {

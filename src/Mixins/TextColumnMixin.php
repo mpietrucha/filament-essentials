@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
+use Filament\Schemas\Components\Component;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
@@ -12,9 +13,9 @@ use Mpietrucha\Filament\Essentials\Record;
  */
 trait TextColumnMixin
 {
-    public function limitBadge(): static
+    public function limitWithBadge(): static
     {
-        return $this->state(function (Model $record): null|HtmlString|string {
+        return $this->state(function (Component $component, Model $record): null|HtmlString|string {
             $results = $this->getRelationshipResults($record) |> collect(...);
 
             if ($results->isEmpty()) {
@@ -22,6 +23,7 @@ trait TextColumnMixin
             }
 
             $name = Record::make(
+                $component,
                 $results->first()
             )->get($this->getFullAttributeName($record));
 
@@ -29,7 +31,7 @@ trait TextColumnMixin
                 return $name;
             }
 
-            $remaning = (string) $results->count() - 1;
+            $remaning = $results->count() - 1;
 
             return new HtmlString(sprintf('%s%s', $name, $remaning));
         });

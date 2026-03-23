@@ -12,7 +12,7 @@ use Mpietrucha\Filament\Essentials\Record;
  */
 trait AttachActionMixin
 {
-    public function avatars(?string $attribute = null): static
+    public function withAvatars(?string $attribute = null): static
     {
         $this->recordSelect(static function (Select $select): Select {
             return $select->allowHtml();

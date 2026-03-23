@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Record;
 
+use BackedEnum;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Tables\Columns\TextColumn;
@@ -37,6 +38,10 @@ class Adapter extends Context
 
         if ($value === null) {
             return Str::none();
+        }
+
+        if ($value instanceof BackedEnum) {
+            $value = $value->value;
         }
 
         if (! is_scalar($value)) {

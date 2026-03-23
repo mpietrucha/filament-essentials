@@ -11,7 +11,7 @@ use Mpietrucha\Filament\Essentials\Record;
  */
 trait SelectMixin
 {
-    public function avatars(?string $attribute = null): static
+    public function withAvatars(?string $attribute = null): static
     {
         $this->allowHtml();
 
