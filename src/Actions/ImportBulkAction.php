@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\LazyCollection;
 use League\Csv\Reader;
 use League\Csv\Writer;
-use Livewire\Component as Livewire;
+use Livewire\Component as LivewireComponent;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Mpietrucha\Support\Exception\RuntimeException;
 use Mpietrucha\Support\Filesystem;
@@ -124,7 +124,7 @@ class ImportBulkAction extends ImportAction
 
         $fileUpload->afterStateUpdated(null);
 
-        $fileUpload->afterStateUpdated(static function (FileUpload $fileUpload, Livewire $livewire, Set $set, array $state) use ($handler): void {
+        $fileUpload->afterStateUpdated(static function (FileUpload $fileUpload, LivewireComponent $livewire, Set $set, array $state) use ($handler): void {
             if ($state === []) {
                 return;
             }
