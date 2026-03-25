@@ -16,12 +16,12 @@ use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
-use Mpietrucha\Laravel\Essentials\Package\Builder;
-use Mpietrucha\Laravel\Essentials\Package\ServiceProvider;
+use Mpietrucha\Laravel\Essentials\PackageTools\Package;
+use Mpietrucha\Laravel\Essentials\PackageTools\PackageServiceProvider;
 
-class FilamentEssentialsServiceProvider extends ServiceProvider
+class FilamentEssentialsServiceProvider extends PackageServiceProvider
 {
-    public function configure(Builder $package): void
+    public function configure(Package $package): void
     {
         $package->name('filament-essentials');
 
