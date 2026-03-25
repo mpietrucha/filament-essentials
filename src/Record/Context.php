@@ -16,6 +16,8 @@ use Mpietrucha\Support\Forward\Concerns\Forwardable;
  * @phpstan-import-type RecordComponent from Record
  *
  * @implements Arrayable<int, mixed>
+ *
+ * @internal
  */
 abstract class Context implements Arrayable
 {

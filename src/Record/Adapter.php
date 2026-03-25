@@ -15,6 +15,8 @@ use Mpietrucha\Support\Str;
 /**
  * @mixin TextColumn
  * @mixin TextEntry
+ *
+ * @internal
  */
 class Adapter extends Context
 {

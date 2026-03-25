@@ -13,6 +13,8 @@ use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-import-type RecordComponent from Record
+ *
+ * @internal
  */
 class StateFormatter
 {
