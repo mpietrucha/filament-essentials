@@ -6,7 +6,7 @@ use Filament\Facades\Filament;
 use Illuminate\Support\Arr;
 use Mpietrucha\Support\Str;
 
-abstract class Guesser
+abstract class ResourceGuesser
 {
     public static function guess(string $indicator): string
     {

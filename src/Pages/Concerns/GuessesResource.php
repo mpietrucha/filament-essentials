@@ -4,7 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Pages\Concerns;
 
 use Filament\Resources\Pages\Page;
 use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
-use Mpietrucha\Filament\Essentials\Resources\Guesser;
+use Mpietrucha\Filament\Essentials\Resources\ResourceGuesser;
 
 /**
  * @phpstan-require-extends Page
@@ -21,6 +21,6 @@ trait GuessesResource
     public static function getResource(): string
     {
         /** @var class-string */
-        return static::$resource ??= static::identify(level: 2) |> Guesser::guess(...);
+        return static::$resource ??= static::identify(level: 2) |> ResourceGuesser::guess(...);
     }
 }

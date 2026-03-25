@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Concerns;
 
-use Mpietrucha\Support\Instance\Path;
+use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Str;
 
 /**
@@ -15,11 +15,11 @@ trait Identifiable
         $class = static::class;
 
         if (is_int($level)) {
-            $class = Path::namespace($class, $level);
+            $class = ClassNamespace::parent($class, $level);
         }
 
         return str(
-            Path::name($class)
+            ClassNamespace::name($class)
         )->before($suffix ?? Str::none())->lower();
     }
 }

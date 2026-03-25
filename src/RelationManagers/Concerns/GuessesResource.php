@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
 use Filament\Resources\RelationManagers\RelationManager;
-use Mpietrucha\Filament\Essentials\Resources\Guesser;
+use Mpietrucha\Filament\Essentials\Resources\ResourceGuesser;
 
 /**
  * @phpstan-require-extends RelationManager
@@ -16,6 +16,6 @@ trait GuessesResource
             return static::$relatedResource;
         }
 
-        return static::$relatedResource = static::getRelationshipName() |> Guesser::guess(...);
+        return static::$relatedResource = static::getRelationshipName() |> ResourceGuesser::guess(...);
     }
 }
