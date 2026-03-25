@@ -18,10 +18,17 @@ trait InteractsWithActions
         return ExportAction::make() |> static::configureAction(...);
     }
 
+    public static function getActionName(): string
+    {
+        return static::identify('Exporter');
+    }
+
     protected static function configureAction(ExportAction $exportAction): ExportAction
     {
-        $name = static::identify('Exporter');
+        $exportAction->exporter(static::class);
 
-        return $exportAction->name($name)->exporter(static::class);
+        static::getActionName() |> $exportAction->name(...);
+
+        return $exportAction;
     }
 }

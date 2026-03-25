@@ -21,6 +21,11 @@ trait InteractsWithActions
         return ImportBulkAction::make() |> static::configureBulkAction(...);
     }
 
+    public static function getActionName(): string
+    {
+        return static::identify('Importer');
+    }
+
     protected static function configureBulkAction(ImportBulkAction $importBulkAction): ImportBulkAction
     {
         static::configureAction($importBulkAction);
@@ -30,8 +35,10 @@ trait InteractsWithActions
 
     protected static function configureAction(ImportAction $importAction): ImportAction
     {
-        $name = static::identify('Importer');
+        $importAction->importer(static::class);
 
-        return $importAction->name($name)->importer(static::class);
+        static::getActionName() |> $importAction->name(...);
+
+        return $importAction;
     }
 }
