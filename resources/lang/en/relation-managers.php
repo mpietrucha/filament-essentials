@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'modal_label' => ':Records for :record',
+    'modal_label' => ':Records - :record',
 ];
