@@ -5,15 +5,12 @@ namespace Mpietrucha\Filament\Essentials\Actions\Imports\Concerns;
 use Filament\Actions\Imports\Importer;
 use Mpietrucha\Filament\Essentials\Actions\ImportAction;
 use Mpietrucha\Filament\Essentials\Actions\ImportBulkAction;
-use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 
 /**
  * @phpstan-require-extends Importer
  */
 trait InteractsWithActions
 {
-    use Identifiable;
-
     public static function action(): ImportAction
     {
         return ImportAction::make() |> static::configureAction(...);
@@ -34,10 +31,6 @@ trait InteractsWithActions
     protected static function configureAction(ImportAction $importAction): ImportAction
     {
         $name = static::identify('Importer');
-
-        __('filament-essentials::import.action.label', [
-            'name' => $name,
-        ]) |> $importAction->label(...);
 
         return $importAction->name($name)->importer(static::class);
     }

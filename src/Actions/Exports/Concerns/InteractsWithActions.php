@@ -22,10 +22,6 @@ trait InteractsWithActions
     {
         $name = static::identify('Exporter');
 
-        __('filament-essentials::export.action.label', [
-            'name' => $name,
-        ]) |> $exportAction->label(...);
-
         return $exportAction->name($name)->exporter(static::class);
     }
 }
