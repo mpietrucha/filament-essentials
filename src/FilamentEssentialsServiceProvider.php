@@ -19,7 +19,7 @@ use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
 use Mpietrucha\Laravel\Essentials\Package\Builder;
 use Mpietrucha\Laravel\Essentials\Package\ServiceProvider;
 
-class EssentialsServiceProvider extends ServiceProvider
+class FilamentEssentialsServiceProvider extends ServiceProvider
 {
     public function configure(Builder $package): void
     {

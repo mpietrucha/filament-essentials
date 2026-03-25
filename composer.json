@@ -63,7 +63,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mpietrucha\\Filament\\Essentials\\EssentialsServiceProvider"
+                "Mpietrucha\\Filament\\Essentials\\FilamentEssentialsServiceProvider"
             ]
         }
     },
