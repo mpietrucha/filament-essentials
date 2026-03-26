@@ -74,8 +74,8 @@ trait InteractsWithActions
         /** @phpstan-ignore staticMethod.notFound */
         static::getDecoratedActionsResource()::applyActionModalIcon($relationManagerAction);
 
-        $relationManagerAction->label(static function (Model $record, Page $page): string {
-            $title = $page::getResource()::getRecordTitleAttribute();
+        $relationManagerAction->label(static function (Model $record, Page $livewire): string {
+            $title = $livewire::getResource()::getRecordTitleAttribute();
 
             $record = $record->$title;
 
