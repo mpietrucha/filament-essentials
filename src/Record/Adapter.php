@@ -11,6 +11,7 @@ use Mpietrucha\Support\Exception\BadMethodCallException;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
 use Mpietrucha\Support\Instance;
 use Mpietrucha\Support\Str;
+use Stringable;
 
 /**
  * @mixin TextColumn
@@ -44,6 +45,10 @@ class Adapter extends Context
 
         if ($value instanceof BackedEnum) {
             $value = $value->value;
+        }
+
+        if ($value instanceof Stringable) {
+            $value = (string) $value;
         }
 
         if (! is_scalar($value)) {
