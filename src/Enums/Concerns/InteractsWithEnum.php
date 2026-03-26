@@ -30,10 +30,8 @@ trait InteractsWithEnum
             default => $this->name
         };
 
-        $prefix = 'static::TRANSLATION_PREFIX';
-
-        if (defined($prefix) && is_string($prefix = constant($prefix))) {
-            return __(sprintf('%s.%s', $prefix, $value));
+        if ($translated = static::getTranslatedLabelValue($value)) {
+            return $translated;
         }
 
         if (Str::upper($value) === $value) {
@@ -47,5 +45,22 @@ trait InteractsWithEnum
         }
 
         return Str::lower($headline) |> Str::ucfirst(...);
+    }
+
+    protected static function getTranslatedLabelValue(string $value): ?string
+    {
+        $prefix = 'static::TRANSLATION_PREFIX';
+
+        if (! defined($prefix)) {
+            return null;
+        }
+
+        $prefix = constant($prefix);
+
+        if (! is_string($prefix)) {
+            return null;
+        }
+
+        return __(sprintf('%s.%s', $prefix, $value));
     }
 }
