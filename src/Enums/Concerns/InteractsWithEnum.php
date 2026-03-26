@@ -30,6 +30,12 @@ trait InteractsWithEnum
             default => $this->name
         };
 
+        $prefix = 'static::TRANSLATION_PREFIX';
+
+        if (defined($prefix) && is_string($prefix = constant($prefix))) {
+            return __(sprintf('%s.%s', $prefix, $value));
+        }
+
         if (Str::upper($value) === $value) {
             return $value;
         }
