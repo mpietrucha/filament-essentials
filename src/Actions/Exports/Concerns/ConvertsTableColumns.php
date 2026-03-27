@@ -28,13 +28,14 @@ trait ConvertsTableColumns
     }
 
     /**
-     * @param  array<TextColumn>  $textColumns
-     * @return array<ExportColumn>
+     * @param  list<TextColumn>  $textColumns
+     * @return list<ExportColumn>
      */
     protected static function convertTextColumns(array $textColumns): array
     {
         $exportColumns = static::convertTextColumn(...) |> collect($textColumns)->map(...);
 
+        /** @var list<ExportColumn> */
         return $exportColumns->all();
     }
 }
