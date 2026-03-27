@@ -30,7 +30,7 @@ trait InteractsWithEnum
             default => $this->name
         };
 
-        if ($prefix = static::getTranslationPrefix()) {
+        if ($prefix = static::getLabelTranslationPrefix()) {
             return sprintf('%s.%s', $prefix, Str::lower($value));
         }
 
@@ -47,7 +47,7 @@ trait InteractsWithEnum
         return Str::lower($headline) |> Str::ucfirst(...);
     }
 
-    protected static function getTranslationPrefix(): ?string
+    protected static function getLabelTranslationPrefix(): ?string
     {
         return null;
     }
