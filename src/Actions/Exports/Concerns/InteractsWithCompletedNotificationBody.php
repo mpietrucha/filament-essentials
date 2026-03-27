@@ -13,7 +13,7 @@ trait InteractsWithCompletedNotificationBody
 {
     use Identifiable;
 
-    public static function getCompletedNotificationExportName(): string
+    public static function getCompletedNotificationName(): string
     {
         return static::identify('Exporter');
     }
@@ -21,7 +21,7 @@ trait InteractsWithCompletedNotificationBody
     public static function getCompletedNotificationBody(Export $export): string
     {
         $body = trans_choice('filament-essentials::export.completed', $export->successful_rows, [
-            'name' => static::getCompletedNotificationExportName(),
+            'name' => static::getCompletedNotificationName(),
         ]);
 
         $failed = $export->getFailedRowsCount();
