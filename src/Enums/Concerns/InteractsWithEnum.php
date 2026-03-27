@@ -31,7 +31,9 @@ trait InteractsWithEnum
         };
 
         if ($prefix = static::getLabelTranslationPrefix()) {
-            return sprintf('%s.%s', $prefix, Str::lower($value));
+            $value = Str::lower($value);
+
+            return sprintf('%s.%s', $prefix, $value) |> __(...);
         }
 
         if (Str::upper($value) === $value) {
