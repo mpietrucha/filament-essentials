@@ -6,6 +6,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
+use Mpietrucha\Laravel\Essentials\Locale;
 
 class TranslationForm
 {
@@ -33,7 +34,7 @@ class TranslationForm
                 ->label(__('filament-essentials::translation.form.text'))
                 ->required()
                 ->columnSpanFull()
-                ->translate(),
+                ->translate(requiredLocales: Locale::enum()::default()),
         ];
     }
 }
