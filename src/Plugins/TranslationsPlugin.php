@@ -10,7 +10,7 @@ use Filament\Support\Icons\Heroicon;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Support\Concerns\Makeable;
 
-class FilamentTranslationsPlugin implements FilamentPlugin
+class TranslationsPlugin implements FilamentPlugin
 {
     use HasLabels;
     use HasNavigation;
