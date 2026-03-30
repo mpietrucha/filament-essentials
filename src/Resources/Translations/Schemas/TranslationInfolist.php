@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 use Filament\Forms\Components\KeyValue;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class TranslationInfolist
@@ -20,9 +21,35 @@ class TranslationInfolist
     protected static function components(): array
     {
         return [
-            TextEntry::make('group'),
-            TextEntry::make('key'),
-            KeyValue::make('text'),
+            TextEntry::make('group')
+                ->label(__('filament-essentials::translation.infolist.group'))
+                ->columnSpanFull(),
+
+            TextEntry::make('key')
+                ->label(__('filament-essentials::translation.infolist.key'))
+                ->columnSpanFull(),
+
+            KeyValue::make('text')
+                ->keyLabel(__('filament-essentials::translation.infolist.language'))
+                ->valueLabel(__('filament-essentials::translation.infolist.text'))
+                ->columnSpanFull(),
+
+            Section::make(__('filament-essentials::translation.infolist.details'))
+                ->columnSpanFull()
+                ->inlineLabel()
+                ->schema([
+                    TextEntry::make('created_at')
+                        ->label(__('filament-essentials::translation.infolist.created_at'))
+                        ->dateTime()
+                        ->placeholder('-')
+                        ->columnSpanFull(),
+
+                    TextEntry::make('updated_at')
+                        ->label(__('filament-essentials::translation.infolist.updated_at'))
+                        ->dateTime()
+                        ->placeholder('-')
+                        ->columnSpanFull(),
+                ]),
         ];
     }
 }

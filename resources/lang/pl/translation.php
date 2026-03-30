@@ -25,10 +25,12 @@ return [
     ],
 
     'infolist' => [
-        'group' => 'Group',
-        'key' => 'Key',
-        'text' => 'Text',
-        'created_at' => 'Created At',
-        'updated_at' => 'Updated At',
+        'group' => 'Grupa',
+        'key' => 'Klucz',
+        'language' => 'Język',
+        'text' => 'Tekst',
+        'details' => 'Szczegóły',
+        'created_at' => 'Utworzono',
+        'updated_at' => 'Zaktualizowano',
     ],
 ];

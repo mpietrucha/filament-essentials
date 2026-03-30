@@ -27,7 +27,9 @@ return [
     'infolist' => [
         'group' => 'Group',
         'key' => 'Key',
+        'language' => 'Language',
         'text' => 'Text',
+        'details' => 'Details',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
     ],
