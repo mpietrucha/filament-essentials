@@ -4,10 +4,13 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations\Tables;
 
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
+use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 
 class TranslationTable
 {
@@ -67,7 +70,14 @@ class TranslationTable
      */
     protected static function recordActions(): array
     {
-        return [];
+        return [
+            TranslationResource::getViewAction(),
+            TranslationResource::getEditAction(),
+            ActionGroup::make([
+                DeleteAction::make(),
+                RestoreAction::make(),
+            ]),
+        ];
     }
 
     /**
