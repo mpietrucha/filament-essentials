@@ -4,10 +4,14 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations;
 
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasNavigation;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\PageRegistration;
-use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
+use Mpietrucha\Filament\Essentials\Plugins\TranslationsPlugin;
+use Mpietrucha\Filament\Essentials\Resources\Resource as FilamentResource;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Pages\ManageTranslations;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Schemas\TranslationForm;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Schemas\TranslationInfolist;
@@ -47,5 +51,26 @@ class TranslationResource extends FilamentResource
         return [
             'index' => ManageTranslations::route('/'),
         ];
+    }
+
+    public static function applyDefaultActionConfiguration(Action $action): void
+    {
+        $action->slideOver();
+
+        $action->modalWidth(Width::Medium);
+    }
+
+    public static function configureCreateAction(CreateAction $createAction): CreateAction
+    {
+        $createAction = parent::configureCreateAction($createAction);
+
+        __('filament-essentials::translation.action.create.modal_heading') |> $createAction->modalHeading(...);
+
+        return $createAction;
+    }
+
+    protected static function getEssentialsPlugin(): TranslationsPlugin
+    {
+        return TranslationsPlugin::get();
     }
 }

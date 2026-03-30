@@ -16,9 +16,19 @@ class TranslationsPlugin implements FilamentPlugin
     use HasNavigation;
     use Makeable;
 
+    protected static string $id = 'mpietrucha-filament-translations-plugin';
+
+    public static function get(): static
+    {
+        /** @var static $plugin */
+        $plugin = filament(static::$id);
+
+        return $plugin;
+    }
+
     public function getId(): string
     {
-        return 'mpietrucha-filament-translations-plugin';
+        return static::$id;
     }
 
     public function register(Panel $panel): void

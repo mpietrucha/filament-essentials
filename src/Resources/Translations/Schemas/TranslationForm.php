@@ -2,6 +2,8 @@
 
 namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 
@@ -17,6 +19,17 @@ class TranslationForm
      */
     protected static function components(): array
     {
-        return [];
+        return [
+            TextInput::make('group')
+                ->label(__('filament-essentials::translation.form.group')),
+
+            TextInput::make('key')
+                ->label(__('filament-essentials::translation.form.key')),
+
+            Textarea::make('text')
+                ->label(__('filament-essentials::translation.form.text'))
+                ->columnSpanFull()
+                ->translate(),
+        ];
     }
 }

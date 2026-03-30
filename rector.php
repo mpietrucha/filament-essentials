@@ -40,10 +40,10 @@ return RectorConfig::configure()
             'src/Mixins/TextColumnMixin.php',
         ],
         AddOverrideAttributeToOverriddenMethodsRector::class => [
-            'src/Resources/Translations/TranslationResource.php',
+            'src/Resources/Translations',
         ],
         AddOverrideAttributeToOverriddenPropertiesRector::class => [
-            'src/Resources/Translations/TranslationResource.php',
+            'src/Resources/Translations',
         ],
     ])
     ->withRules([
