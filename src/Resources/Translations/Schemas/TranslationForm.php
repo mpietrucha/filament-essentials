@@ -21,13 +21,17 @@ class TranslationForm
     {
         return [
             TextInput::make('group')
-                ->label(__('filament-essentials::translation.form.group')),
+                ->label(__('filament-essentials::translation.form.group'))
+                ->required(),
 
             TextInput::make('key')
-                ->label(__('filament-essentials::translation.form.key')),
+                ->label(__('filament-essentials::translation.form.key'))
+                ->unique()
+                ->required(),
 
             Textarea::make('text')
                 ->label(__('filament-essentials::translation.form.text'))
+                ->required()
                 ->columnSpanFull()
                 ->translate(),
         ];

@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'label' => 'translation',
-    'plural_label' => 'translations',
+    'label' => 'tłumaczenie',
+    'plural_label' => 'tłumaczenia',
 
     'action' => [
         'create' => [
-            'modal_heading' => 'Create translation',
+            'modal_heading' => 'Create Tłumaczenie',
         ],
     ],
 
@@ -14,5 +14,21 @@ return [
         'group' => 'Group',
         'key' => 'Key',
         'text' => 'Text',
+    ],
+
+    'table' => [
+        'group' => 'Group',
+        'key' => 'Key',
+        'text' => 'Text',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+    ],
+
+    'infolist' => [
+        'group' => 'Group',
+        'key' => 'Key',
+        'text' => 'Text',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
     ],
 ];

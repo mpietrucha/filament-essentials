@@ -6,7 +6,7 @@ return [
 
     'action' => [
         'create' => [
-            'modal_heading' => 'Utwórz translacje',
+            'modal_heading' => 'Utwórz Translacje',
         ],
     ],
 
@@ -14,5 +14,21 @@ return [
         'group' => 'Grupa',
         'key' => 'Klucz',
         'text' => 'Tekst',
+    ],
+
+    'table' => [
+        'group' => 'Grupa',
+        'key' => 'Klucz',
+        'text' => 'Tekst',
+        'created_at' => 'Utworzono',
+        'updated_at' => 'Zaktualizowano',
+    ],
+
+    'infolist' => [
+        'group' => 'Grupa',
+        'key' => 'Klucz',
+        'text' => 'Tekst',
+        'created_at' => 'Utworzono',
+        'updated_at' => 'Zaktualizowano',
     ],
 ];
