@@ -14,3 +14,4 @@
 /README.md export-ignore
 /.github export-ignore
 /analyze export-ignore
+/rector.php export-ignore

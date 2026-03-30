@@ -2,6 +2,8 @@
 
 namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 
+use Filament\Forms\Components\KeyValue;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
 
@@ -17,6 +19,10 @@ class TranslationInfolist
      */
     protected static function components(): array
     {
-        return [];
+        return [
+            TextEntry::make('group'),
+            TextEntry::make('key'),
+            KeyValue::make('text'),
+        ];
     }
 }
