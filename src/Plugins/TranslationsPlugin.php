@@ -50,6 +50,7 @@ class TranslationsPlugin implements FilamentPlugin
         return [
             'modelLabel' => __('filament-essentials::translation.label'),
             'pluralModelLabel' => __('filament-essentials::translation.plural_label'),
+            'recordTitleAttribute' => 'key',
 
             'navigationIcon' => Heroicon::Language,
         ];

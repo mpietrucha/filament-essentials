@@ -11,6 +11,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
+use Mpietrucha\Laravel\Essentials\Locale;
+use Spatie\TranslationLoader\LanguageLine;
 
 class TranslationTable
 {
@@ -37,9 +39,28 @@ class TranslationTable
                 ->label(__('filament-essentials::translation.table.key'))
                 ->searchable(),
 
+            TextColumn::make('languages')
+                ->label(__('filament-essentials::translation.table.languages'))
+                ->state(static function (LanguageLine $languageLine) {
+                    /** @phpstan-ignore property.notFound */
+                    $text = $languageLine->text;
+
+                    /** @var array<string, string> $text */
+                    return collect($text)
+                        ->keys()
+                        ->map(Locale::enum()::from(...)) /** @phpstan-ignore staticMethod.notFound */
+                        ->map
+                        ->code();
+                })
+                ->badge()
+                ->listWithLineBreaks(),
+
             TextColumn::make('text')
-                ->label(__('filament-essentials::translation.table.group'))
-                ->searchable(),
+                ->label(__('filament-essentials::translation.table.text'))
+                ->listWithLineBreaks()
+                ->searchable()
+                ->toggleable()
+                ->toggledHiddenByDefault(),
 
             TextColumn::make('created_at')
                 ->label(__('filament-essentials::translation.table.created_at'))
