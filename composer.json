@@ -39,7 +39,6 @@
         "phpstan/phpstan": "^2.1",
         "rector/rector": "^2.3",
         "rector/type-perfect": "^2.1",
-        "spatie/laravel-translation-loader": "^2.8",
         "symfony/var-dumper": "^8.0"
     },
     "provide": {
