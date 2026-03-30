@@ -5,7 +5,6 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 use Filament\Forms\Components\KeyValue;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class TranslationInfolist
@@ -35,22 +34,17 @@ class TranslationInfolist
                 ->valueLabel(__('filament-essentials::translation.infolist.text'))
                 ->columnSpanFull(),
 
-            Section::make(__('filament-essentials::translation.infolist.details'))
-                ->columnSpanFull()
-                ->inlineLabel()
-                ->schema([
-                    TextEntry::make('created_at')
-                        ->label(__('filament-essentials::translation.infolist.created_at'))
-                        ->dateTime()
-                        ->placeholder('-')
-                        ->columnSpanFull(),
+            TextEntry::make('created_at')
+                ->label(__('filament-essentials::translation.infolist.created_at'))
+                ->dateTime()
+                ->placeholder('-')
+                ->columnSpanFull(),
 
-                    TextEntry::make('updated_at')
-                        ->label(__('filament-essentials::translation.infolist.updated_at'))
-                        ->dateTime()
-                        ->placeholder('-')
-                        ->columnSpanFull(),
-                ]),
+            TextEntry::make('updated_at')
+                ->label(__('filament-essentials::translation.infolist.updated_at'))
+                ->dateTime()
+                ->placeholder('-')
+                ->columnSpanFull(),
         ];
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'label' => 'translacja',
-    'plural_label' => 'translacje',
+    'label' => 'tłumaczenie',
+    'plural_label' => 'tłumaczenia',
 
     'action' => [
         'create' => [
-            'modal_heading' => 'Utwórz Translacje',
+            'modal_heading' => 'Utwórz Tłumaczenie',
         ],
     ],
 
@@ -30,7 +30,6 @@ return [
         'translations' => 'Tłumaczenia',
         'language' => 'Język',
         'text' => 'Tekst',
-        'details' => 'Szczegóły',
         'created_at' => 'Utworzono',
         'updated_at' => 'Zaktualizowano',
     ],
