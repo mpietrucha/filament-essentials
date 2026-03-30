@@ -11,6 +11,8 @@ use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Php85\Rector\Property\AddOverrideAttributeToOverriddenPropertiesRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
 use RectorFilament\Rector\MethodCall\ModelToRecordClosureParamRector;
@@ -36,6 +38,12 @@ return RectorConfig::configure()
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
+        ],
+        AddOverrideAttributeToOverriddenMethodsRector::class => [
+            'src/Resources/Translations/TranslationResource.php',
+        ],
+        AddOverrideAttributeToOverriddenPropertiesRector::class => [
+            'src/Resources/Translations/TranslationResource.php',
         ],
     ])
     ->withRules([
