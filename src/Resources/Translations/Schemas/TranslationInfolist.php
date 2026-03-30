@@ -20,31 +20,31 @@ class TranslationInfolist
     protected static function components(): array
     {
         return [
-            TextEntry::make('group')
-                ->label(__('filament-essentials::translation.infolist.group'))
-                ->columnSpanFull(),
+            Group::make()
+                ->columnSpanFull()
+                ->inlineLabel()
+                ->schema([
+                    TextEntry::make('group')
+                        ->label(__('filament-essentials::translation.infolist.group')),
 
-            TextEntry::make('key')
-                ->label(__('filament-essentials::translation.infolist.key'))
-                ->columnSpanFull(),
+                    TextEntry::make('key')
+                        ->label(__('filament-essentials::translation.infolist.key')),
 
-            KeyValue::make('text')
-                ->label(__('filament-essentials::translation.infolist.translations'))
-                ->keyLabel(__('filament-essentials::translation.infolist.language'))
-                ->valueLabel(__('filament-essentials::translation.infolist.text'))
-                ->columnSpanFull(),
+                    KeyValue::make('text')
+                        ->label(__('filament-essentials::translation.infolist.translations'))
+                        ->keyLabel(__('filament-essentials::translation.infolist.language'))
+                        ->valueLabel(__('filament-essentials::translation.infolist.text')),
 
-            TextEntry::make('created_at')
-                ->label(__('filament-essentials::translation.infolist.created_at'))
-                ->dateTime()
-                ->placeholder('-')
-                ->columnSpanFull(),
+                    TextEntry::make('created_at')
+                        ->label(__('filament-essentials::translation.infolist.created_at'))
+                        ->dateTime()
+                        ->placeholder('-'),
 
-            TextEntry::make('updated_at')
-                ->label(__('filament-essentials::translation.infolist.updated_at'))
-                ->dateTime()
-                ->placeholder('-')
-                ->columnSpanFull(),
+                    TextEntry::make('updated_at')
+                        ->label(__('filament-essentials::translation.infolist.updated_at'))
+                        ->dateTime()
+                        ->placeholder('-'),
+                ]),
         ];
     }
 }
