@@ -19,7 +19,6 @@ return [
     'table' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'languages' => 'Języki',
         'text' => 'Tekst',
         'created_at' => 'Utworzono',
         'updated_at' => 'Zaktualizowano',

@@ -10,6 +10,7 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
+use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Spatie\TranslationLoader\LanguageLine;
@@ -39,28 +40,22 @@ class TranslationTable
                 ->label(__('filament-essentials::translation.table.key'))
                 ->searchable(),
 
-            TextColumn::make('languages')
-                ->label(__('filament-essentials::translation.table.languages'))
-                ->state(static function (LanguageLine $languageLine) {
+            TextColumn::make('text')
+                ->label(__('filament-essentials::translation.table.text'))
+                ->state(function (LanguageLine $languageLine) {
                     /** @phpstan-ignore property.notFound */
                     $text = $languageLine->text;
 
                     /** @var array<string, string> $text */
-                    return collect($text)
-                        ->keys()
-                        ->map(Locale::enum()::from(...)) /** @phpstan-ignore staticMethod.notFound */
-                        ->map
-                        ->code();
-                })
-                ->badge()
-                ->listWithLineBreaks(),
+                    return collect($text)->map(function (string $text, string $locale) {
+                        /** @phpstan-ignore-next-line staticMethod.notFound */
+                        $locale = Locale::enum()::from($locale)->code() |> Blade::renderPrefixBadge(...);
 
-            TextColumn::make('text')
-                ->label(__('filament-essentials::translation.table.text'))
-                ->listWithLineBreaks()
+                        return sprintf('%s%s', $locale, $text);
+                    });
+                })
                 ->searchable()
-                ->toggleable()
-                ->toggledHiddenByDefault(),
+                ->listWithLineBreaks(),
 
             TextColumn::make('created_at')
                 ->label(__('filament-essentials::translation.table.created_at'))

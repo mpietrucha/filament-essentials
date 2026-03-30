@@ -21,14 +21,22 @@ abstract class Blade extends \Illuminate\Support\Facades\Blade
         return static::render($component, $attributes);
     }
 
-    public static function renderTextColumnBadge(string $badge): string
+    public static function renderPrefixBadge(string $badge, string $size = 'sm'): string
     {
         $attributes = [
-            'size' => 'sm',
-            'class' => 'ml-2',
+            'size' => $size,
+            'class' => 'mr-2',
         ];
 
-        $badge = sprintf('+%s', $badge);
+        return static::renderBadge($badge, $attributes);
+    }
+
+    public static function renderSuffixBadge(string $badge, string $size = 'sm'): string
+    {
+        $attributes = [
+            'size' => $size,
+            'class' => 'ml-2',
+        ];
 
         return static::renderBadge($badge, $attributes);
     }

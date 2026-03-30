@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
+use Mpietrucha\Filament\Essentials\Blade;
 
 /**
  * @phpstan-require-extends TextColumn
@@ -33,7 +34,11 @@ trait TextColumnMixin
                 return $name;
             }
 
-            return new HtmlString(sprintf('%s%s', $name, $results->count()));
+            return new HtmlString(sprintf(
+                '%s%s',
+                $name,
+                Blade::renderSuffixBadge(sprintf('+%s', $results->count()))
+            ));
         });
     }
 }
