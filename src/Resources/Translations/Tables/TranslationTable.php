@@ -10,6 +10,8 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Laravel\Essentials\Locale;
@@ -42,16 +44,16 @@ class TranslationTable
 
             TextColumn::make('text')
                 ->label(__('filament-essentials::translation.table.text'))
-                ->state(function (LanguageLine $languageLine) {
+                ->state(static function (LanguageLine $languageLine): Collection {
                     /** @phpstan-ignore property.notFound */
                     $text = $languageLine->text;
 
                     /** @var array<string, string> $text */
-                    return collect($text)->map(function (string $text, string $locale) {
+                    return collect($text)->map(static function (string $text, string $locale): HtmlString {
                         /** @phpstan-ignore-next-line staticMethod.notFound */
                         $locale = Locale::enum()::from($locale)->code() |> Blade::renderPrefixBadge(...);
 
-                        return sprintf('%s%s', $locale, $text);
+                        return new HtmlString(sprintf('%s%s', $locale, $text));
                     });
                 })
                 ->searchable()
