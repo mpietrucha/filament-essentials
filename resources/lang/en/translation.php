@@ -13,13 +13,13 @@ return [
     'form' => [
         'group' => 'Group',
         'key' => 'Key',
-        'text' => 'Text',
+        'translations' => 'Translations',
     ],
 
     'table' => [
         'group' => 'Group',
         'key' => 'Key',
-        'text' => 'Text',
+        'translations' => 'Translations',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
     ],
@@ -27,6 +27,7 @@ return [
     'infolist' => [
         'group' => 'Group',
         'key' => 'Key',
+        'translations' => 'Translations',
         'language' => 'Language',
         'text' => 'Text',
         'details' => 'Details',

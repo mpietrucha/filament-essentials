@@ -13,13 +13,13 @@ return [
     'form' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'text' => 'Tekst',
+        'translations' => 'Tłumaczenia',
     ],
 
     'table' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'text' => 'Tekst',
+        'translations' => 'Tłumaczenia',
         'created_at' => 'Utworzono',
         'updated_at' => 'Zaktualizowano',
     ],
@@ -27,6 +27,7 @@ return [
     'infolist' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
+        'translations' => 'Tłumaczenia',
         'language' => 'Język',
         'text' => 'Tekst',
         'details' => 'Szczegóły',

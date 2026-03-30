@@ -30,6 +30,7 @@ class TranslationInfolist
                 ->columnSpanFull(),
 
             KeyValue::make('text')
+                ->label(__('filament-essentials::translation.infolist.translations'))
                 ->keyLabel(__('filament-essentials::translation.infolist.language'))
                 ->valueLabel(__('filament-essentials::translation.infolist.text'))
                 ->columnSpanFull(),
