@@ -50,10 +50,13 @@ class TranslationTable
 
                     /** @var array<string, string> $text */
                     return collect($text)->map(static function (string $text, string $locale): HtmlString {
-                        /** @phpstan-ignore-next-line staticMethod.notFound */
-                        $locale = Locale::enum()::from($locale)->code() |> Blade::renderPrefixBadge(...);
+                        $locale = Locale::enum()::from($locale);
 
-                        return new HtmlString(sprintf('%s%s', $locale, $text));
+                        return new HtmlString(sprintf(
+                            '%s%s',
+                            $locale->code() |> Blade::renderPrefixBadge(...),
+                            $text,
+                        ));
                     });
                 })
                 ->searchable()
