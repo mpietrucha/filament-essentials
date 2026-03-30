@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 use Filament\Forms\Components\KeyValue;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
 
 class TranslationInfolist
