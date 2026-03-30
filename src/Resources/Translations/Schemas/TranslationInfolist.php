@@ -30,12 +30,18 @@ class TranslationInfolist
 
                     TextEntry::make('key')
                         ->label(__('filament-essentials::translation.infolist.key')),
+                ]),
 
-                    KeyValue::make('text')
-                        ->label(__('filament-essentials::translation.infolist.translations'))
-                        ->keyLabel(__('filament-essentials::translation.infolist.language'))
-                        ->valueLabel(__('filament-essentials::translation.infolist.text')),
+            KeyValue::make('text')
+                ->hiddenLabel()
+                ->keyLabel(__('filament-essentials::translation.infolist.language'))
+                ->valueLabel(__('filament-essentials::translation.infolist.text'))
+                ->columnSpanFull(),
 
+            Group::make()
+                ->columnSpanFull()
+                ->inlineLabel()
+                ->schema([
                     TextEntry::make('created_at')
                         ->label(__('filament-essentials::translation.infolist.created_at'))
                         ->dateTime()

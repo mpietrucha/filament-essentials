@@ -27,7 +27,6 @@ return [
     'infolist' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'translations' => 'Tłumaczenia',
         'language' => 'Język',
         'text' => 'Tekst',
         'created_at' => 'Utworzono',

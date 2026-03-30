@@ -27,7 +27,6 @@ return [
     'infolist' => [
         'group' => 'Group',
         'key' => 'Key',
-        'translations' => 'Translations',
         'language' => 'Language',
         'text' => 'Text',
         'created_at' => 'Created At',
