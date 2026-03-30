@@ -30,7 +30,7 @@ class TranslationForm
                 ->required(),
 
             Textarea::make('text')
-                ->label(__('filament-essentials::translation.form.translations'))
+                ->label(__('filament-essentials::translation.form.text'))
                 ->required()
                 ->columnSpanFull()
                 ->translate(),

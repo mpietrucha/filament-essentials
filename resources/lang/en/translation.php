@@ -13,13 +13,13 @@ return [
     'form' => [
         'group' => 'Group',
         'key' => 'Key',
-        'translations' => 'Translations',
+        'text' => 'Text',
     ],
 
     'table' => [
         'group' => 'Group',
         'key' => 'Key',
-        'translations' => 'Translations',
+        'text' => 'Text',
         'created_at' => 'Created At',
         'updated_at' => 'Updated At',
     ],

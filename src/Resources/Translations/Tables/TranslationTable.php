@@ -43,7 +43,7 @@ class TranslationTable
                 ->searchable(),
 
             TextColumn::make('text')
-                ->label(__('filament-essentials::translation.table.translations'))
+                ->label(__('filament-essentials::translation.table.text'))
                 ->state(static function (LanguageLine $languageLine): Collection {
                     /** @phpstan-ignore property.notFound */
                     $text = $languageLine->text;

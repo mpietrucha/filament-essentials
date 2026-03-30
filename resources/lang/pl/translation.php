@@ -13,13 +13,13 @@ return [
     'form' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'translations' => 'Tłumaczenia',
+        'text' => 'Tekst',
     ],
 
     'table' => [
         'group' => 'Grupa',
         'key' => 'Klucz',
-        'translations' => 'Tłumaczenia',
+        'text' => 'Tekst',
         'created_at' => 'Utworzono',
         'updated_at' => 'Zaktualizowano',
     ],
