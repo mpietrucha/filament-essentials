@@ -35,6 +35,7 @@ return RectorConfig::configure()
             'src/Resources/Concerns/InteractsWithActions.php',
             'src/Mixins/TextColumnMixin.php',
             'src/RelationManagers/Concerns/InteractsWithActions.php',
+            'src/Resources/Translations/Schemas/TranslationForm.php',
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
