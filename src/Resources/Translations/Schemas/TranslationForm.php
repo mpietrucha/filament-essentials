@@ -25,7 +25,8 @@ class TranslationForm
         return [
             TextInput::make('group')
                 ->label(__('filament-essentials::translation.form.group'))
-                ->required(),
+                ->required()
+                ->alpha(),
 
             TextInput::make('key')
                 ->label(__('filament-essentials::translation.form.key'))
@@ -35,7 +36,8 @@ class TranslationForm
 
                     return $rule->where('group', $group);
                 })
-                ->required(),
+                ->required()
+                ->regex('/^[\w.]+$/'),
 
             Textarea::make('text')
                 ->label(__('filament-essentials::translation.form.text'))
