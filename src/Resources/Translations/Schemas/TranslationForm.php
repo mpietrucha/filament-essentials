@@ -37,7 +37,7 @@ class TranslationForm
                     return $rule->where('group', $group);
                 })
                 ->required()
-                ->regex('/^[\w.]+$/'),
+                ->regex('/^[a-z_.]+$/'),
 
             Textarea::make('text')
                 ->label(__('filament-essentials::translation.form.text'))
