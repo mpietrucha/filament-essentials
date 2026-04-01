@@ -7,29 +7,16 @@ use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasNavigation;
 use Filament\Contracts\Plugin as FilamentPlugin;
 use Filament\Panel;
 use Filament\Support\Icons\Heroicon;
+use Mpietrucha\Filament\Essentials\Plugins\Concerns\HasIdentifier;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Support\Concerns\Makeable;
 
 class TranslationsPlugin implements FilamentPlugin
 {
+    use HasIdentifier;
     use HasLabels;
     use HasNavigation;
     use Makeable;
-
-    protected static string $id = 'mpietrucha-filament-translations-plugin';
-
-    public static function get(): static
-    {
-        /** @var static $plugin */
-        $plugin = filament(static::$id);
-
-        return $plugin;
-    }
-
-    public function getId(): string
-    {
-        return static::$id;
-    }
 
     public function register(Panel $panel): void
     {
