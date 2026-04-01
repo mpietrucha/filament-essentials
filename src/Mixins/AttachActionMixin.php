@@ -19,9 +19,9 @@ trait AttachActionMixin
             return $select->allowHtml();
         });
 
-        return $this->getAvatarConfigurator(
+        return static::getAvatarConfigurator(
             $attribute,
-            fn () => $this->getTable()?->getRecordTitleAttribute(),
+            fn (): ?string => $this->getTable()?->getRecordTitleAttribute(),
         ) |> $this->recordTitle(...);
     }
 }

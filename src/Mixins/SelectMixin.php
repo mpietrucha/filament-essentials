@@ -16,7 +16,7 @@ trait SelectMixin
     {
         $this->allowHtml();
 
-        return $this->getAvatarConfigurator(
+        return static::getAvatarConfigurator(
             $attribute,
             $this->getRelationshipTitleAttribute(...)
         ) |> $this->getOptionLabelFromRecordUsing(...);

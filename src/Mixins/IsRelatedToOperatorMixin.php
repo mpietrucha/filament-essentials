@@ -14,7 +14,7 @@ trait IsRelatedToOperatorMixin
 
     public function withAvatars(?string $attribute = null): static
     {
-        return $this->getAvatarConfigurator(
+        return static::getAvatarConfigurator(
             $attribute,
             $this->getTitleAttribute(...)
         ) |> $this->getOptionLabelFromRecordUsing(...);

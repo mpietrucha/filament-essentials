@@ -14,7 +14,7 @@ trait SelectFilterMixin
 
     public function withAvatars(?string $attribute = null): static
     {
-        return $this->getAvatarConfigurator(
+        return static::getAvatarConfigurator(
             $attribute,
             $this->getRelationshipTitleAttribute(...)
         ) |> $this->getOptionLabelFromRecordUsing(...);
