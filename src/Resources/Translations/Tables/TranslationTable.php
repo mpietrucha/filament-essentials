@@ -15,6 +15,7 @@ use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Support\Str;
 use Spatie\TranslationLoader\LanguageLine;
 
 class TranslationTable
@@ -55,7 +56,7 @@ class TranslationTable
                         return new HtmlString(sprintf(
                             '%s%s',
                             $locale->code() |> Blade::renderPrefixBadge(...),
-                            $text,
+                            Str::limit($text, 50),
                         ));
                     });
                 })

@@ -2,7 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Resources\Translations\Schemas;
 
-use Filament\Forms\Components\KeyValue;
+use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Group;
@@ -32,7 +32,7 @@ class TranslationInfolist
                         ->label(__('filament-essentials::translation.infolist.key')),
                 ]),
 
-            KeyValue::make('text')
+            KeyValueEntry::make('text')
                 ->hiddenLabel()
                 ->keyLabel(__('filament-essentials::translation.infolist.language'))
                 ->valueLabel(__('filament-essentials::translation.infolist.text'))
