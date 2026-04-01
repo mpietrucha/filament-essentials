@@ -21,7 +21,7 @@ trait ImageColumnMixin
             return Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 5)
                 ->map
                 ->getFunction()
-                ->contains('mapTableColumnToArray') ? Str::none() : $label;
+                ->doesntContain('mapTableColumnToArray') ? Str::none() : $label;
         });
 
         return $this->circular()->width('1%');
