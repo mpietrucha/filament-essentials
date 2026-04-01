@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'label' => 'tłumaczenie',
-    'plural_label' => 'tłumaczenia',
+    'label' => 'translation',
+    'plural_label' => 'translations',
 
     'action' => [
         'create' => [
-            'modal_heading' => 'Create Tłumaczenie',
+            'modal_heading' => 'Create Translation',
         ],
     ],
 
