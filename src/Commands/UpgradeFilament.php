@@ -22,6 +22,7 @@ class UpgradeFilament extends Command
     public function handle(): void
     {
         $this->select();
+        $this->selectFilter();
         $this->isRelatedToOperator();
 
         $this->info('Filament upgraded successfully.');
@@ -44,14 +45,25 @@ class UpgradeFilament extends Command
         );
     }
 
-    protected function isRelatedToOperator(): void
+    protected function selectFilter(): void
     {
-        $file = base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
+        $selectFilter = base_path('vendor/filament/tables/src/Filters/SelectFilter.php');
 
-        if (Filesystem::unexists($file)) {
+        if (Filesystem::unexists($selectFilter)) {
             return;
         }
 
-        Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $file);
+        Filesystem::replaceInFile('return $field;', 'return $field->allowHtml();', $selectFilter);
+    }
+
+    protected function isRelatedToOperator(): void
+    {
+        $isRelatedToOperator = base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
+
+        if (Filesystem::unexists($isRelatedToOperator)) {
+            return;
+        }
+
+        Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $isRelatedToOperator);
     }
 }

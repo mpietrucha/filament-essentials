@@ -2,20 +2,18 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\SelectFilter;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarConfigurator;
 
 /**
- * @phpstan-require-extends Select
+ * @phpstan-require-extends SelectFilter
  */
-trait SelectMixin
+trait SelectFilterMixin
 {
     use HasAvatarConfigurator;
 
     public function withAvatars(?string $attribute = null): static
     {
-        $this->allowHtml();
-
         return $this->getAvatarConfigurator(
             $attribute,
             $this->getRelationshipTitleAttribute(...)
