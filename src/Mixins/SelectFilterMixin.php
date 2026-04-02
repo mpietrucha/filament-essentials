@@ -40,6 +40,10 @@ trait SelectFilterMixin
                     $value = $value->first();
                 }
 
+                if ($value === null) {
+                    return;
+                }
+
                 $query->{$isMultiple ? 'whereIn' : 'where'}($attribute, $value);
             }
         ));
