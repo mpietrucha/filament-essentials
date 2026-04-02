@@ -40,7 +40,7 @@ trait SelectFilterMixin
                     $value = $value->first();
                 }
 
-                if ($value === null) {
+                if (blank($value)) {
                     return;
                 }
 
