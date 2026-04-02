@@ -34,6 +34,7 @@ return RectorConfig::configure()
             'src/Resources/Concerns/TitlesRecordById.php',
             'src/Resources/Concerns/InteractsWithActions.php',
             'src/Mixins/TextColumnMixin.php',
+            'src/Mixins/SelectFilterMixin.php',
             'src/RelationManagers/Concerns/InteractsWithActions.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
         ],
