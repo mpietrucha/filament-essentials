@@ -53,7 +53,7 @@ class TranslationResource extends FilamentResource
         ];
     }
 
-    public static function applyDefaultActionConfiguration(Action $action): void
+    public static function applyDefaultActionConfiguration(Action $action, ?string $relation = null): void
     {
         $action->slideOver();
 

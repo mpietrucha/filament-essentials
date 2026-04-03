@@ -71,7 +71,7 @@ trait InteractsWithActions
     {
         static::applyActionModalHeading($action, $operation, $relation);
 
-        static::applyActionConfiguration($action);
+        static::applyActionConfiguration($action, $relation);
 
         return $action;
     }
@@ -101,14 +101,14 @@ trait InteractsWithActions
         static::getNavigationIcon() |> $action->modalIcon(...);
     }
 
-    public static function applyActionConfiguration(Action $action): void
+    public static function applyActionConfiguration(Action $action, ?string $relation = null): void
     {
         static::applyActionModalIcon($action);
 
-        static::applyDefaultActionConfiguration($action);
+        static::applyDefaultActionConfiguration($action, $relation);
     }
 
-    public static function applyDefaultActionConfiguration(Action $action): void
+    public static function applyDefaultActionConfiguration(Action $action, ?string $relation = null): void
     {
     }
 
