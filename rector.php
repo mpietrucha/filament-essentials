@@ -38,6 +38,8 @@ return RectorConfig::configure()
             'src/RelationManagers/Concerns/InteractsWithActions.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
             'src/Actions/ImportBulkAction.php',
+            'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
+            'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',

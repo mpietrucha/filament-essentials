@@ -2,11 +2,11 @@
 
 namespace Mpietrucha\Filament\Essentials\Plugins\Concerns;
 
-use Filament\Contracts\Plugin as FilamentPlugin;
+use Filament\Contracts\Plugin;
 use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 
 /**
- * @phpstan-require-implements FilamentPlugin
+ * @phpstan-require-implements Plugin
  */
 trait HasIdentifier
 {

@@ -4,33 +4,29 @@ namespace Mpietrucha\Filament\Essentials\Plugins;
 
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Closure;
-use Filament\Contracts\Plugin as FilamentPlugin;
 use Filament\Panel;
-use Mpietrucha\Filament\Essentials\Plugins\Concerns\HasIdentifier;
-use Mpietrucha\Support\Concerns\Makeable;
 use Outerweb\FilamentTranslatableFields\TranslatableFieldsPlugin;
 
-class EssentialsPlugin implements FilamentPlugin
+class EssentialsPlugin extends Plugin
 {
-    use HasIdentifier;
-    use Makeable;
-
-    protected bool|Closure $translatable = true;
+    protected bool|Closure $scout = true;
 
     protected bool|Closure $shield = true;
 
     protected bool|Closure $translations = true;
 
-    public function withTranslatable(?Closure $translatable = null): static
+    protected bool|Closure $translatable = true;
+
+    public function withScout(?Closure $scout = null): static
     {
-        $this->translatable = $translatable ?? true;
+        $this->scout = $scout ?? true;
 
         return $this;
     }
 
-    public function withoutTranslatable(): static
+    public function withoutScout(): static
     {
-        $this->translatable = false;
+        $this->scout = false;
 
         return $this;
     }
@@ -63,28 +59,28 @@ class EssentialsPlugin implements FilamentPlugin
         return $this;
     }
 
-    public function register(Panel $panel): void
+    public function withTranslatable(?Closure $translatable = null): static
     {
-        if ($translatable = $this->translatable) {
-            value($translatable, $plugin = TranslatableFieldsPlugin::make());
+        $this->translatable = $translatable ?? true;
 
-            $panel->plugin($plugin);
-        }
-
-        if ($shield = $this->shield) {
-            value($shield, $plugin = FilamentShieldPlugin::make());
-
-            $panel->plugin($plugin);
-        }
-
-        if ($translations = $this->translations) {
-            value($translations, $plugin = TranslationsPlugin::make());
-
-            $panel->plugin($plugin);
-        }
+        return $this;
     }
 
-    public function boot(Panel $panel): void
+    public function withoutTranslatable(): static
     {
+        $this->translatable = false;
+
+        return $this;
+    }
+
+    public function register(Panel $panel): void
+    {
+        static::install(ScoutPlugin::make(...), $panel, $this->scout);
+
+        static::install(FilamentShieldPlugin::make(...), $panel, $this->shield);
+
+        static::install(TranslationsPlugin::make(...), $panel, $this->translations);
+
+        static::install(TranslatableFieldsPlugin::make(...), $panel, $this->translatable);
     }
 }

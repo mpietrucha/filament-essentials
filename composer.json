@@ -35,7 +35,9 @@
         "filament/filament": "^5.4",
         "larastan/larastan": "^3.9",
         "laravel/pint": "^1.29",
+        "laravel/scout": "^11.1",
         "leek/rector-filament": "dev-main",
+        "meilisearch/meilisearch-php": "^1.16",
         "orchestra/testbench": "^11.0",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
@@ -57,6 +59,7 @@
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
+            "php-http/discovery": false,
             "phpstan/extension-installer": true
         },
         "optimize-autoloader": true,

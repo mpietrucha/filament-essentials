@@ -27,6 +27,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
     {
         $package->name('filament-essentials');
 
+        $package->hasConfigFile();
         $package->hasTranslations();
         $package->hasBladeAnonymousComponents();
 
