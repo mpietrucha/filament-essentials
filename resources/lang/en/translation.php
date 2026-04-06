@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'label' => 'translation',
     'plural_label' => 'translations',

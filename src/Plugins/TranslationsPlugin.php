@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\Plugins;
 
 use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasLabels;

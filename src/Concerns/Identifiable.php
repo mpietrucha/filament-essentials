@@ -20,6 +20,6 @@ trait Identifiable
 
         return str(
             ClassNamespace::name($class)
-        )->before($suffix ?? Str::none())->lower();
+        )->before($suffix ?? Str::none())->lower()->toString();
     }
 }

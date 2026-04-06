@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\QueryBuilder\Constraints;
 
 use Filament\QueryBuilder\Constraints\Constraint;

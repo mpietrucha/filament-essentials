@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
 
 use Mpietrucha\Filament\Essentials\Enums\Contracts\CurrencyInterface;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\Resources;
 
 use Filament\Resources\Resource as FilamentResource;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\Actions\Exports;
 
 use Mpietrucha\Filament\Essentials\Actions\Exports\Concerns\InteractsWithActions;
