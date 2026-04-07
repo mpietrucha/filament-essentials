@@ -21,6 +21,7 @@ use RectorLaravel\Set\LaravelSetList;
 return RectorConfig::configure()
     ->withPaths([
         'src',
+        'config',
         'analyze',
         'resources/lang',
     ])
