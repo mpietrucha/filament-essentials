@@ -24,12 +24,12 @@ class TranslationForm
     {
         return [
             TextInput::make('group')
-                ->label(__('filament-essentials::translation.form.group'))
+                ->label(__('filament-essentials::resource.translation.form.group'))
                 ->required()
                 ->alpha(),
 
             TextInput::make('key')
-                ->label(__('filament-essentials::translation.form.key'))
+                ->label(__('filament-essentials::resource.translation.form.key'))
                 ->unique(modifyRuleUsing: static function (Unique $rule, Get $get): Unique {
                     /** @var string $group */
                     $group = $get('group');
@@ -40,7 +40,7 @@ class TranslationForm
                 ->regex('/^[a-z_.]+$/'),
 
             Textarea::make('text')
-                ->label(__('filament-essentials::translation.form.text'))
+                ->label(__('filament-essentials::resource.translation.form.text'))
                 ->required()
                 ->columnSpanFull()
                 ->translate(requiredLocales: Locale::enum()::default()),

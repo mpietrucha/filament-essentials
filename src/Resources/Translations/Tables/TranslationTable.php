@@ -36,15 +36,15 @@ class TranslationTable
     {
         return [
             TextColumn::make('group')
-                ->label(__('filament-essentials::translation.table.group'))
+                ->label(__('filament-essentials::resource.translation.table.group'))
                 ->searchable(),
 
             TextColumn::make('key')
-                ->label(__('filament-essentials::translation.table.key'))
+                ->label(__('filament-essentials::resource.translation.table.key'))
                 ->searchable(),
 
             TextColumn::make('text')
-                ->label(__('filament-essentials::translation.table.text'))
+                ->label(__('filament-essentials::resource.translation.table.text'))
                 ->state(static function (LanguageLine $languageLine): Collection {
                     /** @phpstan-ignore property.notFound */
                     $text = $languageLine->text;
@@ -64,14 +64,14 @@ class TranslationTable
                 ->listWithLineBreaks(),
 
             TextColumn::make('created_at')
-                ->label(__('filament-essentials::translation.table.created_at'))
+                ->label(__('filament-essentials::resource.translation.table.created_at'))
                 ->dateTime()
                 ->sortable()
                 ->toggleable()
                 ->toggledHiddenByDefault(),
 
             TextColumn::make('updated_at')
-                ->label(__('filament-essentials::translation.table.updated_at'))
+                ->label(__('filament-essentials::resource.translation.table.updated_at'))
                 ->dateTime()
                 ->sortable()
                 ->toggleable()

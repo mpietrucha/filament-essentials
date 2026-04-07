@@ -66,7 +66,7 @@ class TranslationResource extends FilamentResource
     {
         $createAction = parent::configureCreateAction($createAction);
 
-        __('filament-essentials::translation.action.create.modal_heading') |> $createAction->modalHeading(...);
+        __('filament-essentials::resource.translation.action.create.modal_heading') |> $createAction->modalHeading(...);
 
         return $createAction;
     }
