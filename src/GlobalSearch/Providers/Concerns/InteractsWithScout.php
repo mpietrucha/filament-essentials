@@ -58,7 +58,7 @@ trait InteractsWithScout
     protected static function getScoutRecord(Model|string $modelOrRecord): Model
     {
         /** @var Model $record */
-        $record = is_string($modelOrRecord) ? app($modelOrRecord) : $modelOrRecord;
+        $record = is_string($modelOrRecord) ? resolve($modelOrRecord) : $modelOrRecord;
 
         return $record;
     }
