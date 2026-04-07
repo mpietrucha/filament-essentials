@@ -85,7 +85,7 @@ trait InteractsWithActions
 
             $records = static::getDecoratedActionsResource()::getPluralModelLabel();
 
-            return __('filament-essentials::relation-managers.modal_label', ['records' => $records, 'record' => $record]);
+            return __('filament-essentials::relation-manager.modal_label', ['records' => $records, 'record' => $record]);
         });
 
         return $relationManagerAction;
