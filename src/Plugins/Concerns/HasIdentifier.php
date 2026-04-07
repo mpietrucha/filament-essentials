@@ -12,8 +12,6 @@ trait HasIdentifier
 {
     use Identifiable;
 
-    protected static ?string $identifier = null;
-
     public static function get(): static
     {
         /** @var static $plugin */
@@ -29,12 +27,8 @@ trait HasIdentifier
 
     protected static function identifier(): string
     {
-        if (static::$identifier) {
-            return static::$identifier;
-        }
-
         $name = static::identify('Plugin');
 
-        return static::$identifier = sprintf('mpietrucha-essentials-filament-%s-plugin', $name);
+        return sprintf('mpietrucha-essentials-filament-%s-plugin', $name);
     }
 }

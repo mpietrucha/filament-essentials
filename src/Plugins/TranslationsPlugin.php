@@ -28,8 +28,8 @@ class TranslationsPlugin extends Plugin
     protected function getPluginDefaults(): array
     {
         return [
-            'modelLabel' => __('filament-essentials::resource.translations.label'),
-            'pluralModelLabel' => __('filament-essentials::resource.translations.plural_label'),
+            'modelLabel' => __('filament-essentials::resource.translation.label'),
+            'pluralModelLabel' => __('filament-essentials::resource.translation.plural_label'),
             'recordTitleAttribute' => 'key',
 
             'navigationIcon' => Heroicon::Language,
