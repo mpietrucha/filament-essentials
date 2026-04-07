@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'translations' => [
+    'translation' => [
         'label' => 'tłumaczenie',
         'plural_label' => 'tłumaczenia',
 
