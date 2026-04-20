@@ -54,7 +54,10 @@
     "autoload": {
         "psr-4": {
             "Mpietrucha\\Filament\\Essentials\\": "src/"
-        }
+        },
+        "files": [
+            "overrides/Filament/Support/Concerns/EvaluatesClosures.php"
+        ]
     },
     "config": {
         "allow-plugins": {
