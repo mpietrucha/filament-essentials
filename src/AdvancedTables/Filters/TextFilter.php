@@ -51,9 +51,23 @@ if (class_exists(ArchilexTextFilter::class)) {
                 return $builder;
             }
 
-            return $builder->{static::isInListOperator($data) ? 'whereIn' : 'whereNotIn'}(
-                $this->getQueryColumn($builder),
-                $values
+            $relationship = $this->getColumn()?->getRelationshipName(
+                $builder->getModel()
+            );
+
+            $column = $this->getQueryColumn($builder);
+            $isInListOperator = static::isInListOperator($data);
+
+            if ($relationship === null) {
+                return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
+                    $column,
+                    $values,
+                );
+            }
+
+            return $builder->{$isInListOperator ? 'whereHas' : 'whereDoesntHave'}(
+                $relationship,
+                static fn (Builder $builder): Builder => $builder->whereIn($column, $values)
             );
         }
 

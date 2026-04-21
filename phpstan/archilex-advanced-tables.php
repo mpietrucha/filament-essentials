@@ -55,4 +55,8 @@ class TextFilter extends BaseFilter
     protected function getQueryColumn(Builder $query): string
     {
     }
+
+    protected function getColumn(): ?Column
+    {
+    }
 }
