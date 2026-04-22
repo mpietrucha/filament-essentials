@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
 use Filament\Actions\AttachAction;
 use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -56,16 +57,16 @@ trait InteractsWithActions
         return $resource;
     }
 
-    public static function getEditAction(): RelationManagerAction
+    public static function getRelationManagerAction(): RelationManagerAction
     {
         $relationManagerAction = RelationManagerAction::make();
 
         static::make() |> $relationManagerAction->relationManager(...);
 
-        return static::configureEditAction($relationManagerAction);
+        return static::configureRelationManagerAction($relationManagerAction);
     }
 
-    public static function configureEditAction(RelationManagerAction $relationManagerAction): RelationManagerAction
+    public static function configureRelationManagerAction(RelationManagerAction $relationManagerAction): RelationManagerAction
     {
         $relationManagerAction->hideRelationManagerHeading(false);
 
@@ -104,6 +105,17 @@ trait InteractsWithActions
         });
 
         return $createAction;
+    }
+
+    public static function getEditAction(): EditAction
+    {
+        /** @phpstan-ignore staticMethod.notFound, argument.type */
+        return static::getDecoratedActionsResource()::getEditAction() |> static::configureEditAction(...);
+    }
+
+    public static function configureEditAction(EditAction $editAction): EditAction
+    {
+        return $editAction;
     }
 
     public static function getAttachAction(): AttachAction
