@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Locale;
 
-use IntlDatePatternGenerator as PHPIntlDatePatternGenerator;
 use Mpietrucha\Support\Concerns\Makeable;
 
-class IntlDatePatternGenerator extends PHPIntlDatePatternGenerator
+class IntlDatePatternGenerator extends \IntlDatePatternGenerator
 {
     use Makeable;
 

@@ -3,5 +3,6 @@ parameters:
     paths:
         - src
         - analyze
+        - config
     scanFiles:
         - %currentWorkingDirectory%/phpstan/archilex-advanced-tables.php
