@@ -83,6 +83,7 @@ trait InteractsWithActions
 
             $label = match (true) {
                 ! $record instanceof Model => static::getTitleCaseModelLabel(),
+                /** @phpstan-ignore argument.type */
                 default => static::getActionRecord($record, $relation) |> static::getRecordTitle(...)
             };
 
