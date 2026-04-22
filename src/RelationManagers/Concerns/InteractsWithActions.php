@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\RelationManagers\Concerns;
 
 use Filament\Actions\AttachAction;
 use Filament\Actions\CreateAction;
+use Filament\Actions\DetachAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\Page;
@@ -128,5 +129,15 @@ trait InteractsWithActions
         $attachAction->preloadRecordSelect();
 
         return $attachAction;
+    }
+
+    public static function getDetachAction(): DetachAction
+    {
+        return DetachAction::make() |> static::configureDetachAction(...);
+    }
+
+    public static function configureDetachAction(DetachAction $detachAction): DetachAction
+    {
+        return $detachAction;
     }
 }
