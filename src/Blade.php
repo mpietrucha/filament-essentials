@@ -2,9 +2,10 @@
 
 namespace Mpietrucha\Filament\Essentials;
 
+use Illuminate\Support\Facades\Blade as IlluminateBlade;
 use Illuminate\View\ComponentAttributeBag;
 
-abstract class Blade extends \Illuminate\Support\Facades\Blade
+abstract class Blade extends IlluminateBlade
 {
     /**
      * @param  array<mixed>  $attributes

@@ -6,8 +6,9 @@ namespace Mpietrucha\Filament\Essentials\Enums\Contracts;
 
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Mpietrucha\Laravel\Essentials\Enums\Contracts\LocaleInterface as LaravelEssentialsLocaleInterface;
 
-interface LocaleInterface extends \Mpietrucha\Laravel\Essentials\Enums\Contracts\LocaleInterface, EnumInterface
+interface LocaleInterface extends EnumInterface, LaravelEssentialsLocaleInterface
 {
     public static function configure(): void;
 

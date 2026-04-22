@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Enums\Contracts;
 
-interface CurrencyInterface extends \Mpietrucha\Laravel\Essentials\Enums\Contracts\CurrencyInterface, EnumInterface
+use Mpietrucha\Laravel\Essentials\Enums\Contracts\CurrencyInterface as LaravelEssentialsCurrencyInterface;
+
+interface CurrencyInterface extends EnumInterface, LaravelEssentialsCurrencyInterface
 {
 }

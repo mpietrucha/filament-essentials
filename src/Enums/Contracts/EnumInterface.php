@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Enums\Contracts;
 
 use Filament\Support\Contracts\HasLabel;
+use Mpietrucha\Support\Enums\Contracts\EnumInterface as SupportEnumInterface;
 
-interface EnumInterface extends \Mpietrucha\Support\Enums\Contracts\EnumInterface, HasLabel
+interface EnumInterface extends HasLabel, SupportEnumInterface
 {
     /**
      * @return class-string<static>

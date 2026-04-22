@@ -2,13 +2,14 @@
 
 namespace Mpietrucha\Filament\Essentials\Actions;
 
+use Filament\Actions\ImportAction as FilamentImportAction;
 use League\Csv\Bom;
 use League\Csv\Reader;
 
 /**
  * @phpstan-type CsvReader \League\Csv\Reader<array<mixed>>
  */
-class ImportAction extends \Filament\Actions\ImportAction
+class ImportAction extends FilamentImportAction
 {
     /**
      * @param  null|CsvReader  $reader
