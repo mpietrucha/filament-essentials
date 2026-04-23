@@ -7,6 +7,7 @@ namespace Mpietrucha\Filament\Essentials;
 use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
+use Filament\Infolists\Components\TextEntry;
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -20,6 +21,7 @@ use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
+use Mpietrucha\Filament\Essentials\Mixins\TextEntryMixin;
 use Mpietrucha\Laravel\Essentials\PackageTools\Package;
 use Mpietrucha\Laravel\Essentials\PackageTools\PackageServiceProvider;
 
@@ -36,6 +38,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
         $package->hasMixins([
             Field::class => FieldMixin::class,
             Select::class => SelectMixin::class,
+            TextEntry::class => TextEntryMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
             AttachAction::class => AttachActionMixin::class,

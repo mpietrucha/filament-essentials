@@ -6,12 +6,15 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
+use Mpietrucha\Filament\Essentials\Mixins\Concerns\BuildsMoneyWithDiscount;
 
 /**
  * @phpstan-require-extends TextColumn
  */
 trait TextColumnMixin
 {
+    use BuildsMoneyWithDiscount;
+
     public function withLimitBadge(): static
     {
         return $this->state(function (Model $record): null|HtmlString|string {
