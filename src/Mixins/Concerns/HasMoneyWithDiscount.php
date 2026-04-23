@@ -37,7 +37,7 @@ trait HasMoneyWithDiscount
 
         Record::attribute($currencyAttribute, $relation) |> Record::get(...) |> $component->money(...);
 
-        Record::pipe(static function (Record $record) use ($referencePriceAttribute): ?string {
+        return Record::pipe(static function (Record $record) use ($referencePriceAttribute): ?string {
             $money = $record->money($referencePriceAttribute);
 
             /** @var string $money */
@@ -47,7 +47,5 @@ trait HasMoneyWithDiscount
 
             return sprintf('%s ', $money);
         }) |> $component->prefix(...);
-
-        return $component;
     }
 }
