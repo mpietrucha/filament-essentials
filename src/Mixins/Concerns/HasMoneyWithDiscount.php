@@ -9,7 +9,7 @@ use Mpietrucha\Filament\Essentials\Record;
 /**
  * @internal
  */
-trait BuildsMoneyWithDiscount
+trait HasMoneyWithDiscount
 {
     public static function moneyWithDiscount(
         ?string $relation = null,
@@ -37,7 +37,16 @@ trait BuildsMoneyWithDiscount
 
         Record::attribute($currencyAttribute, $relation) |> Record::get(...) |> $component->money(...);
 
-        Record::attribute($referencePriceAttribute, $relation) |> Record::money(...) |> $component->prefix(...);
+        Record::pipe(static function (Record $record) use ($referencePriceAttribute): ?string {
+            $money = $record->money($referencePriceAttribute);
+
+            /** @var string $money */
+            if ($money === '') { /** @phpstan-ignore varTag.nativeType */
+                return null;
+            }
+
+            return sprintf('%s ', $money);
+        }) |> $component->prefix(...);
 
         return $component;
     }
