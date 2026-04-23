@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins\Concerns;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Record;
 
 /**
@@ -35,17 +36,22 @@ trait HasMoneyWithDiscount
             $component->description($convertedDiscountedPrice);
         }
 
-        Record::attribute($currencyAttribute, $relation) |> Record::get(...) |> $component->money(...);
+        Record::get(
+            $currencyAttribute = Record::attribute($currencyAttribute, $relation)
+        ) |> $component->money(...);
 
-        return Record::pipe(static function (Record $record) use ($referencePriceAttribute): ?string {
-            $money = $record->money($referencePriceAttribute);
+        return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relation, $currencyAttribute): ?HtmlString {
+            $money = $record->money(
+                Record::attribute($referencePriceAttribute, $relation),
+                $record->get($currencyAttribute), /** @phpstan-ignore argument.type */
+            );
 
             /** @var string $money */
             if ($money === '') { /** @phpstan-ignore varTag.nativeType */
                 return null;
             }
 
-            return sprintf('%s ', $money);
+            return new HtmlString(sprintf('<s>%s</s> ', $money));
         }) |> $component->prefix(...);
     }
 }
