@@ -27,6 +27,7 @@ trait InstallsPlugins
         }
 
         value($install, $plugin);
+
         $panel->plugin($plugin);
 
         return true;

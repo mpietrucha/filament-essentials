@@ -8,9 +8,9 @@ use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasNavigation;
 use Filament\Panel;
 use Filament\Support\Icons\Heroicon;
-use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
 
-class TranslationsPlugin extends Plugin
+class DiscountsPlugin extends Plugin
 {
     use HasLabels;
     use HasNavigation;
@@ -18,7 +18,7 @@ class TranslationsPlugin extends Plugin
     public function register(Panel $panel): void
     {
         $panel->resources([
-            TranslationResource::class,
+            DiscountResource::class,
         ]);
     }
 
@@ -28,11 +28,11 @@ class TranslationsPlugin extends Plugin
     protected function getPluginDefaults(): array
     {
         return [
-            'modelLabel' => __('filament-essentials::translations-plugin.label'),
-            'pluralModelLabel' => __('filament-essentials::translations-plugin.plural_label'),
-            'recordTitleAttribute' => 'key',
+            'modelLabel' => __('filament-essentials::discounts-plugin.label'),
+            'pluralModelLabel' => __('filament-essentials::discounts-plugin.plural_label'),
+            'recordTitleAttribute' => 'id',
 
-            'navigationIcon' => Heroicon::Language,
+            'navigationIcon' => Heroicon::Tag,
         ];
     }
 }

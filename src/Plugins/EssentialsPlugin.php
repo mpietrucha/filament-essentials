@@ -15,6 +15,8 @@ class EssentialsPlugin extends Plugin
 
     protected bool|Closure $shield = true;
 
+    protected bool|Closure $discounts = false;
+
     protected bool|Closure $translations = true;
 
     protected bool|Closure $translatable = true;
@@ -43,6 +45,20 @@ class EssentialsPlugin extends Plugin
     public function withoutShield(): static
     {
         $this->shield = false;
+
+        return $this;
+    }
+
+    public function withDiscounts(?Closure $discounts = null): static
+    {
+        $this->discounts = $discounts ?? true;
+
+        return $this;
+    }
+
+    public function withoutDiscounts(): static
+    {
+        $this->discounts = false;
 
         return $this;
     }
@@ -80,6 +96,8 @@ class EssentialsPlugin extends Plugin
         static::install(ScoutPlugin::make(...), $panel, $this->scout);
 
         static::install(FilamentShieldPlugin::make(...), $panel, $this->shield);
+
+        static::install(DiscountsPlugin::make(...), $panel, $this->discounts);
 
         static::install(TranslationsPlugin::make(...), $panel, $this->translations);
 

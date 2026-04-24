@@ -26,16 +26,16 @@ class TranslationInfolist
                 ->inlineLabel()
                 ->schema([
                     TextEntry::make('group')
-                        ->label(__('filament-essentials::resource.translation.infolist.group')),
+                        ->label(__('filament-essentials::translations-plugin.infolist.group')),
 
                     TextEntry::make('key')
-                        ->label(__('filament-essentials::resource.translation.infolist.key')),
+                        ->label(__('filament-essentials::translations-plugin.infolist.key')),
                 ]),
 
             KeyValueEntry::make('text')
                 ->hiddenLabel()
-                ->keyLabel(__('filament-essentials::resource.translation.infolist.language'))
-                ->valueLabel(__('filament-essentials::resource.translation.infolist.text'))
+                ->keyLabel(__('filament-essentials::translations-plugin.infolist.language'))
+                ->valueLabel(__('filament-essentials::translations-plugin.infolist.text'))
                 ->columnSpanFull(),
 
             Group::make()
@@ -43,12 +43,12 @@ class TranslationInfolist
                 ->inlineLabel()
                 ->schema([
                     TextEntry::make('created_at')
-                        ->label(__('filament-essentials::resource.translation.infolist.created_at'))
+                        ->label(__('filament-essentials::translations-plugin.infolist.created_at'))
                         ->dateTime()
                         ->placeholder('-'),
 
                     TextEntry::make('updated_at')
-                        ->label(__('filament-essentials::resource.translation.infolist.updated_at'))
+                        ->label(__('filament-essentials::translations-plugin.infolist.updated_at'))
                         ->dateTime()
                         ->placeholder('-'),
                 ]),

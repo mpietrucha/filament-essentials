@@ -7,7 +7,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Resource as FilamentResource;
+use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Guava\FilamentModalRelationManagers\Actions\RelationManagerAction;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +18,8 @@ use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends RelationManager
+ *
+ * @phpstan-type FilamentResource class-string<Resource>
  */
 trait InteractsWithActions
 {
@@ -38,7 +40,7 @@ trait InteractsWithActions
     }
 
     /**
-     * @return class-string<FilamentResource>
+     * @return FilamentResource
      */
     public static function getDecoratedActionsResource(): string
     {
@@ -52,7 +54,7 @@ trait InteractsWithActions
             RuntimeException::throw('RelationManager resource must use `%s` trait', ResourceActions::class);
         }
 
-        /** @var class-string<FilamentResource> $resource */
+        /** @var FilamentResource $resource */
         return $resource;
     }
 
@@ -85,7 +87,7 @@ trait InteractsWithActions
 
             $records = static::getDecoratedActionsResource()::getPluralModelLabel();
 
-            return __('filament-essentials::relation-manager.modal_label', ['records' => $records, 'record' => $record]);
+            return __('filament-essentials::filament.relation_manager.modal_label', ['records' => $records, 'record' => $record]);
         });
 
         return $relationManagerAction;

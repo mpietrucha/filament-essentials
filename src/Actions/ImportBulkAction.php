@@ -117,7 +117,7 @@ class ImportBulkAction extends ImportAction
     {
         $fileUpload->multiple();
 
-        __('filament-essentials::import.bulk_action.placeholder') |> $fileUpload->placeholder(...);
+        __('filament-essentials::filament.import.bulk_action.placeholder') |> $fileUpload->placeholder(...);
 
         /** @phpstan-ignore-next-line property.notFound */
         $handler = invade($fileUpload)->afterStateUpdated |> Arr::first(...);

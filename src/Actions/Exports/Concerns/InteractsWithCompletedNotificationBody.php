@@ -20,7 +20,7 @@ trait InteractsWithCompletedNotificationBody
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = trans_choice('filament-essentials::export.completed', $export->successful_rows, [
+        $body = trans_choice('filament-essentials::filament.export.completed', $export->successful_rows, [
             'name' => static::getCompletedNotificationName(),
         ]);
 
@@ -30,6 +30,6 @@ trait InteractsWithCompletedNotificationBody
             return $body;
         }
 
-        return sprintf('%s %s', $body, trans_choice('filament-essentials::export.failed', $failed));
+        return sprintf('%s %s', $body, trans_choice('filament-essentials::filament.export.failed', $failed));
     }
 }

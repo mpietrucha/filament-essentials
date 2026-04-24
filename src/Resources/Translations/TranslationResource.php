@@ -17,7 +17,7 @@ use Mpietrucha\Filament\Essentials\Resources\Resource as FilamentResource;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Pages\ManageTranslations;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Schemas\TranslationForm;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Schemas\TranslationInfolist;
-use Mpietrucha\Filament\Essentials\Resources\Translations\Tables\TranslationTable;
+use Mpietrucha\Filament\Essentials\Resources\Translations\Tables\TranslationsTable;
 use Spatie\TranslationLoader\LanguageLine;
 
 /**
@@ -42,7 +42,7 @@ class TranslationResource extends FilamentResource
 
     public static function table(Table $table): Table
     {
-        return TranslationTable::configure($table);
+        return TranslationsTable::configure($table);
     }
 
     /**
@@ -66,7 +66,7 @@ class TranslationResource extends FilamentResource
     {
         $createAction = parent::configureCreateAction($createAction);
 
-        __('filament-essentials::resource.translation.action.create.modal_heading') |> $createAction->modalHeading(...);
+        __('filament-essentials::translations-plugin.action.create.modal_heading') |> $createAction->modalHeading(...);
 
         return $createAction;
     }
