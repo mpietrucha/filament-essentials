@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Plugins\Concerns;
 
-use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
@@ -12,9 +11,9 @@ use Mpietrucha\Support\Exception\InvalidArgumentException;
 /**
  * @phpstan-require-implements Plugin
  */
-trait InstallsPlugins
+trait RegistersPlugin
 {
-    public static function install(Closure|Plugin $plugin, Panel $panel, bool|Closure $install = true): bool
+    protected static function registerPlugin(Panel $panel, mixed $plugin, mixed $install = true): bool
     {
         if ($install === false) {
             return false;
@@ -23,7 +22,7 @@ trait InstallsPlugins
         $plugin = value($plugin);
 
         if (! $plugin instanceof Plugin) {
-            InvalidArgumentException::throw('Install plugin must implement %s', Plugin::class);
+            InvalidArgumentException::throw('The plugin to be registered must implement %s', Plugin::class);
         }
 
         value($install, $plugin);

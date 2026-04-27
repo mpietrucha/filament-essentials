@@ -93,14 +93,14 @@ class EssentialsPlugin extends Plugin
 
     public function register(Panel $panel): void
     {
-        static::install(ScoutPlugin::make(...), $panel, $this->scout);
+        static::registerPlugin($panel, ScoutPlugin::make(...), $this->scout);
 
-        static::install(FilamentShieldPlugin::make(...), $panel, $this->shield);
+        static::registerPlugin($panel, FilamentShieldPlugin::make(...), $this->shield);
 
-        static::install(DiscountsPlugin::make(...), $panel, $this->discounts);
+        static::registerPlugin($panel, DiscountsPlugin::make(...), $this->discounts);
 
-        static::install(TranslationsPlugin::make(...), $panel, $this->translations);
+        static::registerPlugin($panel, TranslationsPlugin::make(...), $this->translations);
 
-        static::install(TranslatableFieldsPlugin::make(...), $panel, $this->translatable);
+        static::registerPlugin($panel, TranslatableFieldsPlugin::make(...), $this->translatable);
     }
 }
