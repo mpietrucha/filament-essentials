@@ -11,12 +11,16 @@ use Mpietrucha\Support\Str;
 abstract class ResourceGuesser
 {
     /**
-     * @var array<class-string>
+     * @return array<class-string>
      */
-    protected static array $resources = [
-        DiscountResource::class,
-        TranslationResource::class,
-    ];
+    public static function getGuessableResources(): array
+    {
+        return [
+            ...Filament::getResources(),
+            DiscountResource::class,
+            TranslationResource::class,
+        ];
+    }
 
     public static function guess(string $indicator): string
     {
@@ -26,8 +30,8 @@ abstract class ResourceGuesser
         );
 
         $resource = Arr::first(
-            Filament::getResources() + static::$resources,
-            static fn (string $resource): bool => Str::is($name, $resource)
+            static::getGuessableResources(),
+            static fn (string $resource): bool => Str::is($name, $resource),
         );
 
         return (string) $resource;
