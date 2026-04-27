@@ -4,24 +4,10 @@ namespace Mpietrucha\Filament\Essentials\Resources;
 
 use Filament\Facades\Filament;
 use Illuminate\Support\Arr;
-use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
-use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
 use Mpietrucha\Support\Str;
 
 abstract class ResourceGuesser
 {
-    /**
-     * @return array<class-string>
-     */
-    public static function getGuessableResources(): array
-    {
-        return [
-            ...Filament::getResources(),
-            DiscountResource::class,
-            TranslationResource::class,
-        ];
-    }
-
     public static function guess(string $indicator): string
     {
         $name = sprintf(
@@ -30,7 +16,7 @@ abstract class ResourceGuesser
         );
 
         $resource = Arr::first(
-            static::getGuessableResources(),
+            Filament::getResources(),
             static fn (string $resource): bool => Str::is($name, $resource),
         );
 

@@ -15,7 +15,7 @@ class EssentialsPlugin extends Plugin
 
     protected bool|Closure $shield = true;
 
-    protected bool|Closure $discounts = false;
+    protected bool|Closure $discounts = true;
 
     protected bool|Closure $translations = true;
 
