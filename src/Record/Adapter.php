@@ -3,9 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Record;
 
 use BackedEnum;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Models\Contracts\HasAvatar;
-use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Arr;
 use Mpietrucha\Support\Exception\BadMethodCallException;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
@@ -14,10 +12,17 @@ use Mpietrucha\Support\Str;
 use Stringable;
 
 /**
- * @mixin TextColumn
- * @mixin TextEntry
- *
  * @internal
+ *
+ * @method string date(string $attribute, ?string $format = null, ?string $timezone = null)
+ * @method string dateTime(string $attribute, ?string $format = null, ?string $timezone = null)
+ * @method string isoDate(string $attribute, ?string $format = null, ?string $timezone = null)
+ * @method string isoDateTime(string $attribute, ?string $format = null, ?string $timezone = null)
+ * @method string isoTime(string $attribute, ?string $format = null, ?string $timezone = null)
+ * @method string since(string $attribute, ?string $timezone = null)
+ * @method string money(string $attribute, string|BackedEnum|null $currency = null, int $divideBy = 0, string|BackedEnum|null $locale = null, ?int $decimalPlaces = null)
+ * @method string numeric(string $attribute, ?int $decimalPlaces = null, ?string $decimalSeparator = null, ?string $thousandsSeparator = null, ?int $maxDecimalPlaces = null, string|BackedEnum|null $locale = null)
+ * @method string time(string $attribute, ?string $format = null, ?string $timezone = null)
  */
 class Adapter extends Context
 {

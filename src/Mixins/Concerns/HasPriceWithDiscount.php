@@ -10,23 +10,23 @@ use Mpietrucha\Filament\Essentials\Record;
 /**
  * @internal
  */
-trait HasMoneyWithDiscount
+trait HasPriceWithDiscount
 {
-    public static function moneyWithDiscount(
+    public static function priceWithDiscount(
         ?string $relation = null,
         ?string $label = null,
+        string $currencyAttribute = 'currency',
         string $discountedPriceAttribute = 'discounted_price',
         string $referencePriceAttribute = 'reference_price',
-        string $currencyAttribute = 'currency',
-        string $convertedDiscountedPriceAttribute = 'converted_discounted_price'
+        string $convertedDiscountedPriceAttribute = 'converted_discounted_price',
     ): static {
-        $convertedDiscountedPrice = Record::attribute($convertedDiscountedPriceAttribute, $relation) |> Record::money(...);
-
         $component = Record::attribute($discountedPriceAttribute, $relation) |> static::make(...);
 
         if (is_string($label)) {
             $component->label($label);
         }
+
+        $convertedDiscountedPrice = Record::attribute($convertedDiscountedPriceAttribute, $relation) |> Record::money(...);
 
         if ($component instanceof TextEntry) { /** @phpstan-ignore instanceof.alwaysTrue, instanceof.alwaysFalse */
             $component->belowContent($convertedDiscountedPrice);
@@ -43,11 +43,10 @@ trait HasMoneyWithDiscount
         return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relation, $currencyAttribute): ?HtmlString {
             $money = $record->money(
                 Record::attribute($referencePriceAttribute, $relation),
-                $record->get($currencyAttribute), /** @phpstan-ignore argument.type */
+                $record->get($currencyAttribute),
             );
 
-            /** @var string $money */
-            if ($money === '') { /** @phpstan-ignore varTag.nativeType */
+            if ($money === '') {
                 return null;
             }
 

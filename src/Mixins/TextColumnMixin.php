@@ -6,14 +6,14 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
-use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasMoneyWithDiscount;
+use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasPriceWithDiscount;
 
 /**
  * @phpstan-require-extends TextColumn
  */
 trait TextColumnMixin
 {
-    use HasMoneyWithDiscount;
+    use HasPriceWithDiscount;
 
     public function withLimitBadge(): static
     {
