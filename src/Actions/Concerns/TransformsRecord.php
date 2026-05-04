@@ -32,7 +32,7 @@ trait TransformsRecord
         $transformRecordUsing = $this->transformRecordUsing;
 
         if ($transformRecordUsing === null) {
-            return null;
+            return $record;
         }
 
         $record = value($transformRecordUsing, $record);
