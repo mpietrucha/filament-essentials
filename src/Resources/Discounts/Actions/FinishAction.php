@@ -6,11 +6,14 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Actions;
 
 use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
-use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelationship;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishAction extends Action
 {
+    use HasRelationship;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -23,10 +26,13 @@ class FinishAction extends Action
 
         $this->requiresConfirmation();
 
-        $this->hidden(static function (Discount $record, Component $livewire): bool {
-            if ($livewire->isReadOnly()) { /** @phpstan-ignore method.notFound */
+        $this->hidden(function (Model $record): bool {
+            if ($this->getLivewire()?->isReadOnly()) { /** @phpstan-ignore method.notFound */
                 return true;
             }
+
+            /** @var Discount $record */
+            $record = $this->getRelatedRecord($record);
 
             if ($record->isInactive()) {
                 return true;
@@ -35,10 +41,14 @@ class FinishAction extends Action
             return $record->isFinished();
         });
 
-        $this->action(static function (Discount $record, Component $livewire): void {
+        $this->action(function (Model $record): void {
+            /** @var Discount $record */
+            $record = $this->getRelatedRecord($record);
+
             $record->finish()->save();
 
-            $livewire->js('$wire.$parent.$refresh()');
+            /** @phpstan-ignore method.notFound */
+            $this->getLivewire()?->js('$wire.$parent.$refresh()');
         });
     }
 

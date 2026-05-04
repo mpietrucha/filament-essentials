@@ -7,6 +7,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasNavigation;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
@@ -67,6 +68,16 @@ class DiscountResource extends FilamentResource
     public static function getFinishAction(): Action
     {
         return FinishAction::make();
+    }
+
+    #[\Override]
+    public static function configureEditAction(EditAction $editAction): EditAction
+    {
+        $editAction = parent::configureEditAction($editAction);
+
+        return $editAction->hidden(static function (Discount $record): bool {
+            return $record->isFinished();
+        });
     }
 
     public static function applyDefaultActionConfiguration(Action $action, ?string $relation = null): void

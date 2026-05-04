@@ -39,6 +39,8 @@ return RectorConfig::configure()
             'src/RelationManagers/Concerns/InteractsWithActions.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
             'src/Resources/Discounts/Tables/DiscountsTable.php',
+            'src/Resources/Discounts/DiscountResource.php',
+            'src/Actions/Concerns/HasRelationship.php',
             'src/Resources/Discounts/Actions/FinishAction.php',
             'src/Actions/ImportBulkAction.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
