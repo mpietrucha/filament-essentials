@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Actions;
 
 use Filament\Actions\Action;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelationship;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\TransformsRecord;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishAction extends Action
 {
-    use HasRelationship;
+    use TransformsRecord;
 
     protected function setUp(): void
     {
@@ -27,12 +28,14 @@ class FinishAction extends Action
         $this->requiresConfirmation();
 
         $this->hidden(function (Model $record): bool {
-            if ($this->getLivewire()?->isReadOnly()) { /** @phpstan-ignore method.notFound */
+            $livewire = $this->getLivewire();
+
+            if ($livewire instanceof RelationManager && $livewire->isReadOnly()) {
                 return true;
             }
 
             /** @var Discount $record */
-            $record = $this->getRelatedRecord($record);
+            $record = $this->getTransformedRecord($record);
 
             if ($record->isInactive()) {
                 return true;
@@ -43,7 +46,7 @@ class FinishAction extends Action
 
         $this->action(function (Model $record): void {
             /** @var Discount $record */
-            $record = $this->getRelatedRecord($record);
+            $record = $this->getTransformedRecord($record);
 
             $record->finish()->save();
 

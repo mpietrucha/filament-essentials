@@ -40,7 +40,7 @@ return RectorConfig::configure()
             'src/Resources/Translations/Schemas/TranslationForm.php',
             'src/Resources/Discounts/Tables/DiscountsTable.php',
             'src/Resources/Discounts/DiscountResource.php',
-            'src/Actions/Concerns/HasRelationship.php',
+            'src/Actions/Concerns/TransformsRecord.php',
             'src/Resources/Discounts/Actions/FinishAction.php',
             'src/Actions/ImportBulkAction.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
