@@ -50,15 +50,17 @@ class TranslationsTable
                     $text = $languageLine->text;
 
                     /** @var array<string, string> $text */
-                    return collect($text)->map(static function (string $text, string $locale): HtmlString {
-                        $locale = Locale::enum()::from($locale);
+                    return collect($text)
+                        ->filter()
+                        ->map(static function (string $text, string $locale): HtmlString {
+                            $locale = Locale::enum()::from($locale);
 
-                        return new HtmlString(sprintf(
-                            '%s%s',
-                            $locale->code() |> Blade::renderPrefixBadge(...),
-                            Str::limit($text, 50),
-                        ));
-                    });
+                            return new HtmlString(sprintf(
+                                '%s%s',
+                                $locale->code() |> Blade::renderPrefixBadge(...),
+                                Str::limit($text, 50),
+                            ));
+                        });
                 })
                 ->searchable()
                 ->listWithLineBreaks(),

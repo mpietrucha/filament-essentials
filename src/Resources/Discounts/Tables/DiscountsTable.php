@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Tables;
 
 use Brick\Money\Money;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
@@ -17,7 +20,11 @@ class DiscountsTable
 {
     public static function configure(Table $table): Table
     {
-        return static::columns() |> $table->columns(...);
+        return $table
+            ->columns(static::columns())
+            ->filters(static::filters())
+            ->recordActions(static::recordActions())
+            ->toolbarActions(static::toolbarActions());
     }
 
     /**
@@ -54,6 +61,30 @@ class DiscountsTable
                     return $record->get('status') |> DiscountStatus::from(...);
                 })),
         ];
+    }
+
+    /**
+     * @return list<BaseFilter>
+     */
+    protected static function filters(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<Action|ActionGroup>
+     */
+    protected static function recordActions(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<Action|ActionGroup>
+     */
+    protected static function toolbarActions(): array
+    {
+        return [];
     }
 
     protected static function getPriceColumn(): TextColumn

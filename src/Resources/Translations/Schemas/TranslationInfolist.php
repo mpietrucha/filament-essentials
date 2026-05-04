@@ -7,6 +7,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
+use Spatie\TranslationLoader\LanguageLine;
 
 class TranslationInfolist
 {
@@ -34,6 +35,12 @@ class TranslationInfolist
 
             KeyValueEntry::make('text')
                 ->hiddenLabel()
+                ->state(static function (LanguageLine $languageLine): array {
+                    /** @var array<string, mixed> $text */
+                    $text = $languageLine->text; /** @phpstan-ignore property.notFound */
+
+                    return array_filter($text);
+                })
                 ->keyLabel(__('filament-essentials::translations-plugin.infolist.language'))
                 ->valueLabel(__('filament-essentials::translations-plugin.infolist.text'))
                 ->columnSpanFull(),

@@ -20,7 +20,7 @@ trait RegistersResource
      */
     protected ?string $resource = null;
 
-    protected bool $registerDefaultResource = false;
+    protected bool $registerDefaultResource = true;
 
     /**
      * @param  FilamentResource  $resource
