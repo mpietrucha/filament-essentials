@@ -26,6 +26,7 @@ return [
     'actions' => [
         'finish' => [
             'label' => 'Zakończ',
+            'extended_label' => 'Zakończ zniżkę',
         ],
     ],
 ];

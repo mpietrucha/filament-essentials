@@ -38,7 +38,7 @@ class FinishDiscountAction extends Action
             $record = $this->getTransformedRecord($record);
 
             if (! $record instanceof Model) {
-                return;
+                return true;
             }
 
             if ($record->isInactive()) {
@@ -61,6 +61,15 @@ class FinishDiscountAction extends Action
             /** @phpstan-ignore method.notFound */
             $this->getLivewire()?->js('$wire.$refresh()');
         });
+    }
+
+    public static function related(string $relationship): static
+    {
+        $finishDiscountAction = static::make();
+
+        __('filament-essentials::discounts-plugin.actions.finish.extended_label') |> $finishDiscountAction->label(...);
+
+        return $finishDiscountAction->relationship($relationship);
     }
 
     public static function getDefaultName(): ?string
