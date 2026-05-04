@@ -63,7 +63,7 @@ class FinishDiscountAction extends Action
         });
     }
 
-    public static function related(string $relationship): static
+    public static function external(string $relationship): static
     {
         $finishDiscountAction = static::make();
 
