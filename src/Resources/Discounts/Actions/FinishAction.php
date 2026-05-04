@@ -34,8 +34,12 @@ class FinishAction extends Action
                 return true;
             }
 
-            /** @var Discount $record */
+            /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
+
+            if ($record === null) {
+                return true;
+            }
 
             if ($record->isInactive()) {
                 return true;
@@ -45,8 +49,12 @@ class FinishAction extends Action
         });
 
         $this->action(function (Model $record): void {
-            /** @var Discount $record */
+            /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
+
+            if ($record === null) {
+                return;
+            }
 
             $record->finish()->save();
 

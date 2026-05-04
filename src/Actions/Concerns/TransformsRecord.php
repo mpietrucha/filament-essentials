@@ -5,35 +5,38 @@ namespace Mpietrucha\Filament\Essentials\Actions\Concerns;
 use Closure;
 use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Support\Exception\RuntimeException;
 
 /**
  * @phpstan-require-extends Action
  */
 trait TransformsRecord
 {
-    protected null|Closure|string $recordTransformer = null;
+    protected ?Closure $transformRecordUsing = null;
 
-    public function transformRecord(Closure|string $recordTransformer): static
+    public function relationship(string $relationship): static
     {
-        $this->recordTransformer = $recordTransformer;
+        return $this->transformRecordUsing(static function (Model $record) use ($relationship) {
+            return data_get($record, $relationship);
+        });
+    }
+
+    public function transformRecordUsing(Closure $transformRecordUsing): static
+    {
+        $this->transformRecordUsing = $transformRecordUsing;
 
         return $this;
     }
 
-    protected function getTransformedRecord(Model $record): Model
+    protected function getTransformedRecord(Model $record): ?Model
     {
-        $transformer = $this->recordTransformer;
+        $transformRecordUsing = $this->transformRecordUsing;
 
-        $record = match (true) {
-            is_string($transformer) => data_get($record, $transformer),
-            default => value($transformer, $record, $record)
-        };
-
-        if (! $record instanceof Model) {
-            RuntimeException::throw('Record transformer must return Model');
+        if ($transformRecordUsing === null) {
+            return null;
         }
 
-        return $record;
+        $record = value($transformRecordUsing, $record);
+
+        return $record instanceof Model ? $record : null;
     }
 }
