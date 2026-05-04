@@ -40,6 +40,7 @@ class DiscountsRelationManager extends RelationManager
          */
         return [
             static::getResource()::getEditAction(),
+            static::getResource()::getFinishAction(),
         ];
     }
 

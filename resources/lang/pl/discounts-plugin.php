@@ -22,4 +22,10 @@ return [
         'finished_at' => 'Zakończona',
         'status' => 'Status',
     ],
+
+    'actions' => [
+        'finish' => [
+            'label' => 'Zakończ',
+        ],
+    ],
 ];
