@@ -84,7 +84,7 @@ class DiscountsTable
          */
         return [
             static::getResource()::getViewAction(),
-            static::getResource()::getCreateAction(),
+            static::getResource()::getEditAction(),
         ];
     }
 
