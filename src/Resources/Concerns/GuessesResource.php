@@ -14,6 +14,9 @@ trait GuessesResource
      */
     protected static string $resource;
 
+    /**
+     * @return class-string
+     */
     public static function getResource(): string
     {
         /** @var class-string */
