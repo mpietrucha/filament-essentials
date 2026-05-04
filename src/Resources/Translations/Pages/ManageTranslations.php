@@ -6,8 +6,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Translations\Pages;
 
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ManageRecords;
-use Mpietrucha\Filament\Essentials\Pages\Concerns\GuessesResource;
-use Mpietrucha\Filament\Essentials\Resources\Translations\TranslationResource;
+use Mpietrucha\Filament\Essentials\Resources\Concerns\GuessesResource;
 
 class ManageTranslations extends ManageRecords
 {
@@ -18,8 +17,9 @@ class ManageTranslations extends ManageRecords
      */
     protected function getHeaderActions(): array
     {
+        /** @var list<Action> */
         return [
-            TranslationResource::getCreateAction(),
+            static::getResource()::getCreateAction(),
         ];
     }
 }

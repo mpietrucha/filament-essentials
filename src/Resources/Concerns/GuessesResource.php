@@ -1,14 +1,10 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Pages\Concerns;
+namespace Mpietrucha\Filament\Essentials\Resources\Concerns;
 
-use Filament\Resources\Pages\Page;
 use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 use Mpietrucha\Filament\Essentials\Resources\ResourceGuesser;
 
-/**
- * @phpstan-require-extends Page
- */
 trait GuessesResource
 {
     use Identifiable;

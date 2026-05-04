@@ -12,12 +12,15 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Filament\Essentials\Resources\Concerns\GuessesResource;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
 
 class DiscountsTable
 {
+    use GuessesResource;
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -76,7 +79,13 @@ class DiscountsTable
      */
     protected static function recordActions(): array
     {
-        return [];
+        /**
+         * @var list<Action|ActionGroup>
+         */
+        return [
+            static::getResource()::getViewAction(),
+            static::getResource()::getCreateAction(),
+        ];
     }
 
     /**
