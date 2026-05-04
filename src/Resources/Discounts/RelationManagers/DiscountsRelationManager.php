@@ -8,9 +8,12 @@ use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\RelationManagers\RelationManager;
+use Mpietrucha\Filament\Essentials\Resources\Concerns\GuessesResource;
 
 class DiscountsRelationManager extends RelationManager
 {
+    use GuessesResource;
+
     public function table(Table $table): Table
     {
         return $table
@@ -32,7 +35,12 @@ class DiscountsRelationManager extends RelationManager
      */
     protected static function recordActions(): array
     {
-        return [];
+        /**
+         * @var list<Action|ActionGroup>
+         */
+        return [
+            static::getResource()::getEditAction(),
+        ];
     }
 
     /**
