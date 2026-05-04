@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\TransformsRecord;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
@@ -27,9 +28,7 @@ class FinishDiscountAction extends Action
 
         $this->requiresConfirmation();
 
-        $this->hidden(function (Model $record): bool {
-            $livewire = $this->getLivewire();
-
+        $this->hidden(function (Model $record, Component $livewire): bool {
             if ($livewire instanceof RelationManager && $livewire->isReadOnly()) {
                 return true;
             }
@@ -48,7 +47,7 @@ class FinishDiscountAction extends Action
             return $record->isFinished();
         });
 
-        $this->action(function (Model $record): void {
+        $this->action(function (Model $record, Component $livewire): void {
             /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
 
@@ -57,6 +56,10 @@ class FinishDiscountAction extends Action
             }
 
             $record->finish()->save();
+
+            if ($livewire instanceof RelationManager) {
+                return;
+            }
 
             /** @phpstan-ignore method.notFound */
             $this->getLivewire()?->js('$wire.$refresh()');
