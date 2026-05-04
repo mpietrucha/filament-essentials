@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\TransformsRecord;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
-class FinishAction extends Action
+class FinishDiscountAction extends Action
 {
     use TransformsRecord;
 
@@ -37,8 +37,8 @@ class FinishAction extends Action
             /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
 
-            if ($record === null) {
-                return true;
+            if (! $record instanceof Model) {
+                return;
             }
 
             if ($record->isInactive()) {
@@ -52,14 +52,14 @@ class FinishAction extends Action
             /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
 
-            if ($record === null) {
+            if (! $record instanceof Model) {
                 return;
             }
 
             $record->finish()->save();
 
             /** @phpstan-ignore method.notFound */
-            $this->getLivewire()?->js('$wire.$parent.$refresh()');
+            $this->getLivewire()?->js('$wire.$refresh()');
         });
     }
 

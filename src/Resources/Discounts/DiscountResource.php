@@ -14,7 +14,7 @@ use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
-use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishAction;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
@@ -65,9 +65,9 @@ class DiscountResource extends FilamentResource
         ];
     }
 
-    public static function getFinishAction(): Action
+    public static function getFinishAction(): FinishDiscountAction
     {
-        return FinishAction::make();
+        return FinishDiscountAction::make();
     }
 
     #[\Override]
