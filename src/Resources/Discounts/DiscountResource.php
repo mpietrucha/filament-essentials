@@ -14,7 +14,7 @@ use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
-use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountsTable;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Tables\DiscountsTable;
 use Mpietrucha\Filament\Essentials\Resources\Resource as FilamentResource;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 

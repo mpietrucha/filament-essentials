@@ -38,6 +38,7 @@ return RectorConfig::configure()
             'src/Mixins/SelectFilterMixin.php',
             'src/RelationManagers/Concerns/InteractsWithActions.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
+            'src/Resources/Discounts/Tables/DiscountsTable.php',
             'src/Actions/ImportBulkAction.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
             'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
