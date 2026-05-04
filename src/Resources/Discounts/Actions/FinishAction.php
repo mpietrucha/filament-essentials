@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Actions;
 
 use Filament\Actions\Action;
+use Filament\Support\Icons\Heroicon;
+use Livewire\Component;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishAction extends Action
@@ -15,20 +17,28 @@ class FinishAction extends Action
 
         __('filament-essentials::discounts-plugin.actions.finish.label') |> $this->label(...);
 
+        $this->icon(Heroicon::XMark);
+
         $this->color('danger');
 
         $this->requiresConfirmation();
 
-        $this->hidden(static function (Discount $record): bool {
-            if ($record->isActive()) {
+        $this->hidden(static function (Discount $record, Component $livewire): bool {
+            if ($livewire->isReadOnly()) { /** @phpstan-ignore method.notFound */
+                return true;
+            }
+
+            if ($record->isInactive()) {
                 return true;
             }
 
             return $record->isFinished();
         });
 
-        $this->action(static function (Discount $record): void {
+        $this->action(static function (Discount $record, Component $livewire): void {
             $record->finish()->save();
+
+            $livewire->js('$wire.$parent.$refresh()');
         });
     }
 
