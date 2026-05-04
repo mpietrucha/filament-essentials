@@ -8,6 +8,7 @@ use Brick\Money\Money;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
 
@@ -24,9 +25,11 @@ class DiscountsTable
     protected static function columns(): array
     {
         return [
-            static::getDiscountColumn(),
+            static::getPriceColumn(),
 
-            static::getLimitColumn(),
+            TextColumn::make('quota.usage')
+                ->label(__('filament-essentials::discounts-plugin.table.usage'))
+                ->placeholder('-'),
 
             TextColumn::make('active_from')
                 ->label(__('filament-essentials::discounts-plugin.table.active_from'))
@@ -42,17 +45,20 @@ class DiscountsTable
                 ->label(__('filament-essentials::discounts-plugin.table.finished_at'))
                 ->dateTime()
                 ->placeholder('-'),
+
+            TextColumn::make('status')
+                ->label(__('filament-essentials::discounts-plugin.table.status'))
+                ->badge()
+                ->state(static fn (string $state): DiscountStatus => DiscountStatus::from($state)),
         ];
     }
 
-    protected static function getDiscountColumn(): TextColumn
+    protected static function getPriceColumn(): TextColumn
     {
-        $label = __('filament-essentials::discounts-plugin.table.discount');
-
-        return TextColumn::make('discount')
-            ->label($label)
+        return TextColumn::make('price')
+            ->label(__('filament-essentials::discounts-plugin.table.price'))
             ->placeholder('-')
-            ->state(static function (Discount $record) use ($label): ?string {
+            ->state(static function (Discount $record): ?string {
                 $price = $record->getPrice();
 
                 if ($price instanceof Money) {
@@ -65,14 +71,7 @@ class DiscountsTable
                     return null;
                 }
 
-                return sprintf('%s %s%%', $label, $discountPercentage);
+                return sprintf('%s %s%%', __('filament-essentials::discounts-plugin.table.discount'), $discountPercentage);
             });
-    }
-
-    protected static function getLimitColumn(): TextColumn
-    {
-        return TextColumn::make('quota.limit')
-            ->label(__('filament-essentials::discounts-plugin.table.limit'))
-            ->placeholder('-');
     }
 }
