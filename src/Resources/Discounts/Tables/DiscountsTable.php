@@ -8,6 +8,7 @@ use Brick\Money\Money;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
@@ -49,7 +50,9 @@ class DiscountsTable
             TextColumn::make('status')
                 ->label(__('filament-essentials::discounts-plugin.table.status'))
                 ->badge()
-                ->state(static fn (string $state): DiscountStatus => DiscountStatus::from($state)),
+                ->state(Record::pipe(static function (Record $record): DiscountStatus {
+                    return $record->get('status') |> DiscountStatus::from(...);
+                })),
         ];
     }
 

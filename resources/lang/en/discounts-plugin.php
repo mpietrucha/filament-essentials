@@ -17,9 +17,9 @@ return [
         'price' => 'Price',
         'discount' => 'Discount',
         'usage' => 'Usage',
-        'active_from' => 'Active From',
-        'active_to' => 'Active To',
-        'finished_at' => 'Finished At',
+        'active_from' => 'From',
+        'active_to' => 'To',
+        'finished_at' => 'Finished',
         'status' => 'Status',
     ],
 ];
