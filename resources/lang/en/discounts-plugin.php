@@ -23,6 +23,23 @@ return [
         'status' => 'Status',
     ],
 
+    'form' => [
+        'price' => 'Price',
+        'discount_percentage' => 'Percentage',
+        'active_from' => 'Active from',
+        'active_to' => 'Active to',
+        'quota_type' => 'Quota',
+        'quota' => [
+            'none' => 'None',
+            'existing' => 'Existing',
+            'new' => 'New',
+            'name' => 'Name',
+            'limit' => 'Limit',
+            'active_from' => 'Active from',
+            'active_to' => 'Active to',
+        ],
+    ],
+
     'actions' => [
         'finish' => [
             'label' => 'Finish',
