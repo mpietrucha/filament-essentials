@@ -42,6 +42,7 @@ return RectorConfig::configure()
             'src/Resources/Discounts/DiscountResource.php',
             'src/Actions/Concerns/TransformsRecord.php',
             'src/Resources/Discounts/Actions/FinishDiscountAction.php',
+            'src/Resources/Discounts/Schemas/DiscountForm.php',
             'src/Actions/ImportBulkAction.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
             'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
