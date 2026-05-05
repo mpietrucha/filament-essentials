@@ -72,7 +72,7 @@ class DiscountForm
 
                     Select::make('quota_id')
                         ->searchable()
-                        ->label(__('filament-essentials::discounts-plugin.form.quota'))
+                        ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
                         ->relationship('quota', 'name')
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'existing')
                         ->columnSpanFull(),
