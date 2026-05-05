@@ -16,7 +16,7 @@ return [
     'table' => [
         'price' => 'Cena',
         'discount' => 'Zniżka',
-        'usage' => 'Zużycie',
+        'usage' => 'Ilość',
         'active_from' => 'Od',
         'active_to' => 'Do',
         'finished_at' => 'Zakończona',

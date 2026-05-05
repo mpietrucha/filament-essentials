@@ -33,10 +33,9 @@ class FinishDiscountAction extends Action
                 return true;
             }
 
-            /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
 
-            if (! $record instanceof Model) {
+            if (! $record instanceof Discount) {
                 return true;
             }
 
@@ -48,10 +47,9 @@ class FinishDiscountAction extends Action
         });
 
         $this->action(function (Model $record, Component $livewire): void {
-            /** @var null|Discount $record */
             $record = $this->getTransformedRecord($record);
 
-            if (! $record instanceof Model) {
+            if (! $record instanceof Discount) {
                 return;
             }
 
