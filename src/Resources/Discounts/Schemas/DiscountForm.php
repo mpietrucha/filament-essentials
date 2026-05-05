@@ -15,6 +15,7 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
 
@@ -76,7 +77,9 @@ class DiscountForm
                         ->searchable()
                         ->preload()
                         ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
-                        ->relationship('quota', 'name')
+                        ->relationship('quota', 'name', static function (Builder $builder): void {
+                            $builder->whereNotNull('name');
+                        })
                         ->live()
                         ->afterStateUpdated(static function (?string $state, Set $set): void {
                             if ($state === null) {
