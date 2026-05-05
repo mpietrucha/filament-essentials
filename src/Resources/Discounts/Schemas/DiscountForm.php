@@ -13,8 +13,10 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
 
 class DiscountForm
 {
@@ -75,6 +77,14 @@ class DiscountForm
                         ->preload()
                         ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
                         ->relationship('quota', 'name')
+                        ->live()
+                        ->afterStateUpdated(static function (?string $state, Set $set): void {
+                            if ($state === null) {
+                                return;
+                            }
+
+                            $set('quota.notes', Quota::getModel()::query()->find($state)?->notes);
+                        })
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'existing')
                         ->columnSpanFull(),
 
