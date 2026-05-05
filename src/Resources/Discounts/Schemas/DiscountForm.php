@@ -29,35 +29,35 @@ class DiscountForm
     protected static function components(): array
     {
         return [
-            Fieldset::make(__('filment-essentials::discounts-plugin.form.details'))
+            Fieldset::make(__('filament-essentials::discounts-plugin.form.details'))
                 ->columnSpanFull()
                 ->schema([
                     TextInput::make('price')
-                        ->label(__('filment-essentials::discounts-plugin.form.price')),
+                        ->label(__('filament-essentials::discounts-plugin.form.price')),
 
                     TextInput::make('discount_percentage')
-                        ->label(__('filment-essentials::discounts-plugin.form.discount_percentage')),
+                        ->label(__('filament-essentials::discounts-plugin.form.discount_percentage')),
                 ]),
 
-            Fieldset::make(__('filment-essentials::discounts-plugin.form.activity'))
+            Fieldset::make(__('filament-essentials::discounts-plugin.form.activity'))
                 ->columnSpanFull()
                 ->schema([
                     DatePicker::make('active_from')
-                        ->label(__('filment-essentials::discounts-plugin.form.active_from')),
+                        ->label(__('filament-essentials::discounts-plugin.form.active_from')),
 
                     DatePicker::make('active_to')
-                        ->label(__('filment-essentials::discounts-plugin.form.active_to')),
+                        ->label(__('filament-essentials::discounts-plugin.form.active_to')),
                 ]),
 
-            Fieldset::make(__('filment-essentials::discounts-plugin.form.quota.label'))
+            Fieldset::make(__('filament-essentials::discounts-plugin.form.quota.label'))
                 ->columnSpanFull()
                 ->schema([
                     ToggleButtons::make('quota_type')
-                        ->label(__('filment-essentials::discounts-plugin.form.quota.type'))
+                        ->label(__('filament-essentials::discounts-plugin.form.quota.type'))
                         ->options([
-                            'none' => __('filment-essentials::discounts-plugin.form.quota.none'),
-                            'existing' => __('filment-essentials::discounts-plugin.form.quota.existing'),
-                            'new' => __('filment-essentials::discounts-plugin.form.quota.new'),
+                            'none' => __('filament-essentials::discounts-plugin.form.quota.none'),
+                            'existing' => __('filament-essentials::discounts-plugin.form.quota.existing'),
+                            'new' => __('filament-essentials::discounts-plugin.form.quota.new'),
                         ])
                         ->inline()
                         ->afterStateHydrated(static function (ToggleButtons $component, ?Discount $record): void {
@@ -72,7 +72,7 @@ class DiscountForm
 
                     Select::make('quota_id')
                         ->searchable()
-                        ->label(__('filment-essentials::discounts-plugin.form.quota'))
+                        ->label(__('filament-essentials::discounts-plugin.form.quota'))
                         ->relationship('quota', 'name')
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'existing')
                         ->columnSpanFull(),
@@ -83,20 +83,20 @@ class DiscountForm
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'new')
                         ->schema([
                             TextInput::make('name')
-                                ->label(__('filment-essentials::discounts-plugin.form.quota.name')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.name')),
 
                             TextInput::make('limit')
-                                ->label(__('filment-essentials::discounts-plugin.form.quota.limit')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.limit')),
 
                             DatePicker::make('active_from')
-                                ->label(__('filment-essentials::discounts-plugin.form.quota.active_from')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_from')),
 
                             DatePicker::make('active_to')
-                                ->label(__('filment-essentials::discounts-plugin.form.quota.active_to')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_to')),
                         ]),
 
                     Textarea::make('quota.notes')
-                        ->label(__('filment-essentials::discounts-plugin.form.quota.notes'))
+                        ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
                         ->columnSpanFull()
                         ->visible(static fn (Get $get): bool => $get('quota_type') !== 'none'),
                 ]),
