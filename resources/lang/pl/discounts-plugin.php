@@ -36,6 +36,8 @@ return [
             'none' => 'Brak',
             'existing' => 'Istniejąca',
             'new' => 'Nowa',
+            'name' => 'Nazwa',
+            'limit' => 'Limit',
             'active_from' => 'Od',
             'active_to' => 'Do',
             'notes' => 'Notatki',

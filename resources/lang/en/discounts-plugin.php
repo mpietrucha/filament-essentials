@@ -36,6 +36,8 @@ return [
             'none' => 'None',
             'existing' => 'Existing',
             'new' => 'New',
+            'name' => 'Name',
+            'limit' => 'Limit',
             'active_from' => 'From',
             'active_to' => 'To',
             'notes' => 'Notes',
