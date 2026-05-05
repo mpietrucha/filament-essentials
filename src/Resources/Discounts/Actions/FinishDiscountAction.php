@@ -64,13 +64,17 @@ class FinishDiscountAction extends Action
         });
     }
 
-    public static function external(string $relationship): static
+    public static function extended(?string $relationship = null): static
     {
         $finishDiscountAction = static::make();
 
         __('filament-essentials::discounts-plugin.actions.finish.extended_label') |> $finishDiscountAction->label(...);
 
-        return $finishDiscountAction->relationship($relationship);
+        if (is_string($relationship)) {
+            $finishDiscountAction->relationship($relationship);
+        }
+
+        return $finishDiscountAction;
     }
 
     public static function getDefaultName(): ?string
