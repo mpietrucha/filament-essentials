@@ -83,6 +83,8 @@ class DiscountForm
                         ->live()
                         ->afterStateUpdated(static function (?string $state, Set $set): void {
                             if ($state === null) {
+                                $set('quota.notes', null);
+
                                 return;
                             }
 
