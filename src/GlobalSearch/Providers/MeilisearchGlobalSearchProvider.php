@@ -35,7 +35,7 @@ class MeilisearchGlobalSearchProvider extends ScoutGlobalSearchProvider
     #[\Override]
     protected static function getScoutSearchBuilder(string $model, string $query, ?Closure $callback = null): Builder
     {
-        $meilisearchOptions = config()->array('filament-essentisls.scout.meilisearch.options', []);
+        $meilisearchOptions = config()->array('filament-essentials.scout.meilisearch.options');
 
         $builder = parent::getScoutSearchBuilder(
             $model,
