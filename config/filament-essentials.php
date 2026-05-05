@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
+
 return [
     'scout' => [
         'meilisearch' => [
@@ -11,5 +13,9 @@ return [
                 'highlightPostTag' => '</strong>',
             ],
         ],
+    ],
+
+    'discounts' => [
+        'status_enum' => DiscountStatus::class,
     ],
 ];

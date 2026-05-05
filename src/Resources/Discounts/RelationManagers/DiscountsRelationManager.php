@@ -27,7 +27,9 @@ class DiscountsRelationManager extends RelationManager
      */
     protected static function headerActions(): array
     {
-        return [];
+        return [
+            static::getCreateAction(),
+        ];
     }
 
     /**

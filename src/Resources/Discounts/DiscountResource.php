@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
@@ -85,6 +86,13 @@ class DiscountResource extends FilamentResource
         $action->slideOver();
 
         $action->modalWidth(Width::Medium);
+    }
+
+    public static function getRecordStatus(Discount $record): DiscountStatus
+    {
+        $discountStatus = config()->string('filament-essentisls.scout.discount.status_enum');
+
+        return $record->status |> $discountStatus::from(...);
     }
 
     protected static function getEssentialsPlugin(): DiscountsPlugin
