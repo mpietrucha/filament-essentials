@@ -115,7 +115,7 @@ class DiscountForm
                     Group::make()
                         ->relationship('quota')
                         ->columnSpanFull()
-                        ->visible(static fn (Get $get): bool => $get('quota_type') !== 'new')
+                        ->visible(static fn (Get $get): bool => $get('quota_type') !== 'none')
                         ->schema([
                             Textarea::make('notes')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
