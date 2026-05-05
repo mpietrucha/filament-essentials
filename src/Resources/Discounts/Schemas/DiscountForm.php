@@ -72,6 +72,7 @@ class DiscountForm
 
                     Select::make('quota_id')
                         ->searchable()
+                        ->preload()
                         ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
                         ->relationship('quota', 'name')
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'existing')
@@ -80,6 +81,7 @@ class DiscountForm
                     Group::make()
                         ->columns(2)
                         ->columnSpanFull()
+                        ->relationship('quota')
                         ->visible(static fn (Get $get): bool => $get('quota_type') === 'new')
                         ->schema([
                             TextInput::make('name')
@@ -95,10 +97,14 @@ class DiscountForm
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.active_to')),
                         ]),
 
-                    Textarea::make('quota.notes')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
+                    Group::make()
+                        ->relationship('quota')
                         ->columnSpanFull()
-                        ->visible(static fn (Get $get): bool => $get('quota_type') !== 'none'),
+                        ->schema([
+                            Textarea::make('notes')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
+                                ->columnSpanFull(),
+                        ]),
                 ]),
         ];
     }
