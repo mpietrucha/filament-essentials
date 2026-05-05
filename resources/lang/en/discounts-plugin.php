@@ -32,9 +32,10 @@ return [
         'active_to' => 'To',
         'quota' => [
             'label' => 'Quota',
-            'type' => 'Quota type',
             'none' => 'None',
             'existing' => 'Existing',
+            'finish' => 'Finish',
+            'empty_name' => '(empty name)',
             'new' => 'New',
             'name' => 'Name',
             'limit' => 'Limit',

@@ -32,9 +32,10 @@ return [
         'active_to' => 'Do',
         'quota' => [
             'label' => 'Pakiet',
-            'type' => 'Typ pakietu',
             'none' => 'Brak',
             'existing' => 'Istniejący',
+            'finish' => 'Zakończ',
+            'empty_name' => '(brak nazwy)',
             'new' => 'Nowy',
             'name' => 'Nazwa',
             'limit' => 'Limit',
