@@ -31,8 +31,8 @@ return [
         'quota_type' => 'Quota',
         'quota' => [
             'none' => 'None',
-            'existing' => 'Existing',
-            'new' => 'New',
+            'existing' => 'Existing quota',
+            'new' => 'New quota',
             'name' => 'Name',
             'limit' => 'Limit',
             'active_from' => 'Active from',
