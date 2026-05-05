@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Resources\Discounts;
 
+use BackedEnum;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasNavigation;
 use Filament\Actions\Action;
@@ -15,13 +16,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
-use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\DiscountStatus;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Tables\DiscountsTable;
 use Mpietrucha\Filament\Essentials\Resources\Resource as FilamentResource;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
+use Mpietrucha\Support\Enum;
 
 /**
  * @extends FilamentResource<Model>
@@ -88,11 +89,13 @@ class DiscountResource extends FilamentResource
         $action->modalWidth(Width::Medium);
     }
 
-    public static function getRecordStatus(Discount $record): DiscountStatus
+    public static function getRecordStatus(Discount $record): BackedEnum
     {
-        $discountStatus = config()->string('filament-essentisls.scout.discount.status_enum');
+        $status = $record->status;
 
-        return $record->status |> $discountStatus::from(...);
+        $enum = config()->string('filament-essentisls.scout.discount.status_enum') |> Enum::backed(...);
+
+        return $enum::from($status);
     }
 
     protected static function getEssentialsPlugin(): DiscountsPlugin
