@@ -93,7 +93,7 @@ class DiscountResource extends FilamentResource
     {
         $status = $record->status;
 
-        $enum = config()->string('filament-essentisls.scout.discount.status_enum') |> Enum::backed(...);
+        $enum = config()->string('filament-essentisls.discounts.status_enum') |> Enum::backed(...);
 
         return $enum::from($status);
     }
