@@ -40,6 +40,7 @@ return [
             'active_to' => 'Do',
             'notes' => 'Notatki',
         ],
+    ],
 
     'actions' => [
         'finish' => [
