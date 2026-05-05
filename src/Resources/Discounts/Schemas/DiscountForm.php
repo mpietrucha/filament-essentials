@@ -79,70 +79,70 @@ class DiscountForm
                         ->live()
                         ->dehydrated(false)
                         ->columnSpanFull(),
-                ]),
 
-            Select::make('quota_id')
-                ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
-                ->searchable()
-                ->preload()
-                ->hintActions([
-                    Action::make('finish_quota')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.finish'))
-                        ->icon(Heroicon::XMark)
-                        ->color('danger')
-                        ->requiresConfirmation()
-                        ->cancelParentActions()
-                        ->visible(static fn (Get $get): bool => $get('quota_id') |> filled(...))
-                        ->action(static function (Get $get, LivewireComponent $livewire): void {
-                            /** @var null|Quota $quota */
-                            $quota = $get('quota_id') |> Quota::getModel()::query()->find(...);
+                    Select::make('quota_id')
+                        ->label(__('filament-essentials::discounts-plugin.form.quota.label'))
+                        ->searchable()
+                        ->preload()
+                        ->hintActions([
+                            Action::make('finish_quota')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.finish'))
+                                ->icon(Heroicon::XMark)
+                                ->color('danger')
+                                ->requiresConfirmation()
+                                ->cancelParentActions()
+                                ->visible(static fn (Get $get): bool => $get('quota_id') |> filled(...))
+                                ->action(static function (Get $get, LivewireComponent $livewire): void {
+                                    /** @var null|Quota $quota */
+                                    $quota = $get('quota_id') |> Quota::getModel()::query()->find(...);
 
-                            $quota?->finish()->save();
+                                    $quota?->finish()->save();
 
-                            $livewire->js('$wire.$refresh()');
-                        }),
-                ])
-                ->relationship('quota', 'name', static function (Builder $query): void {
-                    $query->whereNull('name');
-                })
-                ->getSelectedRecordUsing(static function (string $state): ?Quota {
-                    return Quota::getModel()::query()->find($state);
-                })
-                ->live()
-                ->afterStateUpdated(static function (?string $state, Set $set): void {
-                    static::hydrateQuota($set, $state);
-                })
-                ->getOptionLabelFromRecordUsing(static function (Quota $record): string {
-                    if ($name = $record->name) {
-                        return $name;
-                    }
+                                    $livewire->js('$wire.$refresh()');
+                                }),
+                        ])
+                        ->relationship('quota', 'name', static function (Builder $query): void {
+                            $query->whereNull('name');
+                        })
+                        ->getSelectedRecordUsing(static function (string $state): ?Quota {
+                            return Quota::getModel()::query()->find($state);
+                        })
+                        ->live()
+                        ->afterStateUpdated(static function (?string $state, Set $set): void {
+                            static::hydrateQuota($set, $state);
+                        })
+                        ->getOptionLabelFromRecordUsing(static function (Quota $record): string {
+                            if ($name = $record->name) {
+                                return $name;
+                            }
 
-                    return __('filament-essentials::discounts-plugin.form.quota.empty_name');
-                })
-                ->visible(static fn (Get $get): bool => $get('quota_type') === QuotaType::Existing)
-                ->columnSpanFull(),
-
-            Group::make()
-                ->relationship('quota')
-                ->columns(2)
-                ->columnSpanFull()
-                ->visible(static fn (Get $get): bool => $get('quota_type') !== QuotaType::None)
-                ->schema([
-                    TextInput::make('name')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.name')),
-
-                    TextInput::make('limit')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.limit')),
-
-                    DatePicker::make('active_from')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.active_from')),
-
-                    DatePicker::make('active_to')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.active_to')),
-
-                    Textarea::make('notes')
-                        ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
+                            return __('filament-essentials::discounts-plugin.form.quota.empty_name');
+                        })
+                        ->visible(static fn (Get $get): bool => $get('quota_type') === QuotaType::Existing)
                         ->columnSpanFull(),
+
+                    Group::make()
+                        ->relationship('quota')
+                        ->columns(2)
+                        ->columnSpanFull()
+                        ->visible(static fn (Get $get): bool => $get('quota_type') !== QuotaType::None)
+                        ->schema([
+                            TextInput::make('name')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.name')),
+
+                            TextInput::make('limit')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.limit')),
+
+                            DatePicker::make('active_from')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_from')),
+
+                            DatePicker::make('active_to')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_to')),
+
+                            Textarea::make('notes')
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
+                                ->columnSpanFull(),
+                        ]),
                 ]),
         ];
     }
