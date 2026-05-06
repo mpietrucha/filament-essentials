@@ -102,7 +102,7 @@ class DiscountForm
                                 }),
                         ])
                         ->relationship('quota', 'name', static function (Builder $query): void {
-                            $query->whereNull('name');
+                            $query->whereNotNull('name');
                         })
                         ->getSelectedRecordUsing(static function (string $state): ?Quota {
                             return Quota::getModel()::query()->find($state);
