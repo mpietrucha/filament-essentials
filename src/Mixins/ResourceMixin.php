@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
-use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-extends Resource
@@ -79,6 +78,8 @@ trait ResourceMixin
             return __('filament-actions::create.single.modal.heading', ['label' => $label]);
         });
 
+        static::getModel() |> $action->model(...);
+
         static::configureAction($action, $relation);
 
         return $action;
@@ -113,12 +114,7 @@ trait ResourceMixin
     {
         $action->relation($relation);
 
-        $action->schema(static function (Model $record, Schema $schema) use ($action, $handler): Schema {
-            /** @var class-string<Model> $model */
-            $model = Instance::namespace($record);
-
-            $action->model($model);
-
+        $action->schema(static function (Model $record, Schema $schema) use ($handler): Schema {
             return $schema->model($record) |> $handler;
         });
     }
