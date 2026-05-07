@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
+use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-extends Resource
@@ -112,7 +113,12 @@ trait ResourceMixin
     {
         $action->relation($relation);
 
-        $action->schema(static function (Model $record, Schema $schema) use ($handler): Schema {
+        $action->schema(static function (Model $record, Schema $schema) use ($action, $handler): Schema {
+            /** @var class-string<Model> $model */
+            $model = Instance::namespace($record);
+
+            $action->model($model);
+
             return $schema->model($record) |> $handler;
         });
     }
