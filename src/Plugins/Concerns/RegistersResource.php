@@ -2,16 +2,14 @@
 
 namespace Mpietrucha\Filament\Essentials\Plugins\Concerns;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Mpietrucha\Filament\Essentials\Plugins\Plugin;
 
 /**
- * @phpstan-require-implements Plugin
+ * @phpstan-require-extends Plugin
  */
 trait RegistersResource
 {
-    use HasResource;
-
     public function register(Panel $panel): void
     {
         $this->registerResource($panel);
