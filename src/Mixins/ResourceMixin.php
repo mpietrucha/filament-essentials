@@ -8,9 +8,11 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Illuminate\Database\Eloquent\Model;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
+use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-extends Resource
@@ -22,7 +24,7 @@ trait ResourceMixin
         $viewAction = ViewAction::make($relation);
 
         if (is_string($relation)) {
-            static::applyActionRelationSchema($viewAction, $relation, static::infolist(...));
+            static::configureActionRelation($viewAction, $relation, static::infolist(...));
         }
 
         static::configureViewAction($viewAction, $relation);
@@ -42,7 +44,7 @@ trait ResourceMixin
         $editAction = EditAction::make($relation);
 
         if (is_string($relation)) {
-            static::applyActionRelationSchema($editAction, $relation, static::form(...));
+            static::configureActionRelation($editAction, $relation);
         }
 
         static::configureEditAction($editAction, $relation);
@@ -62,7 +64,7 @@ trait ResourceMixin
         $createAction = CreateAction::make($relation);
 
         if (is_string($relation)) {
-            static::applyActionRelationSchema($createAction, $relation, static::form(...));
+            static::configureActionRelation($createAction, $relation);
         }
 
         static::configureCreateAction($createAction, $relation);
@@ -87,35 +89,47 @@ trait ResourceMixin
 
     public static function configureAction(Action $action, ?string $relation = null): Action
     {
-        static::applyActionConfiguration($action, $relation);
-
-        return $action;
-    }
-
-    public static function applyActionConfiguration(Action $action, ?string $relation = null): void
-    {
         static::getNavigationIcon() |> $action->modalIcon(...);
 
         $action->modalIconColor(Color::Gray);
 
         static::getRecordTitleAttribute() |> $action->recordTitleAttribute(...);
 
-        static::applyDefaultActionConfiguration($action, $relation);
+        static::configureDefaultAction($action, $relation);
+
+        return $action;
     }
 
-    public static function applyDefaultActionConfiguration(Action $action, ?string $relation = null): void
+    public static function configureDefaultAction(Action $action, ?string $relation = null): void
     {
     }
 
     /**
-     * @param  Closure(Schema): Schema  $handler
+     * @param  null|Closure(Schema): Schema  $resourceSchema
      */
-    public static function applyActionRelationSchema(CreateAction|EditAction|ViewAction $action, string $relation, Closure $handler): void
+    public static function configureActionRelation(Action $action, string $relation, ?Closure $resourceSchema = null): Action
     {
-        $action->relation($relation);
+        if (Instance::traits($action)->contains(HasRelation::class)) {
+            /** @phpstan-ignore method.notFound */
+            $action->relation($relation);
+        }
 
-        $action->schema(static function (Model $record, Schema $schema) use ($handler): Schema {
-            return $schema->model($record) |> $handler;
+        static::configureActionSchema($action, $resourceSchema);
+
+        return $action;
+    }
+
+    /**
+     * @param  null|Closure(Schema): Schema  $resourceSchema
+     */
+    public static function configureActionSchema(Action $action, ?Closure $resourceSchema = null): Action
+    {
+        $resourceSchema ??= static::form(...);
+
+        $action->schema(static function (Model $record, Schema $schema) use ($resourceSchema): Schema {
+            return $schema->model($record) |> $resourceSchema;
         });
+
+        return $action;
     }
 }
