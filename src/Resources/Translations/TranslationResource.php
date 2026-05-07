@@ -12,7 +12,6 @@ use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
-use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Plugins\TranslationsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Pages\ManageTranslations;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Schemas\TranslationForm;
@@ -60,16 +59,16 @@ class TranslationResource extends FilamentResource
         ];
     }
 
-    public static function configureCreateAction(CreateAction $createAction, ?string $relation = null): CreateAction
+    public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($createAction);
+        static::configureAction($action);
 
-        __('filament-essentials::translations-plugin.action.create.modal_heading') |> $createAction->modalHeading(...);
+        __('filament-essentials::translations-plugin.action.create.modal_heading') |> $action->modalHeading(...);
 
-        return $createAction;
+        return $action;
     }
 
-    public static function applyDefaultActionConfiguration(Action $action, ?string $relation = null): void
+    public static function configureDefaultAction(Action $action, ?string $relation = null): void
     {
         $action->slideOver();
 

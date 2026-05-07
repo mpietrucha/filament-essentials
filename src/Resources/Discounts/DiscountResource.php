@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts;
 use BackedEnum;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasNavigation;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource as FilamentResource;
@@ -14,8 +15,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Component;
-use Mpietrucha\Filament\Essentials\Actions\CreateAction;
-use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
@@ -73,20 +72,20 @@ class DiscountResource extends FilamentResource
         return FinishDiscountAction::make();
     }
 
-    public static function configureEditAction(EditAction $editAction, ?string $relation = null): EditAction
+    public static function configureEditAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($editAction, $relation);
+        static::configureAction($action, $relation);
 
-        return $editAction->hidden(static function (Discount $discount): bool {
+        return $action->hidden(static function (Discount $discount): bool {
             return $discount->isFinished();
         });
     }
 
-    public static function configureCreateAction(CreateAction $createAction, ?string $relation = null): CreateAction
+    public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($createAction, $relation);
+        static::configureAction($action, $relation);
 
-        $createAction->hidden(static function (Component $livewire, Model $record): bool {
+        $action->hidden(static function (Component $livewire, Model $record): bool {
             if (! $livewire instanceof RelationManager) {
                 /** @var Discount $record */
                 return $record->isActive();
@@ -96,7 +95,7 @@ class DiscountResource extends FilamentResource
             return $livewire->getOwnerRecord()->discounts->filter->isActive() |> filled(...);
         });
 
-        $createAction->using(static function (array $data, Component $livewire, Model $record): Model {
+        $action->action(static function (array $data, Component $livewire, Model $record): Model {
             if (! $livewire instanceof RelationManager) {
                 /** @var array<string, mixed> $data */
                 return $record->create($data);
@@ -122,7 +121,7 @@ class DiscountResource extends FilamentResource
             return $relationship->create($data);
         });
 
-        return $createAction;
+        return $action;
     }
 
     public static function getRecordStatus(Discount $discount): BackedEnum
