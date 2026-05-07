@@ -26,6 +26,7 @@ class Record extends Context
             $method,
             $arguments
         ));
+
     }
 
     /**
