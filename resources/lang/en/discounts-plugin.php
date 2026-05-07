@@ -48,7 +48,6 @@ return [
     'actions' => [
         'finish' => [
             'label' => 'Finish',
-            'extended_label' => 'Finish discount',
         ],
     ],
 ];

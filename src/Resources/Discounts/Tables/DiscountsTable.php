@@ -11,14 +11,12 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
-use Mpietrucha\Filament\Essentials\Resources\Concerns\GuessesResource;
+use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
 
 class DiscountsTable
 {
-    use GuessesResource;
-
     public static function configure(Table $table): Table
     {
         return $table
@@ -58,7 +56,8 @@ class DiscountsTable
             TextColumn::make('status')
                 ->label(__('filament-essentials::discounts-plugin.table.status'))
                 ->badge()
-                ->state(static::getResource()::getRecordStatus(...)),
+                /** @phpstan-ignore staticMethod.notFound */
+                ->state(DiscountsPlugin::get()->getResource()::getRecordStatus(...)),
         ];
     }
 
@@ -71,16 +70,13 @@ class DiscountsTable
     }
 
     /**
-     * @return list<Action|ActionGroup>
+     * @return list<Action>
      */
     protected static function recordActions(): array
     {
-        /**
-         * @var list<Action|ActionGroup>
-         */
         return [
-            static::getResource()::getViewAction(),
-            static::getResource()::getEditAction(),
+            DiscountsPlugin::get()->getResource()::getViewAction(),
+            DiscountsPlugin::get()->getResource()::getEditAction(),
         ];
     }
 

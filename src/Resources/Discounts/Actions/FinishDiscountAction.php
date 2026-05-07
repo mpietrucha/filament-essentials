@@ -7,14 +7,13 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Actions;
 use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\TransformsRecord;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishDiscountAction extends Action
 {
-    use TransformsRecord;
+    use HasRelation;
 
     protected function setUp(): void
     {
@@ -28,14 +27,8 @@ class FinishDiscountAction extends Action
 
         $this->requiresConfirmation();
 
-        $this->hidden(function (Model $record, Component $livewire): bool {
+        $this->hidden(static function (Discount $record, Component $livewire): bool {
             if ($livewire instanceof RelationManager && $livewire->isReadOnly()) {
-                return true;
-            }
-
-            $record = $this->getTransformedRecord($record);
-
-            if (! $record instanceof Discount) {
                 return true;
             }
 
@@ -46,35 +39,15 @@ class FinishDiscountAction extends Action
             return $record->isFinished();
         });
 
-        $this->action(function (Model $record, Component $livewire): void {
-            $record = $this->getTransformedRecord($record);
-
-            if (! $record instanceof Discount) {
-                return;
-            }
-
+        $this->action(static function (Discount $record, Component $livewire): void {
             $record->finish()->save();
 
             if ($livewire instanceof RelationManager) {
                 return;
             }
 
-            /** @phpstan-ignore method.notFound */
-            $this->getLivewire()?->js('$wire.$refresh()');
+            $livewire->js('$wire.$refresh()');
         });
-    }
-
-    public static function extended(?string $relationship = null): static
-    {
-        $finishDiscountAction = static::make();
-
-        __('filament-essentials::discounts-plugin.actions.finish.extended_label') |> $finishDiscountAction->label(...);
-
-        if (is_string($relationship)) {
-            $finishDiscountAction->relationship($relationship);
-        }
-
-        return $finishDiscountAction;
     }
 
     public static function getDefaultName(): ?string

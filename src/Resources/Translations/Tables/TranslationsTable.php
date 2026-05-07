@@ -13,15 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
-use Mpietrucha\Filament\Essentials\Resources\Concerns\GuessesResource;
+use Mpietrucha\Filament\Essentials\Plugins\TranslationsPlugin;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Support\Str;
 use Spatie\TranslationLoader\LanguageLine;
 
 class TranslationsTable
 {
-    use GuessesResource;
-
     public static function configure(Table $table): Table
     {
         return $table
@@ -96,12 +94,9 @@ class TranslationsTable
      */
     protected static function recordActions(): array
     {
-        /**
-         * @var list<Action|ActionGroup>
-         */
         return [
-            static::getResource()::getViewAction(),
-            static::getResource()::getEditAction(),
+            TranslationsPlugin::get()->getResource()::getViewAction(),
+            TranslationsPlugin::get()->getResource()::getEditAction(),
             ActionGroup::make([
                 DeleteAction::make(),
                 RestoreAction::make(),

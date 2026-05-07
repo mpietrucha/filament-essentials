@@ -6,20 +6,26 @@ namespace Mpietrucha\Filament\Essentials\Plugins;
 
 use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Plugin\HasNavigation;
+use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
-use Mpietrucha\Filament\Essentials\Plugins\Concerns\RegistersResource;
+use Mpietrucha\Filament\Essentials\Plugins\Concerns\HasResource;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
 
+/**
+ * @phpstan-type FilamentResource class-string<Resource>
+ */
 class DiscountsPlugin extends Plugin
 {
     use HasLabels;
     use HasNavigation;
-    use RegistersResource;
+    use HasResource;
 
-    public function __construct()
-    {
-        $this->resource(DiscountResource::class)->dontRegisterDefaultResource();
-    }
+    /**
+     * @var FilamentResource
+     */
+    protected string $defaultResource = DiscountResource::class;
+
+    protected bool $shouldRegisterResource = false;
 
     /**
      * @return array<string, mixed>

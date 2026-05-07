@@ -11,8 +11,6 @@ use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
-use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
-use Rector\Php85\Rector\Property\AddOverrideAttributeToOverriddenPropertiesRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
 use RectorFilament\Rector\MethodCall\ModelToRecordClosureParamRector;
@@ -32,11 +30,8 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         RenameParamToMatchTypeRector::class => [
             'src/Record/Context.php',
-            'src/Resources/Concerns/TitlesRecordById.php',
-            'src/Resources/Concerns/InteractsWithActions.php',
             'src/Mixins/TextColumnMixin.php',
             'src/Mixins/SelectFilterMixin.php',
-            'src/RelationManagers/Concerns/InteractsWithActions.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
             'src/Resources/Discounts/Tables/DiscountsTable.php',
             'src/Resources/Discounts/DiscountResource.php',
@@ -44,17 +39,12 @@ return RectorConfig::configure()
             'src/Resources/Discounts/Actions/FinishDiscountAction.php',
             'src/Resources/Discounts/Schemas/DiscountForm.php',
             'src/Actions/ImportBulkAction.php',
+            'src/Mixins/ResourceMixin.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
             'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
-        ],
-        AddOverrideAttributeToOverriddenMethodsRector::class => [
-            'src/Resources/Translations',
-        ],
-        AddOverrideAttributeToOverriddenPropertiesRector::class => [
-            'src/Resources/Translations',
         ],
     ])
     ->withRules([

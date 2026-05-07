@@ -15,8 +15,4 @@ return [
             'placeholder' => 'Prześlij plik CSV',
         ],
     ],
-
-    'relation_manager' => [
-        'modal_label' => ':Records - :record',
-    ],
 ];

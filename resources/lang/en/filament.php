@@ -15,8 +15,4 @@ return [
             'placeholder' => 'Upload a CSV files',
         ],
     ],
-
-    'relation_manager' => [
-        'modal_label' => ':Records - :record',
-    ],
 ];

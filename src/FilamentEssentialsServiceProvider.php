@@ -9,6 +9,8 @@ use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\TextEntry;
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Resource;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -18,6 +20,8 @@ use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
+use Mpietrucha\Filament\Essentials\Mixins\RelationManagerMixin;
+use Mpietrucha\Filament\Essentials\Mixins\ResourceMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
@@ -38,11 +42,13 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
         $package->hasMixins([
             Field::class => FieldMixin::class,
             Select::class => SelectMixin::class,
+            Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
             AttachAction::class => AttachActionMixin::class,
             SelectFilter::class => SelectFilterMixin::class,
+            RelationManager::class => RelationManagerMixin::class,
             IsRelatedToOperator::class => IsRelatedToOperatorMixin::class,
         ]);
 
