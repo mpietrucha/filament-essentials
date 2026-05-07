@@ -77,11 +77,6 @@ trait HasResource
         return $resource;
     }
 
-    public function register(Panel $panel): void
-    {
-        $this->registerResource($panel);
-    }
-
     protected function registerResource(Panel $panel): void
     {
         if ($this->shouldRegisterResource === false) {
