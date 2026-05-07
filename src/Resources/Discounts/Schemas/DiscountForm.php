@@ -61,9 +61,9 @@ class DiscountForm
                         ->hiddenLabel()
                         ->options(QuotaType::class)
                         ->inline()
-                        ->afterStateHydrated(static function (ToggleButtons $component, ?Discount $record): void {
+                        ->afterStateHydrated(static function (ToggleButtons $component, ?Discount $discount): void {
                             match (true) {
-                                $record?->quota === null => QuotaType::None,
+                                $discount?->quota === null => QuotaType::None,
                                 default => QuotaType::Existing,
                             } |> $component->state(...);
                         })
@@ -111,8 +111,8 @@ class DiscountForm
                         ->afterStateUpdated(static function (?string $state, Set $set): void {
                             static::hydrateQuota($set, $state);
                         })
-                        ->getOptionLabelFromRecordUsing(static function (Quota $record): string {
-                            if ($name = $record->name) {
+                        ->getOptionLabelFromRecordUsing(static function (Quota $quota): string {
+                            if ($name = $quota->name) {
                                 return $name;
                             }
 

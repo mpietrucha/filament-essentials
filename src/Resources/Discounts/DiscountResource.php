@@ -77,8 +77,8 @@ class DiscountResource extends FilamentResource
     {
         static::configureAction($editAction, $relation);
 
-        return $editAction->hidden(static function (Discount $record): bool {
-            return $record->isFinished();
+        return $editAction->hidden(static function (Discount $discount): bool {
+            return $discount->isFinished();
         });
     }
 
@@ -125,9 +125,9 @@ class DiscountResource extends FilamentResource
         return $createAction;
     }
 
-    public static function getRecordStatus(Discount $record): BackedEnum
+    public static function getRecordStatus(Discount $discount): BackedEnum
     {
-        $status = $record->status;
+        $status = $discount->status;
 
         $enum = config()->string('filament-essentials.discounts.status_enum') |> Enum::backed(...);
 

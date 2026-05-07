@@ -27,20 +27,20 @@ class FinishDiscountAction extends Action
 
         $this->requiresConfirmation();
 
-        $this->hidden(static function (Discount $record, Component $livewire): bool {
+        $this->hidden(static function (Discount $discount, Component $livewire): bool {
             if ($livewire instanceof RelationManager && $livewire->isReadOnly()) {
                 return true;
             }
 
-            if ($record->isInactive()) {
+            if ($discount->isInactive()) {
                 return true;
             }
 
-            return $record->isFinished();
+            return $discount->isFinished();
         });
 
-        $this->action(static function (Discount $record, Component $livewire): void {
-            $record->finish()->save();
+        $this->action(static function (Discount $discount, Component $livewire): void {
+            $discount->finish()->save();
 
             if ($livewire instanceof RelationManager) {
                 return;

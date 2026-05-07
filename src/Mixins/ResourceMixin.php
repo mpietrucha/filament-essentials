@@ -25,14 +25,16 @@ trait ResourceMixin
             static::applyActionRelationSchema($viewAction, $relation, static::infolist(...));
         }
 
-        return static::configureViewAction($viewAction, $relation);
-    }
-
-    public static function configureViewAction(ViewAction $viewAction, ?string $relation = null): ViewAction
-    {
-        static::configureAction($viewAction, $relation);
+        static::configureViewAction($viewAction, $relation);
 
         return $viewAction;
+    }
+
+    public static function configureViewAction(Action $action, ?string $relation = null): Action
+    {
+        static::configureAction($action, $relation);
+
+        return $action;
     }
 
     public static function getEditAction(?string $relation = null): EditAction
@@ -43,14 +45,16 @@ trait ResourceMixin
             static::applyActionRelationSchema($editAction, $relation, static::form(...));
         }
 
-        return static::configureEditAction($editAction, $relation);
-    }
-
-    public static function configureEditAction(EditAction $editAction, ?string $relation = null): EditAction
-    {
-        static::configureAction($editAction, $relation);
+        static::configureEditAction($editAction, $relation);
 
         return $editAction;
+    }
+
+    public static function configureEditAction(Action $action, ?string $relation = null): Action
+    {
+        static::configureAction($action, $relation);
+
+        return $action;
     }
 
     public static function getCreateAction(?string $relation = null): CreateAction
@@ -61,14 +65,22 @@ trait ResourceMixin
             static::applyActionRelationSchema($createAction, $relation, static::form(...));
         }
 
-        return static::configureCreateAction($createAction, $relation);
-    }
-
-    public static function configureCreateAction(CreateAction $createAction, ?string $relation = null): CreateAction
-    {
-        static::configureAction($createAction, $relation);
+        static::configureCreateAction($createAction, $relation);
 
         return $createAction;
+    }
+
+    public static function configureCreateAction(Action $action, ?string $relation = null): Action
+    {
+        $action->modalHeading(static function (): string {
+            $label = static::getTitleCaseModelLabel();
+
+            return __('filament-actions::create.single.modal.heading', ['label' => $label]);
+        });
+
+        static::configureAction($action, $relation);
+
+        return $action;
     }
 
     public static function configureAction(Action $action, ?string $relation = null): Action
@@ -83,6 +95,8 @@ trait ResourceMixin
         static::getNavigationIcon() |> $action->modalIcon(...);
 
         $action->modalIconColor(Color::Gray);
+
+        static::getRecordTitleAttribute() |> $action->recordTitleAttribute(...);
 
         static::applyDefaultActionConfiguration($action, $relation);
     }

@@ -93,14 +93,14 @@ class DiscountsTable
         return TextColumn::make('price')
             ->label(__('filament-essentials::discounts-plugin.table.price'))
             ->placeholder('-')
-            ->state(static function (Discount $record): ?string {
-                $price = $record->getPrice();
+            ->state(static function (Discount $discount): ?string {
+                $price = $discount->getPrice();
 
                 if ($price instanceof Money) {
                     return Locale::get()->code() |> $price->formatToLocale(...);
                 }
 
-                $discountPercentage = $record->discount_percentage;
+                $discountPercentage = $discount->discount_percentage;
 
                 if ($discountPercentage === null) {
                     return null;
