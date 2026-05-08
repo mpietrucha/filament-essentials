@@ -88,7 +88,7 @@ class DiscountResource extends FilamentResource
             $discount = $livewire->getFilamentRecord()?->discount;
 
             if (! $discount instanceof Discount) {
-                return true;
+                return false;
             }
 
             return $discount->isActive();
