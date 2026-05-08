@@ -89,6 +89,8 @@ class ViewAction extends FilamentViewAction
     public function prepareModalAction(Action $action): Action
     {
         if ($action instanceof CreateAction) {
+            $action->createAnother(false);
+
             return $action;
         }
 
