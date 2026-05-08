@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
@@ -35,6 +36,10 @@ trait ResourceMixin
     public static function configureViewAction(Action $action, ?string $relation = null): Action
     {
         static::configureAction($action, $relation);
+
+        if ($action instanceof ViewAction) {
+            $action->withFormActionsResource(static::class);
+        }
 
         return $action;
     }
@@ -76,23 +81,6 @@ trait ResourceMixin
     {
         static::configureAction($action, $relation);
 
-        return $action;
-    }
-
-    public static function configureAction(Action $action, ?string $relation = null): Action
-    {
-        static::getNavigationIcon() |> $action->modalIcon(...);
-
-        $action->modalIconColor(Color::Gray);
-
-        static::getRecordTitleAttribute() |> $action->recordTitleAttribute(...);
-
-        static::configureDefaultAction($action, $relation);
-
-        if (! $action instanceof CreateAction) {
-            return $action;
-        }
-
         $action->modalHeading(static function (): string {
             $label = static::getTitleCaseModelLabel();
 
@@ -104,8 +92,19 @@ trait ResourceMixin
         return $action;
     }
 
-    public static function configureDefaultAction(Action $action, ?string $relation = null): void
+    public static function configureAction(Action $action, ?string $relation = null): Action
     {
+        $action->slideOver();
+
+        $action->modalWidth(Width::Medium);
+
+        $action->modalIconColor(Color::Gray);
+
+        static::getNavigationIcon() |> $action->modalIcon(...);
+
+        static::getRecordTitleAttribute() |> $action->recordTitleAttribute(...);
+
+        return $action;
     }
 
     /**

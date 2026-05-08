@@ -9,7 +9,6 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
@@ -72,16 +71,18 @@ class DiscountResource extends FilamentResource
 
     public static function configureEditAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($action, $relation);
+        parent::configureEditAction($action, $relation);
 
-        return $action->hidden(static function (Discount $discount): bool {
+        $action->hidden(static function (Discount $discount): bool {
             return $discount->isFinished();
         });
+
+        return $action;
     }
 
     public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($action, $relation);
+        parent::configureCreateAction($action, $relation);
 
         $action->hidden(static function (Component $livewire): bool {
             /** @phpstan-ignore property.notFound */
@@ -95,13 +96,6 @@ class DiscountResource extends FilamentResource
         });
 
         return $action;
-    }
-
-    public static function configureDefaultCreateAction(Action $action, ?string $relation = null): void
-    {
-        $action->slideOver();
-
-        $action->modalWidth(Width::Medium);
     }
 
     public static function getRecordStatus(Discount $discount): BackedEnum

@@ -10,7 +10,6 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\Plugins\TranslationsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Translations\Pages\ManageTranslations;
@@ -61,18 +60,11 @@ class TranslationResource extends FilamentResource
 
     public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
-        static::configureAction($action);
+        parent::configureCreateAction($action);
 
         __('filament-essentials::translations-plugin.action.create.modal_heading') |> $action->modalHeading(...);
 
         return $action;
-    }
-
-    public static function configureDefaultAction(Action $action, ?string $relation = null): void
-    {
-        $action->slideOver();
-
-        $action->modalWidth(Width::Medium);
     }
 
     protected static function getEssentialsPlugin(): TranslationsPlugin
