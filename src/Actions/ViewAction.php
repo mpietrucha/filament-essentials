@@ -85,6 +85,20 @@ class ViewAction extends FilamentViewAction
         return $this->withCreateAction(false);
     }
 
+    #[\Override]
+    public function prepareModalAction(Action $action): Action
+    {
+        if ($action instanceof CreateAction) {
+            return $action;
+        }
+
+        if ($action instanceof EditAction) {
+            return $action;
+        }
+
+        return parent::prepareModalAction($action);
+    }
+
     protected function configureFormAction(Action $action): Action
     {
         $action->cancelParentActions();
