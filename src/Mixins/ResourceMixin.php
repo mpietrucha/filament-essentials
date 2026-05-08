@@ -74,14 +74,6 @@ trait ResourceMixin
 
     public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
-        $action->modalHeading(static function (): string {
-            $label = static::getTitleCaseModelLabel();
-
-            return __('filament-actions::create.single.modal.heading', ['label' => $label]);
-        });
-
-        static::getModel() |> $action->model(...);
-
         static::configureAction($action, $relation);
 
         return $action;
@@ -96,6 +88,18 @@ trait ResourceMixin
         static::getRecordTitleAttribute() |> $action->recordTitleAttribute(...);
 
         static::configureDefaultAction($action, $relation);
+
+        if (! $action instanceof CreateAction) {
+            return $action;
+        }
+
+        $action->modalHeading(static function (): string {
+            $label = static::getTitleCaseModelLabel();
+
+            return __('filament-actions::create.single.modal.heading', ['label' => $label]);
+        });
+
+        static::getModel() |> $action->model(...);
 
         return $action;
     }
@@ -126,8 +130,10 @@ trait ResourceMixin
     {
         $resourceSchema ??= static::form(...);
 
-        $action->schema(static function (Model $record, Schema $schema) use ($resourceSchema): Schema {
-            return $schema->model($record) |> $resourceSchema;
+        $action->schema(static function (?Model $record, Schema $schema) use ($resourceSchema): Schema {
+            $model = $record ?? static::getModel();
+
+            return $schema->model($model) |> $resourceSchema;
         });
 
         return $action;

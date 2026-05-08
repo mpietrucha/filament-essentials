@@ -7,13 +7,11 @@ use BezhanSalleh\PluginEssentials\Concerns\Resource\HasLabels;
 use BezhanSalleh\PluginEssentials\Concerns\Resource\HasNavigation;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\PageRegistration;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
@@ -85,43 +83,25 @@ class DiscountResource extends FilamentResource
     {
         static::configureAction($action, $relation);
 
-        $action->hidden(static function (Component $livewire, Model $record): bool {
-            if (! $livewire instanceof RelationManager) {
-                /** @var Discount $record */
-                return $record->isActive();
+        $action->hidden(static function (Component $livewire): bool {
+            /** @phpstan-ignore property.notFound */
+            $discount = $livewire->getFilamentRecord()?->discount;
+
+            if (! $discount instanceof Discount) {
+                return true;
             }
 
-            /** @phpstan-ignore property.notFound, property.nonObject, method.nonObject */
-            return $livewire->getOwnerRecord()->discounts->filter->isActive() |> filled(...);
-        });
-
-        $action->action(static function (array $data, Component $livewire, Model $record): Model {
-            if (! $livewire instanceof RelationManager) {
-                /** @var array<string, mixed> $data */
-                return $record->create($data);
-            }
-
-            $record = $livewire->getOwnerRecord();
-
-            /** @phpstan-ignore method.notFound */
-            $discounts = $record->discounts();
-
-            /** @var Relation<Model, Model, mixed> $relationship */
-            $relationship = match (true) {
-                $discounts instanceof HasManyThrough => $discounts->getParent()
-                    ->newQuery()
-                    ->where($discounts->getFirstKeyName(), $record->getKey())
-                    ->sole()
-                    /** @phpstan-ignore method.notFound */
-                    ->discounts(),
-                default => $discounts,
-            };
-
-            /** @var array<string, mixed> $data */
-            return $relationship->create($data);
+            return $discount->isActive();
         });
 
         return $action;
+    }
+
+    public static function configureDefaultCreateAction(Action $action, ?string $relation = null): void
+    {
+        $action->slideOver();
+
+        $action->modalWidth(Width::Medium);
     }
 
     public static function getRecordStatus(Discount $discount): BackedEnum
