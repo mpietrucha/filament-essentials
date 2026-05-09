@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Mpietrucha\Filament\Essentials\Actions;
 
+use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\ViewAction as FilamentViewAction;
 use Filament\Resources\Resource;
@@ -11,6 +10,8 @@ use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 
 /**
+ * @method null|Component getLivewire()
+ *
  * @phpstan-type FilamentResource class-string<Resource>
  */
 class ViewAction extends FilamentViewAction
@@ -18,125 +19,144 @@ class ViewAction extends FilamentViewAction
     use HasRelation;
 
     /**
-     * @var null|FilamentResource
+     * @var null|class-string
      */
-    protected ?string $formActionsResource = null;
+    protected ?string $formActionsContainer = null;
 
-    protected bool $withEditAction = true;
+    protected bool|Closure $withEditAction = true;
 
-    protected bool $withCreateAction = true;
+    protected bool|Closure $withCreateAction = false;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->extraModalFooterActions(function (): array {
-            $resource = $this->formActionsResource;
+            $container = $this->getFormActionsContainer();
 
             $actions = [];
 
-            if ($resource === null) {
+            if ($container === null) {
                 return $actions;
             }
 
-            if ($this->withEditAction) {
-                $actions[] = $resource::getEditAction() |> $this->configureFormAction(...);
+            if ($callback = $this->withEditAction) {
+                $actions[] = $this->buildFormAction($container::getEditAction(), $callback);
             }
 
-            if ($this->withCreateAction) {
-                $actions[] = $resource::getCreateAction() |> $this->configureFormAction(...);
+            if ($callback = $this->withCreateAction) {
+                $actions[] = $this->buildFormAction($container::getCreateAction(), $callback);
             }
 
-            return $actions;
+            return array_filter($actions);
         });
     }
 
     /**
-     * @param  FilamentResource  $formActionsResource
+     * @param  class-string  $formActionsContainer
      */
-    public function withFormActionsResource(string $formActionsResource): static
+    public function withFormActionsContainer(string $formActionsContainer): static
     {
-        $this->formActionsResource = $formActionsResource;
+        if (! method_exists($formActionsContainer, 'getEditAction')) {
+            return $this;
+        }
+
+        if (! method_exists($formActionsContainer, 'getCreateAction')) {
+            return $this;
+        }
+
+        if (! method_exists($formActionsContainer, 'configureActionSchema')) {
+            return $this;
+        }
+
+        $this->formActionsContainer = $formActionsContainer;
 
         return $this;
     }
 
-    public function withEditAction(bool $withEditAction = true): static
+    public function withEditAction(?Closure $withEditAction = null): static
     {
-        $this->withEditAction = $withEditAction;
+        $this->withEditAction = $withEditAction ?? true;
 
         return $this;
     }
 
-    final public function withoutEditAction(): static
+    public function withoutEditAction(): static
     {
-        return $this->withEditAction(false);
-    }
-
-    public function withCreateAction(bool $withCreateAction = true): static
-    {
-        $this->withCreateAction = $withCreateAction;
+        $this->withEditAction = false;
 
         return $this;
     }
 
-    final public function withoutCreateAction(): static
+    public function withCreateAction(?Closure $withCreateAction = null): static
     {
-        return $this->withCreateAction(false);
+        $this->withCreateAction = $withCreateAction ?? true;
+
+        return $this;
+    }
+
+    public function withoutCreateAction(): static
+    {
+        $this->withCreateAction = false;
+
+        return $this;
     }
 
     #[\Override]
     public function prepareModalAction(Action $action): Action
     {
-        if ($action instanceof CreateAction) {
-            $action->createAnother(false);
-
+        if ($action instanceof EditAction) {
             return $action;
         }
 
-        if ($action instanceof EditAction) {
+        if ($action instanceof CreateAction) {
             return $action;
         }
 
         return parent::prepareModalAction($action);
     }
 
-    protected function configureFormAction(Action $action): Action
+    protected function buildFormAction(mixed $action, mixed $callback = null): ?Action
     {
+        if ($callback === false) {
+            return null;
+        }
+
+        if (! $action instanceof Action) {
+            return null;
+        }
+
         $action->cancelParentActions();
 
         $action->extraModalWindowAttributes([
-            'x-init' => <<<'JS'
-                $nextTick(() => {
-                    const wire = $wire;
-                    const id = $el.closest('.fi-modal')?.id;
-                    if (!id) return;
-                    const controller = new AbortController();
-                    window.addEventListener('modal-closed', (e) => {
-                        if (e.detail.id !== id) return;
-                        e.stopImmediatePropagation();
-                        wire.unmountAction(true);
-                    }, { capture: true, signal: controller.signal });
-                    $cleanup(() => controller.abort());
-                })
-                JS,
+
         ]);
 
         $this->getRecord() |> $action->record(...);
 
-        /** @var null|Component $livewire */
-        $livewire = $this->getLivewire();
-
-        if ($livewire) {
+        if ($livewire = $this->getLivewire()) {
             $action->livewire($livewire);
         }
 
-        $resource = $this->formActionsResource ?? $livewire?->getFilamentResource();
-
-        if ($resource) {
-            $resource::configureActionSchema($action);
+        if ($container = $this->getFormActionsContainer()) {
+            $container::configureActionSchema($action);
         }
 
+        value($callback, $action);
+
         return $action;
+    }
+
+    /**
+     * @return null|class-string
+     */
+    protected function getFormActionsContainer(): ?string
+    {
+        if ($container = $this->formActionsContainer) {
+            return $container;
+        }
+
+        /** @var null|FilamentResource */
+        return $this->getLivewire()?->getFilamentResource();
     }
 }
