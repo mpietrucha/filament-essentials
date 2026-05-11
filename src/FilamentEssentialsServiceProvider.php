@@ -10,21 +10,19 @@ use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\TextEntry;
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Livewire\Component as LivewireComponent;
+use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
 use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
+use Mpietrucha\Filament\Essentials\Mixins\ComponentMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
-use Mpietrucha\Filament\Essentials\Mixins\LivewireComponentMixin;
-use Mpietrucha\Filament\Essentials\Mixins\RelationManagerMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ResourceMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
@@ -49,12 +47,11 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             Select::class => SelectMixin::class,
             Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,
+            Component::class => ComponentMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
             AttachAction::class => AttachActionMixin::class,
             SelectFilter::class => SelectFilterMixin::class,
-            RelationManager::class => RelationManagerMixin::class,
-            LivewireComponent::class => LivewireComponentMixin::class,
             IsRelatedToOperator::class => IsRelatedToOperatorMixin::class,
         ]);
 

@@ -13,7 +13,7 @@ trait InteractsWithActions
 {
     use Identifiable;
 
-    public static function action(): ExportAction
+    public static function getAction(): ExportAction
     {
         return ExportAction::make() |> static::configureAction(...);
     }

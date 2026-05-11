@@ -50,7 +50,7 @@ class DiscountsRelationManager extends RelationManager
     protected static function recordActions(): array
     {
         return [
-            static::getRelatedResource()::getEditAction(),
+            static::getEditAction(),
             static::getRelatedResource()::getFinishAction(),
         ];
     }

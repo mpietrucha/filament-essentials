@@ -11,12 +11,12 @@ use Mpietrucha\Filament\Essentials\Actions\ImportBulkAction;
  */
 trait InteractsWithActions
 {
-    public static function action(): ImportAction
+    public static function getAction(): ImportAction
     {
         return ImportAction::make() |> static::configureAction(...);
     }
 
-    public static function bulkAction(): ImportBulkAction
+    public static function getBulkAction(): ImportBulkAction
     {
         return ImportBulkAction::make() |> static::configureBulkAction(...);
     }

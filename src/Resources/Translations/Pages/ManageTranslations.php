@@ -28,7 +28,7 @@ class ManageTranslations extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            static::getResource()::getCreateAction(),
+            static::getCreateAction(),
         ];
     }
 }

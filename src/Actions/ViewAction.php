@@ -1,21 +1,31 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Mpietrucha\Filament\Essentials\Actions;
 
 use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\ViewAction as FilamentViewAction;
+use Filament\Resources\Resource;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 
 /**
- * @method null|Component getLivewire()
+ * @phpstan-type FormActionsResource class-string<Resource>
+ * @phpstan-type FormActionsLivewire class-string<Component>
  */
 class ViewAction extends FilamentViewAction
 {
     use HasRelation;
+
+    /**
+     * @var null|FormActionsResource
+     */
+    protected ?string $formActionsResource = null;
+
+    /**
+     * @var null|FormActionsLivewire
+     */
+    protected ?string $formActionsLivewire = null;
 
     protected bool|Closure $withEditAction = true;
 
@@ -26,7 +36,7 @@ class ViewAction extends FilamentViewAction
         parent::setUp();
 
         $this->extraModalFooterActions(function (): array {
-            $container = $this->getLivewire()?->getFilamentActionsContainer();
+            $container = $this->formActionsLivewire ?? $this->formActionsResource;
 
             $actions = [];
 
@@ -35,15 +45,35 @@ class ViewAction extends FilamentViewAction
             }
 
             if ($callback = $this->withEditAction) {
-                $actions[] = $this->buildFormAction($container::getEditAction(), $callback);
+                $actions[] = $this->configureFormAction($container::getEditAction(), $callback);
             }
 
             if ($callback = $this->withCreateAction) {
-                $actions[] = $this->buildFormAction($container::getCreateAction(), $callback);
+                $actions[] = $this->configureFormAction($container::getCreateAction(), $callback);
             }
 
-            return array_filter($actions);
+            return $actions;
         });
+    }
+
+    /**
+     * @param  FormActionsResource  $formActionsResource
+     */
+    public function withFormActionsResource(string $formActionsResource): static
+    {
+        $this->formActionsResource = $formActionsResource;
+
+        return $this;
+    }
+
+    /**
+     * @param  FormActionsLivewire  $formActionsLivewire
+     */
+    public function withFormActionsLivewire(string $formActionsLivewire): static
+    {
+        $this->formActionsLivewire = $formActionsLivewire;
+
+        return $this;
     }
 
     public function withEditAction(?Closure $withEditAction = null): static
@@ -77,36 +107,29 @@ class ViewAction extends FilamentViewAction
     #[\Override]
     public function prepareModalAction(Action $action): Action
     {
-        if ($action instanceof EditAction) {
+        if ($action instanceof CreateAction) {
             return $action;
         }
 
-        if ($action instanceof CreateAction) {
+        if ($action instanceof EditAction) {
             return $action;
         }
 
         return parent::prepareModalAction($action);
     }
 
-    protected function buildFormAction(mixed $action, mixed $callback = null): ?Action
+    protected function configureFormAction(Action $action, bool|Closure $callback): Action
     {
-        if ($callback === false || ! $action instanceof Action) {
-            return null;
-        }
-
-        $this->getRecord() |> $action->record(...);
-
-        if ($livewire = $this->getLivewire()) {
+        if (null !== $livewire = $this->getLivewire()) {
+            /** @var Component $livewire */
             $action->livewire($livewire);
         }
 
-        if ($resource = $livewire?->getFilamentResource()) {
+        if ($resource = $this->formActionsResource) {
             $resource::configureActionSchema($action);
         }
 
-        if ($action instanceof CreateAction) {
-            $action->createAnother(false);
-        }
+        $this->getRecord() |> $action->record(...);
 
         $action->alwaysCancelParentActions();
 

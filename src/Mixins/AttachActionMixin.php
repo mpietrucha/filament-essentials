@@ -4,14 +4,14 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Select;
-use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarConfigurator;
+use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarBuilderClosure;
 
 /**
  * @phpstan-require-extends AttachAction
  */
 trait AttachActionMixin
 {
-    use HasAvatarConfigurator;
+    use HasAvatarBuilderClosure;
 
     public function withAvatars(?string $attribute = null): static
     {
@@ -19,7 +19,7 @@ trait AttachActionMixin
             return $select->allowHtml();
         });
 
-        return static::getAvatarConfigurator(
+        return static::getAvatarBuilderClosure(
             $attribute,
             fn (): ?string => $this->getTable()?->getRecordTitleAttribute(),
         ) |> $this->recordTitle(...);

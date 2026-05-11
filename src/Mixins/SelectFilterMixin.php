@@ -4,7 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarConfigurator;
+use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarBuilderClosure;
 use Mpietrucha\Support\Str;
 
 /**
@@ -12,11 +12,11 @@ use Mpietrucha\Support\Str;
  */
 trait SelectFilterMixin
 {
-    use HasAvatarConfigurator;
+    use HasAvatarBuilderClosure;
 
     public function withAvatars(?string $attribute = null): static
     {
-        return static::getAvatarConfigurator(
+        return static::getAvatarBuilderClosure(
             $attribute,
             $this->getRelationshipTitleAttribute(...)
         ) |> $this->getOptionLabelFromRecordUsing(...);
