@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Actions\Action;
+use MatthiasMullie\Minify\JS;
 
 /**
  * @phpstan-require-extends Action
@@ -37,7 +38,9 @@ trait ActionMixin
             })
         JS;
 
-        $this->extraModalWindowAttributes(['x-init' => $script], true);
+        $this->extraModalWindowAttributes([
+            'x-init' => new JS($script)->minify(),
+        ], true);
 
         return $this;
     }
