@@ -6,6 +6,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-extends Component
@@ -51,5 +52,20 @@ trait LivewireComponentMixin
         }
 
         return $resource;
+    }
+
+    /**
+     * @return null|FilamentResource|class-string<RelationManager>
+     */
+    public function getFilamentActionsContainer(): ?string
+    {
+        $container = $this instanceof RelationManager ? $this : $this->getFilamentResource();
+
+        if ($container === null) {
+            return null;
+        }
+
+        /** @var FilamentResource|class-string<RelationManager> */
+        return Instance::namespace($container);
     }
 }

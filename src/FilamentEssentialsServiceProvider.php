@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials;
 
+use Filament\Actions\Action;
 use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
@@ -17,6 +18,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Livewire\Component as LivewireComponent;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
+use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
@@ -43,6 +45,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
 
         $package->hasMixins([
             Field::class => FieldMixin::class,
+            Action::class => ActionMixin::class,
             Select::class => SelectMixin::class,
             Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,

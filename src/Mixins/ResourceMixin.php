@@ -37,10 +37,6 @@ trait ResourceMixin
     {
         static::configureAction($action, $relation);
 
-        if ($action instanceof ViewAction) {
-            $action->withFormActionsContainer(static::class);
-        }
-
         return $action;
     }
 
