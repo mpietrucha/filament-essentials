@@ -94,11 +94,7 @@ class ViewAction extends FilamentViewAction
             return null;
         }
 
-        $action->alwaysCancelParentActions();
-
-        if ($action instanceof CreateAction) {
-            $action->createAnother(false);
-        }
+        $this->getRecord() |> $action->record(...);
 
         if ($livewire = $this->getLivewire()) {
             $action->livewire($livewire);
@@ -107,6 +103,12 @@ class ViewAction extends FilamentViewAction
         if ($resource = $livewire?->getFilamentResource()) {
             $resource::configureActionSchema($action);
         }
+
+        if ($action instanceof CreateAction) {
+            $action->createAnother(false);
+        }
+
+        $action->alwaysCancelParentActions();
 
         value($callback, $action);
 
