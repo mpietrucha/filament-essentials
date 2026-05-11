@@ -34,6 +34,7 @@ trait ActionMixin
 
                     e.stopImmediatePropagation();
                 }, { capture: true, signal: controller.signal });
+            })
         JS;
 
         $this->extraModalWindowAttributes(['x-init' => $script], true);
