@@ -32,6 +32,7 @@ return RectorConfig::configure()
             'src/Record/Context.php',
             'src/Mixins/TextColumnMixin.php',
             'src/Mixins/SelectFilterMixin.php',
+            'src/Actions/ViewAction.php',
             'src/Resources/Translations/Schemas/TranslationForm.php',
             'src/Resources/Discounts/Tables/DiscountsTable.php',
             'src/Resources/Discounts/DiscountResource.php',
@@ -45,6 +46,7 @@ return RectorConfig::configure()
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
+            'src/Resources/Discounts/Schemas/DiscountForm.php',
         ],
     ])
     ->withRules([

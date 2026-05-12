@@ -5,7 +5,10 @@ namespace Mpietrucha\Filament\Essentials\Actions;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\ViewAction as FilamentViewAction;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
 
@@ -120,6 +123,15 @@ class ViewAction extends FilamentViewAction
 
     protected function configureFormEditAction(EditAction $editAction): EditAction
     {
+        $editAction->authorize(static function (Component $livewire, Model $record) use ($editAction): Response {
+            if ($livewire instanceof RelationManager) {
+                return $livewire->getAuthorizationResponse('update', $record);
+            }
+
+            /** @phpstan-ignore method.notFound, return.type */
+            return $livewire->getDefaultActionAuthorizationResponse($editAction) ?? Response::allow();
+        });
+
         return $editAction;
     }
 

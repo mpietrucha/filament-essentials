@@ -12,6 +12,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
@@ -83,6 +84,10 @@ class DiscountResource extends FilamentResource
     public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
         parent::configureCreateAction($action, $relation);
+
+        if ($action instanceof CreateAction) {
+            $action->createAnother(false);
+        }
 
         $action->hidden(static function (Component $livewire): bool {
             /** @phpstan-ignore property.notFound */
