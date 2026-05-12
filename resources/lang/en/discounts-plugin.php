@@ -45,9 +45,18 @@ return [
         ],
     ],
 
-    'actions' => [
+    'action' => [
         'finish' => [
             'label' => 'Finish',
+        ],
+        'create' => [
+            'modal_label' => 'Create Discount',
+        ],
+        'edit' => [
+            'modal_label' => 'Edit Discount',
+        ],
+        'view' => [
+            'modal_label' => 'View Discount',
         ],
     ],
 ];

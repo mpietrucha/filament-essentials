@@ -103,6 +103,15 @@ class DiscountResource extends FilamentResource
         return $action;
     }
 
+    public static function configureAction(Action $action, ?string $relation = null): Action
+    {
+        $heading = sprintf('filament-essentials::discounts-plugin.%s.modal_label', $action->getOperation()->value) |> __(...);
+
+        $action->modalHeading($heading);
+
+        return $action;
+    }
+
     public static function getRecordStatus(Discount $discount): BackedEnum
     {
         $status = $discount->status;

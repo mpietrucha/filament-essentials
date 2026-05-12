@@ -19,7 +19,7 @@ class FinishDiscountAction extends Action
     {
         parent::setUp();
 
-        __('filament-essentials::discounts-plugin.actions.finish.label') |> $this->label(...);
+        __('filament-essentials::discounts-plugin.action.finish.label') |> $this->label(...);
 
         $this->icon(Heroicon::XMark);
 

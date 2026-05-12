@@ -3,12 +3,27 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Support\Enums\Operation;
+use Mpietrucha\Support\Exception\RuntimeException;
 
 /**
  * @phpstan-require-extends Action
  */
 trait ActionMixin
 {
+    public function getOperation(): Operation
+    {
+        return match (true) {
+            $this instanceof CreateAction => Operation::Create,
+            $this instanceof EditAction => Operation::Edit,
+            $this instanceof ViewAction => Operation::View,
+            default => RuntimeException::throw('Cannot resolve operation for this Action instance'),
+        };
+    }
+
     public function alwaysCancelParentActions(): static
     {
         $this->cancelParentActions();

@@ -45,9 +45,18 @@ return [
         ],
     ],
 
-    'actions' => [
+    'action' => [
         'finish' => [
             'label' => 'Zakończ',
+        ],
+        'create' => [
+            'modal_label' => 'Utwórz Zniżkę',
+        ],
+        'edit' => [
+            'modal_label' => 'Edytuj Zniżkę',
+        ],
+        'view' => [
+            'modal_label' => 'Podgląd Zniżki',
         ],
     ],
 ];

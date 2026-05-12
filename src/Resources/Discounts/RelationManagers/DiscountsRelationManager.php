@@ -29,6 +29,7 @@ class DiscountsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->defaultSort('active_from', 'desc')
             ->headerActions(static::headerActions())
             ->recordActions(static::recordActions())
             ->toolbarActions(static::toolbarActions());
