@@ -149,14 +149,8 @@ class DiscountForm
 
     protected static function hydrateQuota(Set $set, mixed $state = null): void
     {
-        if ($state === null) {
-            $set('quota', null);
-
-            return;
-        }
-
         /** @var null|Quota $quota */
-        $quota = Quota::getModel()::query()->find($state);
+        $quota = $state === null ? null : Quota::getModel()::query()->find($state);
 
         $set('quota.name', $quota?->name);
         $set('quota.limit', $quota?->limit);
