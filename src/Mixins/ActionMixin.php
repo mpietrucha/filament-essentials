@@ -24,8 +24,6 @@ trait ActionMixin
 
                 const controller = new AbortController();
 
-                $cleanup(() => controller.abort());
-
                 window.addEventListener('modal-closed', e => {
                     if (e.detail.id !== id) {
                         return;
@@ -35,6 +33,8 @@ trait ActionMixin
 
                     e.stopImmediatePropagation();
                 }, { capture: true, signal: controller.signal });
+
+                $cleanup(() => controller.abort());
             })
         JS;
 
