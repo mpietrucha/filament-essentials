@@ -33,16 +33,16 @@ class TrashedOperator extends Operator
     }
 
     /**
-     * @param  TrashedOperatorQuery  $query
+     * @param  TrashedOperatorQuery  $builder
      * @return TrashedOperatorQuery
      */
     #[\Override]
-    public function applyToBaseFilterQuery(Builder $query): Builder
+    public function applyToBaseFilterQuery(Builder $builder): Builder
     {
         /** @var TrashedOperatorQuery */
         return match (true) {
-            $this->isInverse() => $query->withTrashed(), /** @phpstan-ignore method.notFound */
-            default => $query->onlyTrashed(), /** @phpstan-ignore method.notFound */
+            $this->isInverse() => $builder->withTrashed(), /** @phpstan-ignore method.notFound */
+            default => $builder->onlyTrashed(), /** @phpstan-ignore method.notFound */
         };
     }
 }

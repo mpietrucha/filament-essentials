@@ -32,7 +32,7 @@ class TextFilter extends BaseFilter
     {
     }
 
-    public function apply(Builder $query, array $data = []): Builder
+    public function apply(Builder $builder, array $data = []): Builder
     {
     }
 
@@ -52,7 +52,7 @@ class TextFilter extends BaseFilter
     {
     }
 
-    protected function getQueryColumn(Builder $query): string
+    protected function getQueryColumn(Builder $builder): string
     {
     }
 

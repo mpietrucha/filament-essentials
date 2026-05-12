@@ -31,9 +31,9 @@ trait SelectFilterMixin
 
         $attribute = Str::afterLast($attribute, $indicator);
 
-        return $this->query(fn (Builder $query, array $data): Builder => $query->whereHas(
+        return $this->query(fn (Builder $builder, array $data): Builder => $builder->whereHas(
             $relationship,
-            function (Builder $query) use ($attribute, $data): void {
+            function (Builder $builder) use ($attribute, $data): void {
                 $value = collect($data)->flatten();
 
                 if (false === $isMultiple = $this->isMultiple()) {
@@ -44,7 +44,7 @@ trait SelectFilterMixin
                     return;
                 }
 
-                $query->{$isMultiple ? 'whereIn' : 'where'}($attribute, $value);
+                $builder->{$isMultiple ? 'whereIn' : 'where'}($attribute, $value);
             }
         ));
     }

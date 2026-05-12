@@ -101,8 +101,10 @@ class DiscountForm
                                     $livewire->js('$wire.$refresh()');
                                 }),
                         ])
-                        ->relationship('quota', 'name', static function (Builder $query): void {
-                            $query->whereNotNull('name');
+                        ->relationship('quota', 'name', static function (Builder $builder): void {
+                            /** @var Builder<Quota> $builder */
+                            $builder->active();
+                            $builder->whereNotNull('name');
                         })
                         ->getSelectedRecordUsing(static function (string $state): ?Quota {
                             return Quota::getModel()::query()->find($state);
