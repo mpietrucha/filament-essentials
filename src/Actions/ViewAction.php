@@ -107,15 +107,27 @@ class ViewAction extends FilamentViewAction
     #[\Override]
     public function prepareModalAction(Action $action): Action
     {
-        if ($action instanceof CreateAction) {
-            return $action;
+        if ($action instanceof EditAction) {
+            return $this->configureFormEditAction($action);
         }
 
-        if ($action instanceof EditAction) {
-            return $action;
+        if ($action instanceof CreateAction) {
+            return $this->configureFormCreateAction($action);
         }
 
         return parent::prepareModalAction($action);
+    }
+
+    protected function configureFormEditAction(EditAction $editAction): EditAction
+    {
+        return $editAction;
+    }
+
+    protected function configureFormCreateAction(CreateAction $createAction): CreateAction
+    {
+        $createAction->createAnother(false);
+
+        return $createAction;
     }
 
     protected function configureFormAction(Action $action, bool|Closure $callback): Action
