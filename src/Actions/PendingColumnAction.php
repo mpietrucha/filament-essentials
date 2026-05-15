@@ -11,6 +11,11 @@ class PendingColumnAction extends Action
 {
     protected ?Closure $resolver = null;
 
+    public static function getDefaultName(): string
+    {
+        return 'pending-action';
+    }
+
     public function resolver(Closure $resolver): static
     {
         $this->resolver = $resolver;
@@ -35,6 +40,10 @@ class PendingColumnAction extends Action
         if (! $action instanceof Action) {
             RuntimeException::throw('Action resolver must return Action instance');
         }
+
+        $action->table($table);
+
+        $this->getName() |> $action->name(...);
 
         /** @phpstan-ignore return.type */
         return $action;
