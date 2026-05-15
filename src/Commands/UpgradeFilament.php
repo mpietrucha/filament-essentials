@@ -66,8 +66,8 @@ class UpgradeFilament extends Command
     protected function actionBelongsToTableTrait(): void
     {
         $files = [
-            base_path('src/Action/PendingColumnAction.php'),
             base_path('vendor/filament/actions/src/Concerns/BelongsToTable.php'),
+            base_path('vendor/mpietrucha/filament-essentials/src/Actions/PendingColumnAction.php'),
         ];
 
         $signature = 'public function table(?Table $table): %s';
