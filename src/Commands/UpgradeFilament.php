@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
 
 class UpgradeFilament extends Command
@@ -70,12 +70,14 @@ class UpgradeFilament extends Command
             base_path('vendor/mpietrucha/filament-essentials/src/Actions/PendingColumnAction.php'),
         ];
 
-        $signature = 'public function table(?Table $table): %s';
+        $methodSignature = 'public function table(?Table $table): %s';
+
+        $returnType = sprintf('\%s|\%s', Action::class, ActionGroup::class);
 
         $this->replace(
             $files,
-            sprintf($signature, 'static'),
-            sprintf($signature, ClassNamespace::canonicalize(Action::class)),
+            sprintf($methodSignature, 'static'),
+            sprintf($methodSignature, $returnType),
         );
     }
 
