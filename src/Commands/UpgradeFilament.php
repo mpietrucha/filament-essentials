@@ -6,6 +6,7 @@ namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Filament\Actions\Action;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
 
@@ -35,57 +36,60 @@ class UpgradeFilament extends Command
 
     protected function select(): void
     {
-        $select = public_path('js/filament/forms/components/select.js');
-
-        if (Filesystem::unexists($select)) {
-            return;
-        }
-
         $indicator = 'o.className="fi-dropdown-header"';
 
-        Filesystem::replaceInFile(
+        $this->replace(
+            public_path('js/filament/forms/components/select.js'),
             sprintf('%s,o.textContent=t', $indicator),
-            sprintf('%s,this.isHtmlAllowed?o.innerHTML=t:o.textContent=t', $indicator),
-            $select
+            sprintf('%s,this.isHtmlAllowed?o.innerHTML=t:o.textContent=t', $indicator)
         );
     }
 
     protected function selectFilter(): void
     {
-        $selectFilter = base_path('vendor/filament/tables/src/Filters/SelectFilter.php');
-
-        if (Filesystem::unexists($selectFilter)) {
-            return;
-        }
-
-        Filesystem::replaceInFile('return $field;', 'return $field->allowHtml();', $selectFilter);
+        $this->replace(
+            base_path('vendor/filament/tables/src/Filters/SelectFilter.php'),
+            'return $field;',
+            'return $field->allowHtml();',
+        );
     }
 
     protected function isRelatedToOperator(): void
     {
-        $isRelatedToOperator = base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php');
-
-        if (Filesystem::unexists($isRelatedToOperator)) {
-            return;
-        }
-
-        Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $isRelatedToOperator);
+        $this->replace(
+            base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php'),
+            'return [$field];',
+            'return [$field->allowHtml()];',
+        );
     }
 
     protected function actionBelongsToTableTrait(): void
     {
-        $belongsToTableTrait = base_path('vendor/filament/actions/src/Concerns/BelongsToTable.php');
+        $files = [
+            base_path('src/Action/PendingColumnAction.php'),
+            base_path('vendor/filament/actions/src/Concerns/BelongsToTable.php'),
+        ];
 
-        if (Filesystem::unexists($belongsToTableTrait)) {
-            return;
-        }
+        $signature = 'public function table(?Table $table): %s';
 
-        $indicator = 'public function table(?Table $table): %s';
-
-        Filesystem::replaceInFile(
-            sprintf($indicator, 'static'),
-            sprintf($indicator, ClassNamespace::canonicalize(Action::class)),
-            $belongsToTableTrait,
+        $this->replace(
+            $files,
+            sprintf($signature, 'static'),
+            sprintf($signature, ClassNamespace::canonicalize(Action::class)),
         );
+    }
+
+    /**
+     * @param  string|array<string>  $files
+     */
+    protected function replace(array|string $files, string $from, string $to): void
+    {
+        $files = Collection::wrap($files)->filter(Filesystem::exists(...));
+
+        $files->each(static fn (string $file) => Filesystem::replaceInFile(
+            $from,
+            $to,
+            $file,
+        ));
     }
 }
