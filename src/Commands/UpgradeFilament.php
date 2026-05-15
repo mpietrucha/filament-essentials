@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Commands;
 
+use Filament\Actions\Action;
 use Illuminate\Console\Command;
-use Mpietrucha\Filament\Essentials\Actions\ColumnActionResolver;
+use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
 
 class UpgradeFilament extends Command
@@ -27,7 +28,7 @@ class UpgradeFilament extends Command
         $this->select();
         $this->selectFilter();
         $this->isRelatedToOperator();
-        $this->columnCanCallActionTrait();
+        $this->actionBelongsToTableTrait();
 
         $this->info('Filament upgraded successfully.');
     }
@@ -71,18 +72,20 @@ class UpgradeFilament extends Command
         Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $isRelatedToOperator);
     }
 
-    protected function columnCanCallActionTrait(): void
+    protected function actionBelongsToTableTrait(): void
     {
-        $canCallActionTrait = base_path('vendor/filament/tables/src/Columns/Concerns/CanCallAction.php');
+        $belongsToTableTrait = base_path('vendor/filament/actions/src/Concerns/BelongsToTable.php');
 
-        if (Filesystem::unexists($canCallActionTrait)) {
+        if (Filesystem::unexists($belongsToTableTrait)) {
             return;
         }
 
+        $indicator = 'public function table(?Table $table): %s';
+
         Filesystem::replaceInFile(
-            'return $this->action;',
-            sprintf('return \%s::resolve($this);', ColumnActionResolver::class),
-            $canCallActionTrait
+            sprintf($indicator, 'static'),
+            sprintf($indicator, ClassNamespace::canonicalize(Action::class)),
+            $belongsToTableTrait,
         );
     }
 }
