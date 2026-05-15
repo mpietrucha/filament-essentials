@@ -2,7 +2,6 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
-use Closure;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
@@ -44,10 +43,5 @@ trait TextColumnMixin
                 Blade::renderSuffixBadge(sprintf('+%s', $results->count()))
             ));
         });
-    }
-
-    public function resolveActionUsing(Closure $actionResolver): static
-    {
-        return $this->action($actionResolver);
     }
 }

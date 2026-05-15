@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Filament\Infolists\Components\TextEntry;
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -19,6 +20,7 @@ use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
 use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
+use Mpietrucha\Filament\Essentials\Mixins\ColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ComponentMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
@@ -44,6 +46,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
         $package->hasMixins([
             Field::class => FieldMixin::class,
             Action::class => ActionMixin::class,
+            Column::class => ColumnMixin::class,
             Select::class => SelectMixin::class,
             Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,
