@@ -124,14 +124,12 @@ class DiscountForm
                                 return __('filament-essentials::discounts-plugin.form.quota.empty_name');
                             }
 
-                            /** @phpstan-ignore property.notFound */
                             $discounts = $quota->discounts_count;
 
-                            if ($discounts === null || $discounts === 0) {
+                            if ($discounts === 0) {
                                 return $name;
                             }
 
-                            /** @var int $discounts */
                             $badge = Blade::renderBadge((string) $discounts, [
                                 'class' => 'ml-1',
                             ]);

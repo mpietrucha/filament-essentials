@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Illuminate\Console\Command;
+use Mpietrucha\Filament\Essentials\Actions\ColumnActionResolver;
 use Mpietrucha\Support\Filesystem;
 
 class UpgradeFilament extends Command
@@ -19,13 +20,14 @@ class UpgradeFilament extends Command
      * @var string
      */
     #[\Override]
-    protected $description = 'Patch Filament source to enabled additional features';
+    protected $description = 'Patch Filament source to enable additional features';
 
     public function handle(): void
     {
         $this->select();
         $this->selectFilter();
         $this->isRelatedToOperator();
+        $this->columnCanCallActionTrait();
 
         $this->info('Filament upgraded successfully.');
     }
@@ -67,5 +69,20 @@ class UpgradeFilament extends Command
         }
 
         Filesystem::replaceInFile('return [$field];', 'return [$field->allowHtml()];', $isRelatedToOperator);
+    }
+
+    protected function columnCanCallActionTrait(): void
+    {
+        $canCallActionTrait = base_path('vendor/filament/tables/src/Columns/Concerns/CanCallAction.php');
+
+        if (Filesystem::unexists($canCallActionTrait)) {
+            return;
+        }
+
+        Filesystem::replaceInFile(
+            'return $this->action;',
+            sprintf('return %s::resolve($this)', ColumnActionResolver::class),
+            $canCallActionTrait
+        );
     }
 }

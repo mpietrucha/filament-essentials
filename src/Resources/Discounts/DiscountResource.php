@@ -105,9 +105,11 @@ class DiscountResource extends FilamentResource
 
     public static function configureAction(Action $action, ?string $relation = null): Action
     {
-        $heading = sprintf('filament-essentials::discounts-plugin.%s.modal_label', $action->getOperation()->value) |> __(...);
+        parent::configureAction($action, $relation);
 
-        $action->modalHeading($heading);
+        $operation = $action->getOperation()->value;
+
+        __(sprintf('filament-essentials::discounts-plugin.action.%s.modal_label', $operation)) |> $action->modalHeading(...);
 
         return $action;
     }

@@ -2,9 +2,11 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
+use Closure;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
+use Mpietrucha\Filament\Essentials\Actions\PendingColumnAction;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasPriceWithDiscount;
 
@@ -43,5 +45,12 @@ trait TextColumnMixin
                 Blade::renderSuffixBadge(sprintf('+%s', $results->count()))
             ));
         });
+    }
+
+    public function resolveActionUsing(Closure $actionResolver): static
+    {
+        $pendingColumnAction = PendingColumnAction::make();
+
+        return $pendingColumnAction->actionResolver($actionResolver) |> $this->action(...);
     }
 }
