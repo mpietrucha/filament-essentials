@@ -17,7 +17,6 @@ trait ColumnMixin
 
         $this->action($pendingColumnAction);
 
-        /** @phpstan-ignore return.type */
-        return $pendingColumnAction;
+        return $this;
     }
 }
