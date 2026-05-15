@@ -81,7 +81,7 @@ class UpgradeFilament extends Command
 
         Filesystem::replaceInFile(
             'return $this->action;',
-            sprintf('return %s::resolve($this)', ColumnActionResolver::class),
+            sprintf('return \%s::resolve($this);', ColumnActionResolver::class),
             $canCallActionTrait
         );
     }
