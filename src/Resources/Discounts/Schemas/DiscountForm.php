@@ -107,7 +107,11 @@ class DiscountForm
                             /** @var Builder<Quota> $builder */
                             $builder->active();
                             $builder->whereNotNull('name');
-                            $builder->withCount('discounts');
+
+                            $builder->withCount(['discounts' => static function (Builder $builder): void {
+                                /** @var Builder<Discount> $builder */
+                                $builder->active($withQuota = false);
+                            }]);
                         })
                         ->getSelectedRecordUsing(static function (string $state): ?Quota {
                             return Quota::getModel()::query()->find($state);
