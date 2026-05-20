@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
+use Mpietrucha\Support\Str;
 
 class UpgradeFilament extends Command
 {
@@ -83,10 +84,14 @@ class UpgradeFilament extends Command
     {
         $files = Collection::wrap($files)->filter(Filesystem::exists(...));
 
-        $files->each(static fn (string $file) => Filesystem::replaceInFile(
-            $from,
-            $to,
-            $file,
-        ));
+        $files->each(static function (string $file) use ($from, $to): void {
+            $contents = Filesystem::get($file);
+
+            if (Str::contains($contents, $to)) {
+                return;
+            }
+
+            Filesystem::put($file, Str::replace($from, $to, $contents));
+        });
     }
 }
