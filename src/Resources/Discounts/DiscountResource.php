@@ -9,6 +9,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource as FilamentResource;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
@@ -106,6 +107,8 @@ class DiscountResource extends FilamentResource
     public static function configureAction(Action $action, ?string $relation = null): Action
     {
         parent::configureAction($action, $relation);
+
+        $action->modalWidth(Width::Large);
 
         $operation = $action->getOperation()->value;
 
