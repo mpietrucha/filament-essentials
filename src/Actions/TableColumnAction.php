@@ -21,6 +21,11 @@ class TableColumnAction extends Action
         return $action->getResolvedAction();
     }
 
+    public static function getDefaultName(): string
+    {
+        return 'table-column-action';
+    }
+
     public function resolveActionUsing(Closure $resolveActionUsing): static
     {
         $this->resolveActionUsing = $resolveActionUsing;
