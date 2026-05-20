@@ -4,18 +4,16 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Closure;
 use Filament\Tables\Columns\Column;
-use Mpietrucha\Filament\Essentials\Actions\PendingColumnAction;
+use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 
 /**
  * @phpstan-require-extends Column
  */
 trait ColumnMixin
 {
-    public function resolveActionUsing(Closure $actionResolver): static
+    public function resolveActionUsing(Closure $resolveActionUsing): static
     {
-        $pendingColumnAction = PendingColumnAction::make()->resolver($actionResolver);
-
-        $this->action($pendingColumnAction);
+        TableColumnAction::make()->resolveActionUsing($resolveActionUsing) |> $this->action(...);
 
         return $this;
     }

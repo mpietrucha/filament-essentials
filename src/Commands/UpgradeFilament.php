@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Commands;
 
-use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
+use Mpietrucha\Support\Str;
 
 class UpgradeFilament extends Command
 {
@@ -30,7 +30,7 @@ class UpgradeFilament extends Command
         $this->select();
         $this->selectFilter();
         $this->isRelatedToOperator();
-        $this->actionBelongsToTableTrait();
+        $this->interactsWithActions();
 
         $this->info('Filament upgraded successfully.');
     }
@@ -64,25 +64,21 @@ class UpgradeFilament extends Command
         );
     }
 
-    protected function actionBelongsToTableTrait(): void
+    protected function interactsWithActions(): void
     {
-        $files = [
-            base_path('vendor/filament/actions/src/Concerns/BelongsToTable.php'),
-            base_path('vendor/mpietrucha/filament-essentials/src/Actions/PendingColumnAction.php'),
-        ];
+        $indicator = '$resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record);';
 
-        $methodSignature = 'public function table(?Table $table): %s';
-
-        $returnType = sprintf(
-            '%s|%s',
-            Action::class |> ClassNamespace::canonicalize(...),
-            ActionGroup::class |> ClassNamespace::canonicalize(...),
+        $definition = sprintf(
+            '%s%s$resolvedAction = %s::resolve($resolvedAction);',
+            $indicator,
+            Str::eol(),
+            ClassNamespace::canonicalize(TableColumnAction::class),
         );
 
         $this->replace(
-            $files,
-            sprintf($methodSignature, 'static'),
-            sprintf($methodSignature, $returnType),
+            base_path('vendor/filament/actions/src/Concerns/InteractsWithActions.php'),
+            $indicator,
+            $definition,
         );
     }
 
