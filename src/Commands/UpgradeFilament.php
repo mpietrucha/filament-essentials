@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
-use Mpietrucha\Support\Str;
 
 class UpgradeFilament extends Command
 {
@@ -66,19 +65,14 @@ class UpgradeFilament extends Command
 
     protected function interactsWithActions(): void
     {
-        $indicator = '$resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record);';
+        $indicator = '$resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record)';
 
-        $definition = sprintf(
-            '%s%s$resolvedAction = %s::resolve($resolvedAction);',
-            $indicator,
-            Str::eol(),
-            ClassNamespace::canonicalize(TableColumnAction::class),
-        );
+        $tableColumnAction = ClassNamespace::canonicalize(TableColumnAction::class);
 
         $this->replace(
             base_path('vendor/filament/actions/src/Concerns/InteractsWithActions.php'),
             $indicator,
-            $definition,
+            sprintf('$resolvedAction = %s::resolve(%s)', $tableColumnAction, $indicator),
         );
     }
 
