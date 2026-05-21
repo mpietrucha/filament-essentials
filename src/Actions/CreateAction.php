@@ -17,7 +17,7 @@ class CreateAction extends FilamentCreateAction
     {
         parent::record($record);
 
-        if ($this->parentRecord instanceof Model) {
+        if ($this->getParentRecord() instanceof Model) {
             return $this;
         }
 
@@ -28,11 +28,16 @@ class CreateAction extends FilamentCreateAction
         return $this;
     }
 
+    public function getParentRecord(): ?Model
+    {
+        return $this->parentRecord;
+    }
+
     #[\Override]
     protected function resolveDefaultClosureDependencyForEvaluationByName(string $parameterName): array
     {
         if ($parameterName === 'parentRecord') {
-            return [$this->parentRecord];
+            return [$this->getParentRecord()];
         }
 
         return parent::resolveDefaultClosureDependencyForEvaluationByName($parameterName);
