@@ -101,6 +101,8 @@ class DiscountResource extends FilamentResource
             return $discount->isActive();
         });
 
+        static::configureActionModalHeading($action);
+
         return $action;
     }
 
@@ -110,6 +112,13 @@ class DiscountResource extends FilamentResource
 
         $action->modalWidth(Width::Large);
 
+        static::configureActionModalHeading($action);
+
+        return $action;
+    }
+
+    public static function configureActionModalHeading(Action $action): Action
+    {
         $operation = $action->getOperation()->value;
 
         __(sprintf('filament-essentials::discounts-plugin.action.%s.modal_label', $operation)) |> $action->modalHeading(...);

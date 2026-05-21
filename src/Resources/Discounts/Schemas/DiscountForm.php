@@ -43,7 +43,8 @@ class DiscountForm
                         ->label(__('filament-essentials::discounts-plugin.form.price')),
 
                     TextInput::make('discount_percentage')
-                        ->label(__('filament-essentials::discounts-plugin.form.discount_percentage')),
+                        ->label(__('filament-essentials::discounts-plugin.form.discount_percentage'))
+                        ->suffix('%'),
                 ]),
 
             Fieldset::make(__('filament-essentials::discounts-plugin.form.activity'))
