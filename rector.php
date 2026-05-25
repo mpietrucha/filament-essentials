@@ -14,6 +14,8 @@ use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
 use RectorFilament\Rector\MethodCall\ModelToRecordClosureParamRector;
+use RectorLaravel\Rector\Class_\DescriptionPropertyToDescriptionAttributeRector;
+use RectorLaravel\Rector\Class_\SignaturePropertyToSignatureAttributeRector;
 use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
@@ -28,6 +30,8 @@ return RectorConfig::configure()
         RemoveNonExistingVarAnnotationRector::class,
         RemoveUselessParamTagRector::class,
         ClosureToArrowFunctionRector::class,
+        SignaturePropertyToSignatureAttributeRector::class,
+        DescriptionPropertyToDescriptionAttributeRector::class,
         RenameParamToMatchTypeRector::class => [
             'src/Record/Context.php',
             'src/Mixins/TextColumnMixin.php',
