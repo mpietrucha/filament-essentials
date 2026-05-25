@@ -10,7 +10,7 @@ use Mpietrucha\Support\Instance;
 /**
  * @phpstan-require-extends Action
  */
-trait HasRelation
+trait ResolvesRecordFromRelation
 {
     protected ?string $relation = null;
 
@@ -21,6 +21,11 @@ trait HasRelation
         return $this;
     }
 
+    public function getRelation(): ?string
+    {
+        return $this->relation;
+    }
+
     public function getRecord(bool $withDefault = true): null|array|Model
     {
         $record = parent::getRecord($withDefault);
@@ -29,7 +34,7 @@ trait HasRelation
             return $record;
         }
 
-        $related = data_get($record, $relation = $this->relation);
+        $related = data_get($record, $relation = $this->getRelation());
 
         if (! $related instanceof Model) {
             RuntimeException::throw('Relation `%s` does not exist on %s model instance', $relation, Instance::namespace($record));

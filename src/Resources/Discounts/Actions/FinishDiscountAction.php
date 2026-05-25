@@ -8,12 +8,12 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishDiscountAction extends Action
 {
-    use HasRelation;
+    use ResolvesRecordFromRelation;
 
     protected function setUp(): void
     {

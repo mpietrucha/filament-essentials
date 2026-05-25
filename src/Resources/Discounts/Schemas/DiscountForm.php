@@ -16,12 +16,14 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Livewire\Component as LivewireComponent;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\QuotaType;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
+use Symfony\Component\Intl\Currencies;
 
 class DiscountForm
 {
@@ -40,7 +42,28 @@ class DiscountForm
                 ->columnSpanFull()
                 ->schema([
                     TextInput::make('price')
-                        ->label(__('filament-essentials::discounts-plugin.form.price')),
+                        ->label(__('filament-essentials::discounts-plugin.form.price'))
+                        ->prefix(static function (?Discount $discount, LivewireComponent $livewire): ?string {
+                            $discountable = $discount?->discountable;
+
+                            if (! $discountable instanceof Model) {
+                                /** @phpstan-ignore method.notFound, method.nonObject */
+                                $record = $livewire->getMountedAction()->getParentRecord() ?? $livewire->getFilamentRecord();
+
+                                /** @phpstan-ignore property.nonObject */
+                                $discountable = $record?->discountable;
+                            }
+
+                            /** @phpstan-ignore-next-line */
+                            $currency = $discountable?->getPrice()->getCurrency()->getCurrencyCode();
+
+                            if ($currency === null) {
+                                return null;
+                            }
+
+                            /** @var string $currency */
+                            return Currencies::getSymbol($currency);
+                        }),
 
                     TextInput::make('discount_percentage')
                         ->label(__('filament-essentials::discounts-plugin.form.discount_percentage'))

@@ -9,7 +9,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\HasRelation;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
@@ -112,7 +112,7 @@ trait ResourceMixin
      */
     public static function configureActionRelation(Action $action, string $relation, ?Closure $resourceSchema = null): Action
     {
-        if (Instance::traits($action)->contains(HasRelation::class)) {
+        if (Instance::traits($action)->contains(ResolvesRecordFromRelation::class)) {
             /** @phpstan-ignore method.notFound */
             $action->relation($relation);
         }
