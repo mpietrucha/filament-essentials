@@ -7,6 +7,7 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Operation;
+use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Support\Exception\RuntimeException;
 
 /**
@@ -53,6 +54,17 @@ trait ActionMixin
         JS;
 
         $this->extraModalWindowAttributes(['x-init' => $script], true);
+
+        return $this;
+    }
+
+    public function imageModalIcon(?string $attribute = null): static
+    {
+        $this->extraModalWindowAttributes([
+            'class' => 'fi-modal-image-icon',
+        ]);
+
+        Record::avatar() |> $this->modalIcon(...);
 
         return $this;
     }
