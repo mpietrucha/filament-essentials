@@ -1,0 +1,16 @@
+.fi-simple-layout .fi-logo {
+    @apply mb-12 h-8!;
+}
+
+.fi-fo-checkbox-list-options.fi-fo-checkbox-list-options-disabled-hidden
+    .fi-fo-checkbox-list-option-ctn:has([disabled="disabled"]) {
+    @apply hidden;
+}
+
+.fi-modal-image-icon .fi-modal-icon-ctn .fi-icon {
+    @apply h-10 w-10 rounded-full;
+}
+
+.fi-modal-image-icon .fi-modal-icon-ctn .fi-modal-icon-bg {
+    @apply p-0;
+}
