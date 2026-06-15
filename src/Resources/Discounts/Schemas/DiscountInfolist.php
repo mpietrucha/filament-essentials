@@ -102,11 +102,11 @@ class DiscountInfolist
             ->state(static function (Discount $discount): ?string {
                 $price = $discount->getPrice();
 
-                if ($price instanceof Money) {
-                    return Locale::get()->code() |> $price->formatToLocale(...);
+                if (! $price instanceof Money) {
+                    return null;
                 }
 
-                return null;
+                return Locale::get()->code() |> $price->formatToLocale(...);
             })
             ->placeholder('-');
     }
