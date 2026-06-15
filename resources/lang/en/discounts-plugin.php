@@ -15,12 +15,29 @@ return [
 
     'table' => [
         'price' => 'Price',
-        'discount' => 'Discount',
         'usage' => 'Usage',
         'active_from' => 'From',
         'active_to' => 'To',
         'finished_at' => 'Finished',
         'status' => 'Status',
+    ],
+
+    'infolist' => [
+        'details' => 'Details',
+        'price' => 'Price',
+        'discount_percentage' => 'Percentage',
+        'status' => 'Status',
+        'active_from' => 'From',
+        'active_to' => 'To',
+        'finished_at' => 'Finished',
+        'quota' => [
+            'label' => 'Quota',
+            'name' => 'Name',
+            'usage' => 'Usage',
+            'active_from' => 'From',
+            'active_to' => 'To',
+            'notes' => 'Notes',
+        ],
     ],
 
     'form' => [

@@ -15,12 +15,29 @@ return [
 
     'table' => [
         'price' => 'Cena',
-        'discount' => 'Zniżka',
         'usage' => 'Ilość',
         'active_from' => 'Od',
         'active_to' => 'Do',
         'finished_at' => 'Zakończona',
         'status' => 'Status',
+    ],
+
+    'infolist' => [
+        'details' => 'Szczegóły',
+        'price' => 'Cena',
+        'discount_percentage' => 'Procent',
+        'status' => 'Status',
+        'active_from' => 'Od',
+        'active_to' => 'Do',
+        'finished_at' => 'Zakończona',
+        'quota' => [
+            'label' => 'Pakiet',
+            'name' => 'Nazwa',
+            'usage' => 'Ilość',
+            'active_from' => 'Od',
+            'active_to' => 'Do',
+            'notes' => 'Notatki',
+        ],
     ],
 
     'form' => [

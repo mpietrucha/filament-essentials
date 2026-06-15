@@ -64,7 +64,7 @@ trait ActionMixin
             'class' => 'fi-modal-image-icon',
         ]);
 
-        Record::avatar() |> $this->modalIcon(...);
+        Record::avatar($attribute) |> $this->modalIcon(...);
 
         return $this;
     }

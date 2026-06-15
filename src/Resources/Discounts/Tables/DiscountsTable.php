@@ -106,7 +106,7 @@ class DiscountsTable
                     return null;
                 }
 
-                return sprintf('%s %s%%', __('filament-essentials::discounts-plugin.table.discount'), $discountPercentage);
+                return sprintf('-%s%%', $discountPercentage);
             });
     }
 }
