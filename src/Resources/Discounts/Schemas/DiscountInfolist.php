@@ -90,6 +90,14 @@ class DiscountInfolist
 
                     TextEntry::make('quota.notes')
                         ->label(__('filament-essentials::discounts-plugin.infolist.quota.notes'))
+                        ->formatStateUsing(static function (?string $state): ?string {
+                            if ($state === null) {
+                                return null;
+                            }
+
+                            return e($state) |> nl2br(...);
+                        })
+                        ->html()
                         ->placeholder('-'),
                 ]),
         ];
