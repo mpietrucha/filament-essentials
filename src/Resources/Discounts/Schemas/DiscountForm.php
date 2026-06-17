@@ -43,30 +43,34 @@ class DiscountForm
                 ->schema([
                     TextInput::make('price')
                         ->label(__('filament-essentials::discounts-plugin.form.price'))
+                        ->numeric()
+                        ->minValue(0)
+                        ->maxValue(static function (?Discount $discount, LivewireComponent $livewire): ?float {
+                            $discountable = static::resolveDiscountable($discount, $livewire);
+
+                            /** @phpstan-ignore-next-line */
+                            return $discountable?->getPrice()?->getAmount()->toFloat();
+                        })
+                        ->requiredWithout('discount_percentage')
                         ->prefix(static function (?Discount $discount, LivewireComponent $livewire): ?string {
-                            $discountable = $discount?->discountable;
-
-                            if (! $discountable instanceof Model) {
-                                /** @phpstan-ignore method.notFound, method.nonObject */
-                                $record = $livewire->getMountedAction()->getParentRecord() ?? $livewire->getFilamentRecord();
-
-                                /** @phpstan-ignore property.nonObject */
-                                $discountable = $record?->discountable;
-                            }
+                            $discountable = static::resolveDiscountable($discount, $livewire);
 
                             /** @phpstan-ignore-next-line */
                             $currency = $discountable?->getPrice()->getCurrency()->getCurrencyCode();
 
-                            if ($currency === null) {
+                            if (! is_string($currency)) {
                                 return null;
                             }
 
-                            /** @var string $currency */
                             return Currencies::getSymbol($currency);
                         }),
 
                     TextInput::make('discount_percentage')
                         ->label(__('filament-essentials::discounts-plugin.form.discount_percentage'))
+                        ->integer()
+                        ->minValue(0)
+                        ->maxValue(100)
+                        ->requiredWithout('price')
                         ->suffix('%'),
                 ]),
 
@@ -77,7 +81,8 @@ class DiscountForm
                         ->label(__('filament-essentials::discounts-plugin.form.active_from')),
 
                     DatePicker::make('active_to')
-                        ->label(__('filament-essentials::discounts-plugin.form.active_to')),
+                        ->label(__('filament-essentials::discounts-plugin.form.active_to'))
+                        ->afterOrEqual('active_from'),
                 ]),
 
             Fieldset::make(__('filament-essentials::discounts-plugin.form.quota.label'))
@@ -165,6 +170,7 @@ class DiscountForm
                             return new HtmlString(sprintf('%s %s', $name, $badge));
                         })
                         ->visible(static fn (Get $get): bool => $get('quota_type') === QuotaType::Existing)
+                        ->required()
                         ->columnSpanFull(),
 
                     Group::make()
@@ -177,13 +183,16 @@ class DiscountForm
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.name')),
 
                             TextInput::make('limit')
-                                ->label(__('filament-essentials::discounts-plugin.form.quota.limit')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.limit'))
+                                ->integer()
+                                ->minValue(1),
 
                             DatePicker::make('active_from')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.active_from')),
 
                             DatePicker::make('active_to')
-                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_to')),
+                                ->label(__('filament-essentials::discounts-plugin.form.quota.active_to'))
+                                ->afterOrEqual('active_from'),
 
                             Textarea::make('notes')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.notes'))
@@ -203,5 +212,20 @@ class DiscountForm
         $set('quota.notes', $quota?->notes);
         $set('quota.active_to', $quota?->active_to);
         $set('quota.active_from', $quota?->active_from);
+    }
+
+    protected static function resolveDiscountable(?Discount $discount, LivewireComponent $livewire): ?Model
+    {
+        $discountable = $discount?->discountable;
+
+        if ($discountable instanceof Model) {
+            return $discountable;
+        }
+
+        /** @phpstan-ignore method.notFound, method.nonObject */
+        $record = $livewire->getMountedAction()->getParentRecord() ?? $livewire->getFilamentRecord();
+
+        /** @phpstan-ignore property.nonObject, return.type */
+        return $record?->discountable;
     }
 }

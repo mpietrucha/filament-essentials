@@ -26,7 +26,7 @@ class DiscountInfolist
     protected static function components(): array
     {
         return [
-            Section::make(__('filament-essentials::discounts-plugin.infolist.details'))
+            Section::make(__('filament-essentials::discounts-plugin.infolist.discount'))
                 ->columnSpanFull()
                 ->inlineLabel()
                 ->schema([

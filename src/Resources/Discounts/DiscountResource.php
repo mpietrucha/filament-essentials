@@ -79,6 +79,10 @@ class DiscountResource extends FilamentResource
             return $discount->isFinished();
         });
 
+        $action->extraModalFooterActions([
+            FinishDiscountAction::make()->icon(null)->cancelParentActions(),
+        ]);
+
         return $action;
     }
 

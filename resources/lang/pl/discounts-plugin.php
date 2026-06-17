@@ -41,7 +41,7 @@ return [
     ],
 
     'form' => [
-        'details' => 'Szczegóły',
+        'discount' => 'Zniżka',
         'price' => 'Cena',
         'discount_percentage' => 'Procent',
         'activity' => 'Aktywność',

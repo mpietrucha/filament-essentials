@@ -23,7 +23,7 @@ return [
     ],
 
     'infolist' => [
-        'details' => 'Details',
+        'discount' => 'Discount',
         'price' => 'Price',
         'discount_percentage' => 'Percentage',
         'status' => 'Status',
