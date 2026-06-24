@@ -15,7 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\CreateDiscountBulkAction;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountAction;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\FinishDiscountBulkAction;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\Actions\UseQuotaAction;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
@@ -69,6 +72,21 @@ class DiscountResource extends FilamentResource
     public static function getFinishAction(): FinishDiscountAction
     {
         return FinishDiscountAction::make();
+    }
+
+    public static function getFinishDiscountBulkAction(): FinishDiscountBulkAction
+    {
+        return FinishDiscountBulkAction::make();
+    }
+
+    public static function getCreateDiscountBulkAction(): CreateDiscountBulkAction
+    {
+        return CreateDiscountBulkAction::make();
+    }
+
+    public static function getUseQuotaAction(): UseQuotaAction
+    {
+        return UseQuotaAction::make();
     }
 
     public static function configureEditAction(Action $action, ?string $relation = null): Action

@@ -27,11 +27,7 @@ class FinishDiscountAction extends Action
 
         $this->requiresConfirmation();
 
-        $this->hidden(static function (Discount $discount, Component $livewire): bool {
-            if ($livewire instanceof RelationManager && $livewire->isReadOnly()) {
-                return true;
-            }
-
+        $this->hidden(static function (Discount $discount): bool {
             if ($discount->isInactive()) {
                 return true;
             }

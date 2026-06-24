@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas;
 
 use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Livewire\Component as LivewireComponent;
 use Mpietrucha\Filament\Essentials\Blade;
+use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\QuotaType;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
@@ -185,7 +187,17 @@ class DiscountForm
                             TextInput::make('limit')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.limit'))
                                 ->integer()
-                                ->minValue(1),
+                                ->minValue(1)
+                                ->prefix(static function (?Quota $record): ?string {
+                                    $used = $record?->limit_used;
+
+                                    if ($used === null) {
+                                        return null;
+                                    }
+
+                                    return sprintf('%s /', $used);
+                                })
+                                ->hintAction(DiscountResource::getUseQuotaAction()),
 
                             DatePicker::make('active_from')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.active_from')),
@@ -222,10 +234,17 @@ class DiscountForm
             return $discountable;
         }
 
-        /** @phpstan-ignore method.notFound, method.nonObject */
-        $record = $livewire->getMountedAction()->getParentRecord() ?? $livewire->getFilamentRecord();
+        /** @phpstan-ignore method.notFound */
+        $mountedAction = $livewire->getMountedAction();
 
-        /** @phpstan-ignore property.nonObject, return.type */
-        return $record?->discountable;
+        if ($mountedAction instanceof BulkAction) {
+            return null;
+        }
+
+        /** @phpstan-ignore method.nonObject */
+        $record = $mountedAction->getParentRecord() ?? $livewire->getFilamentRecord();
+
+        /** @phpstan-ignore property.nonObject, return.type, nullsafe.neverNull */
+        return $record?->discountable ?? $record;
     }
 }

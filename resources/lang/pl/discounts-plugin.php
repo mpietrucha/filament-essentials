@@ -66,14 +66,23 @@ return [
         'finish' => [
             'label' => 'Zakończ',
         ],
+        'bulk_finish' => [
+            'label' => 'Zakończ zniżki',
+        ],
         'create' => [
             'modal_label' => 'Utwórz Zniżkę',
+        ],
+        'bulk_create' => [
+            'modal_label' => 'Utwórz Zniżki',
         ],
         'edit' => [
             'modal_label' => 'Edytuj Zniżkę',
         ],
         'view' => [
             'modal_label' => 'Podgląd Zniżki',
+        ],
+        'increment_quota_usage' => [
+            'label' => 'Zwiększ użycie',
         ],
     ],
 ];

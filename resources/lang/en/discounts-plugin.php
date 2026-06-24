@@ -66,14 +66,23 @@ return [
         'finish' => [
             'label' => 'Finish',
         ],
+        'bulk_finish' => [
+            'label' => 'Finish Discounts',
+        ],
         'create' => [
             'modal_label' => 'Create Discount',
+        ],
+        'bulk_create' => [
+            'modal_label' => 'Create Discounts',
         ],
         'edit' => [
             'modal_label' => 'Edit Discount',
         ],
         'view' => [
             'modal_label' => 'View Discount',
+        ],
+        'increment_quota_usage' => [
+            'label' => 'Increment Usage',
         ],
     ],
 ];
