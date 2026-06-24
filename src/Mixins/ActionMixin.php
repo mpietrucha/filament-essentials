@@ -3,10 +3,8 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Actions\Action;
-use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Operation;
+use Mpietrucha\Filament\Essentials\Actions\ActionOperations;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Support\Exception\RuntimeException;
 
@@ -15,14 +13,16 @@ use Mpietrucha\Support\Exception\RuntimeException;
  */
 trait ActionMixin
 {
+    public function operation(Operation $operation): static
+    {
+        ActionOperations::set($this, $operation);
+
+        return $this;
+    }
+
     public function getOperation(): Operation
     {
-        return match (true) {
-            $this instanceof CreateAction => Operation::Create,
-            $this instanceof EditAction => Operation::Edit,
-            $this instanceof ViewAction => Operation::View,
-            default => RuntimeException::throw('Cannot resolve operation for this Action instance'),
-        };
+        return ActionOperations::get($this) ?? RuntimeException::throw('Cannot resolve operation for this Action instance');
     }
 
     public function alwaysCancelParentActions(): static

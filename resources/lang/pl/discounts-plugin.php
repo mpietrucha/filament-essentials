@@ -23,7 +23,7 @@ return [
     ],
 
     'infolist' => [
-        'details' => 'Szczegóły',
+        'discount' => 'Zniżka',
         'price' => 'Cena',
         'discount_percentage' => 'Procent',
         'status' => 'Status',
@@ -41,6 +41,7 @@ return [
     ],
 
     'form' => [
+        'details' => 'Szczegóły',
         'discount' => 'Zniżka',
         'price' => 'Cena',
         'discount_percentage' => 'Procent',

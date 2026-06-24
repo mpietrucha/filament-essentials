@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Operation;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
@@ -35,6 +36,8 @@ trait ResourceMixin
 
     public static function configureViewAction(Action $action, ?string $relation = null): Action
     {
+        Operation::View |> $action->operation(...);
+
         static::configureAction($action, $relation);
 
         if ($action instanceof ViewAction) {
@@ -59,6 +62,8 @@ trait ResourceMixin
 
     public static function configureEditAction(Action $action, ?string $relation = null): Action
     {
+        Operation::Edit |> $action->operation(...);
+
         static::configureAction($action, $relation);
 
         return $action;
@@ -79,6 +84,8 @@ trait ResourceMixin
 
     public static function configureCreateAction(Action $action, ?string $relation = null): Action
     {
+        Operation::Create |> $action->operation(...);
+
         static::configureAction($action, $relation);
 
         $action->modalHeading(static function (): string {
