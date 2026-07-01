@@ -41,6 +41,39 @@ if (class_exists(ArchilexTextFilter::class)) {
          * @return EloquentBuilder
          */
         #[\Override]
+        public function applyToBaseQuery(Builder $builder, array $data = []): Builder
+        {
+            if (! static::isListOperator($data)) {
+                return parent::applyToBaseQuery($builder, $data);
+            }
+
+            if (! static::isInListOperator($data) || ! static::isSortByList($data)) {
+                return parent::applyToBaseQuery($builder, $data);
+            }
+
+            $values = static::getListValues($data);
+
+            if ($values->isEmpty()) {
+                return parent::applyToBaseQuery($builder, $data);
+            }
+
+            $column = $this->getQueryColumn($builder);
+
+            $relationship = $this->getColumn()?->getRelationshipName(
+                $builder->getModel()
+            );
+
+            static::applyListOrder($builder, $column, $values, $relationship);
+
+            return $builder;
+        }
+
+        /**
+         * @param  EloquentBuilder  $builder
+         * @param  FormData  $data
+         * @return EloquentBuilder
+         */
+        #[\Override]
         public function apply(Builder $builder, array $data = []): Builder
         {
             if (! static::isListOperator($data)) {
@@ -60,10 +93,6 @@ if (class_exists(ArchilexTextFilter::class)) {
             $relationship = $this->getColumn()?->getRelationshipName(
                 $builder->getModel()
             );
-
-            if ($isInListOperator && static::isSortByList($data)) {
-                static::applyListOrder($builder, $column, $values, $relationship);
-            }
 
             if ($relationship === null) {
                 return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
@@ -133,6 +162,12 @@ if (class_exists(ArchilexTextFilter::class)) {
             ]);
 
             return $schema;
+        }
+
+        #[\Override]
+        protected function hasBaseQueryModificationCallback(): bool
+        {
+            return true;
         }
 
         /**
@@ -321,6 +356,8 @@ if (class_exists(ArchilexTextFilter::class)) {
             /** @var literal-string $expression */
             $expression = sprintf('CASE %s %s END', $column, $cases);
 
+            $builder->reorder();
+
             if ($relationship === null) {
                 $builder->orderByRaw($expression, $bindings);
 
@@ -328,13 +365,18 @@ if (class_exists(ArchilexTextFilter::class)) {
             }
 
             /** @var Relation<Model, Model, *> $relation */
-            $relation = $builder->getModel()->$relationship;
+            $relation = $builder->getModel()->{$relationship}();
 
-            $relation->getRelationExistenceQuery(
+            $subquery = $relation->getRelationExistenceQuery(
                 $relation->getRelated()->newQueryWithoutRelationships(),
                 $builder,
                 [$column],
-            )->orderByRaw($expression, $bindings)->limit(1) |> $builder->orderBy(...);
+            )->orderByRaw($expression, $bindings)->limit(1);
+
+            $subquery->getQuery()->columns = null;
+            $subquery->selectRaw($expression, $bindings);
+
+            $builder->orderBy($subquery);
         }
     }
 } else {
