@@ -76,7 +76,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
         $packageName = $this->package->name;
 
         FilamentAsset::register([
-            Js::make($packageName, $this->package->basePath('../dist/index.js')),
+            Js::make($packageName, $this->package->basePath('../resources/dist/index.js')),
         ], sprintf('mpietrucha/%s', $packageName));
     }
 }
