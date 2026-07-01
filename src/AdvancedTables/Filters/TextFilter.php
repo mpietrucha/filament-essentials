@@ -154,6 +154,7 @@ if (class_exists(ArchilexTextFilter::class)) {
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
                     ),
                 Toggle::make(static::getSortByListAttribute())
+                    ->label(__('filament-essentials::advanced-tables.text.sort_by_list'))
                     ->default(true)
                     ->visible($isListOperator)
                     ->columnSpan(
