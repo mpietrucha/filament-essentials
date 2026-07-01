@@ -15,7 +15,7 @@ export default Alpine => {
 
             e.preventDefault()
 
-            const scope = el.closest('[wire:id]') ?? document
+            const scope = el.closest('[wire\\:id]') ?? document
 
             const wrappers = [...scope.querySelectorAll('[x-paste-spreadsheet]')]
             const index = wrappers.indexOf(el)
