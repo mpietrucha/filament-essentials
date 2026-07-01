@@ -42,7 +42,7 @@ class FinishDiscountAction extends Action
                 return;
             }
 
-            $livewire->js('$wire.$refresh()');
+            $livewire->refresh();
         });
     }
 

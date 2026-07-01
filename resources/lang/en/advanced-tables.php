@@ -12,5 +12,6 @@ return [
             'option' => 'is not in list',
             'indicator' => 'is not in list',
         ],
+        'sort_by_list' => 'Sort by list order',
     ],
 ];

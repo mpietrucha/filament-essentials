@@ -86,4 +86,9 @@ trait ComponentMixin
 
         return $record;
     }
+
+    public function refresh(): void
+    {
+        $this->js('$wire.$refresh()');
+    }
 }

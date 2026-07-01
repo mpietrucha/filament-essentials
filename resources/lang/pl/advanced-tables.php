@@ -12,5 +12,6 @@ return [
             'option' => 'nie jest na liście',
             'indicator' => 'nie jest na liście',
         ],
+        'sort_by_list' => 'Sortuj wg kolejności listy',
     ],
 ];

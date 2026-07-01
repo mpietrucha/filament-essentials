@@ -71,16 +71,16 @@ return [
             'label' => 'Zakończ zniżki',
         ],
         'create' => [
-            'modal_label' => 'Utwórz Zniżkę',
+            'modal_label' => 'Utwórz zniżkę',
         ],
         'bulk_create' => [
-            'modal_label' => 'Utwórz Zniżki',
+            'modal_label' => 'Utwórz zniżki',
         ],
         'edit' => [
-            'modal_label' => 'Edytuj Zniżkę',
+            'modal_label' => 'Edytuj zniżkę',
         ],
         'view' => [
-            'modal_label' => 'Podgląd Zniżki',
+            'modal_label' => 'Podgląd zniżki',
         ],
         'increment_quota_usage' => [
             'label' => 'Zwiększ użycie',

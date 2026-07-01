@@ -39,7 +39,7 @@ class DiscountInfolist
                                 return null;
                             }
 
-                            return sprintf('-%s%%', $state);
+                            return sprintf('%s%%', $state);
                         })
                         ->placeholder('-'),
 

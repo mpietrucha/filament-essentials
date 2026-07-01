@@ -8,9 +8,12 @@ use Filament\Actions\Action;
 use Filament\Actions\AttachAction;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
 use Filament\Resources\Resource;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -30,6 +33,7 @@ use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextEntryMixin;
+use Mpietrucha\Filament\Essentials\Mixins\TextInputMixin;
 use Mpietrucha\Laravel\Essentials\PackageTools\Package;
 use Mpietrucha\Laravel\Essentials\PackageTools\PackageServiceProvider;
 
@@ -51,6 +55,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,
             Component::class => ComponentMixin::class,
+            TextInput::class => TextInputMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
             AttachAction::class => AttachActionMixin::class,
@@ -62,5 +67,16 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             UpgradeFilament::class,
             GeneratePolicies::class,
         ]);
+    }
+
+    public function packageBooted(): void
+    {
+        parent::packageBooted();
+
+        $packageName = $this->package->name;
+
+        FilamentAsset::register([
+            Js::make($packageName, $this->package->basePath('../dist/index.js')),
+        ], sprintf('mpietrucha/%s', $packageName));
     }
 }

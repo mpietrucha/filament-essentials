@@ -131,7 +131,7 @@ class DiscountForm
 
                                     $quota?->finish()->save();
 
-                                    $livewire->js('$wire.$refresh()');
+                                    $livewire->refresh();
                                 }),
                         ])
                         ->relationship('quota', 'name', static function (Builder $builder): void {

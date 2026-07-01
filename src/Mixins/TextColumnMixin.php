@@ -33,6 +33,7 @@ trait TextColumnMixin
                 return null;
             }
 
+            /** @phpstan-ignore if.alwaysFalse */
             if ($results->isEmpty()) {
                 return $name;
             }

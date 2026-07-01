@@ -38,7 +38,7 @@ class UseQuotaAction extends Action
         $this->action(static function (Quota $record, Component $livewire): void {
             $record->use()->save();
 
-            $livewire->js('$wire.$refresh()');
+            $livewire->refresh();
         });
     }
 

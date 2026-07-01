@@ -106,7 +106,7 @@ class DiscountsTable
                     return null;
                 }
 
-                return sprintf('-%s%%', $discountPercentage);
+                return sprintf('%s%%', $discountPercentage);
             });
     }
 }

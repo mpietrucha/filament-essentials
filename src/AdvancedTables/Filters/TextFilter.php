@@ -5,6 +5,7 @@ namespace Mpietrucha\Filament\Essentials\AdvancedTables\Filters;
 use Archilex\AdvancedTables\Filters\TextFilter as ArchilexTextFilter;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
@@ -12,6 +13,7 @@ use Filament\Tables\Columns\Column;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
@@ -51,12 +53,17 @@ if (class_exists(ArchilexTextFilter::class)) {
                 return $builder;
             }
 
+            $isInListOperator = static::isInListOperator($data);
+
+            $column = $this->getQueryColumn($builder);
+
             $relationship = $this->getColumn()?->getRelationshipName(
                 $builder->getModel()
             );
 
-            $column = $this->getQueryColumn($builder);
-            $isInListOperator = static::isInListOperator($data);
+            if ($isInListOperator && static::isSortByList($data)) {
+                static::applyListOrder($builder, $column, $values, $relationship);
+            }
 
             if ($relationship === null) {
                 return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
@@ -113,6 +120,12 @@ if (class_exists(ArchilexTextFilter::class)) {
                 ...$gridComponents,
                 Textarea::make(static::getListAttribute())
                     ->hiddenLabel()
+                    ->visible($isListOperator)
+                    ->columnSpan(
+                        $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
+                    ),
+                Toggle::make(static::getSortByListAttribute())
+                    ->default(true)
                     ->visible($isListOperator)
                     ->columnSpan(
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
@@ -197,6 +210,11 @@ if (class_exists(ArchilexTextFilter::class)) {
             return 'list';
         }
 
+        protected static function getSortByListAttribute(): string
+        {
+            return 'sort_by_list';
+        }
+
         /**
          * @param  FormData  $data
          */
@@ -273,6 +291,50 @@ if (class_exists(ArchilexTextFilter::class)) {
             );
 
             return collect($values)->map(Str::squish(...))->filter();
+        }
+
+        /**
+         * @param  FormData  $data
+         */
+        protected static function isSortByList(array $data): bool
+        {
+            return (bool) Arr::get(
+                $data,
+                static::getSortByListAttribute(),
+                true
+            );
+        }
+
+        /**
+         * @param  EloquentBuilder  $builder
+         * @param  ListCollection  $values
+         */
+        protected static function applyListOrder(Builder $builder, string $column, Collection $values, ?string $relationship): void
+        {
+            $bindings = $values->values()->all();
+
+            $cases = Str::space() |> $values
+                ->values()
+                ->map(static fn (string $value, int $index): string => sprintf('WHEN ? THEN %d', $index))
+                ->implode(...);
+
+            /** @var literal-string $expression */
+            $expression = sprintf('CASE %s %s END', $column, $cases);
+
+            if ($relationship === null) {
+                $builder->orderByRaw($expression, $bindings);
+
+                return;
+            }
+
+            /** @var Relation<Model, Model, *> $relation */
+            $relation = $builder->getModel()->$relationship;
+
+            $relation->getRelationExistenceQuery(
+                $relation->getRelated()->newQueryWithoutRelationships(),
+                $builder,
+                [$column],
+            )->orderByRaw($expression, $bindings)->limit(1) |> $builder->orderBy(...);
         }
     }
 } else {

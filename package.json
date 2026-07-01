@@ -1,0 +1,16 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "node resources/bin/build.js",
+        "lint": "bash -c 'prettier --write ${@:-.}' --"
+    },
+    "prettier": "@mpietrucha/prettier",
+    "dependencies": {
+        "@mpietrucha/prettier": "^1.0.10"
+    },
+    "devDependencies": {
+        "esbuild": "^0.28.1"
+    }
+}
