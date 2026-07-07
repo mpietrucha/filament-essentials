@@ -5,18 +5,20 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Js;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
 use Mpietrucha\Support\Exception\RuntimeException;
+use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends Component
  *
  * @phpstan-type FilamentResource class-string<Resource>
  */
-trait ComponentMixin
+trait LivewireComponentMixin
 {
     /**
      * @return null|FilamentResource
@@ -90,5 +92,17 @@ trait ComponentMixin
     public function refresh(): void
     {
         $this->js('$wire.$refresh()');
+    }
+
+    /**
+     * @param  string|iterable<string>  $data
+     */
+    public function copy(iterable|string $data, ?string $delimiter = null): void
+    {
+        if (is_array($data)) {
+            $data = implode($delimiter ?? Str::eol(), $data);
+        }
+
+        sprintf('navigator.clipboard?.writeText(%s)', Js::from($data)) |> $this->js(...);
     }
 }

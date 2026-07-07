@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
-use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
@@ -57,8 +55,6 @@ return RectorConfig::configure()
         ],
     ])
     ->withRules([
-        StaticClosureRector::class,
-        StaticArrowFunctionRector::class,
         ModelToRecordClosureParamRector::class,
         LivewireComponentParamNameRector::class,
         FilamentUtilityInjectionTypeRector::class,

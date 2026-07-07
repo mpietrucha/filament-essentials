@@ -23,6 +23,6 @@ const defaultOptions = {
 
 compile({
     ...defaultOptions,
-    entryPoints: ['./resources/js/index.js'],
     outfile: './resources/dist/index.js',
+    entryPoints: ['./resources/js/index.js'],
 })

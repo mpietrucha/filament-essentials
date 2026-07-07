@@ -24,10 +24,10 @@ use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
 use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ColumnMixin;
-use Mpietrucha\Filament\Essentials\Mixins\ComponentMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
+use Mpietrucha\Filament\Essentials\Mixins\LivewireComponentMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ResourceMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
@@ -54,12 +54,12 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             Select::class => SelectMixin::class,
             Resource::class => ResourceMixin::class,
             TextEntry::class => TextEntryMixin::class,
-            Component::class => ComponentMixin::class,
             TextInput::class => TextInputMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
             AttachAction::class => AttachActionMixin::class,
             SelectFilter::class => SelectFilterMixin::class,
+            Component::class => LivewireComponentMixin::class,
             IsRelatedToOperator::class => IsRelatedToOperatorMixin::class,
         ]);
 
