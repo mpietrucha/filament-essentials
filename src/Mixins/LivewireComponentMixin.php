@@ -95,9 +95,9 @@ trait LivewireComponentMixin
     }
 
     /**
-     * @param  string|iterable<string>  $data
+     * @param  string|array<string>  $data
      */
-    public function copy(iterable|string $data, ?string $delimiter = null): void
+    public function copy(array|string $data, ?string $delimiter = null): void
     {
         if (is_array($data)) {
             $data = implode($delimiter ?? Str::eol(), $data);
