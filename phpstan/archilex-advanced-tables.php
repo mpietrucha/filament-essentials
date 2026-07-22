@@ -1,62 +1,80 @@
 <?php
 
-namespace Archilex\AdvancedTables\Filters;
-
-use Filament\Tables\Columns\Column;
-use Filament\Tables\Filters\BaseFilter;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Builder;
-
-class AdvancedFilter extends BaseFilter
-{
-    protected function getColumnType(Column $column): string
+namespace Archilex\AdvancedTables {
+    trait AdvancedTables
     {
-    }
+        public ?string $activePresetView = null;
 
-    protected function getTextColumnFilter(Column $column): BaseFilter
-    {
+        public function resetTable(): void
+        {
+        }
+
+        /**
+         * @param  null|array<mixed>  $filters
+         */
+        public function loadPresetView(string $presetView, ?array $filters = null, bool $resetTable = true, bool $isActive = true): void
+        {
+        }
     }
 }
 
-class TextFilter extends BaseFilter
-{
-    public static function make(string $name): static
+namespace Archilex\AdvancedTables\Filters {
+    use Filament\Tables\Columns\Column;
+    use Filament\Tables\Filters\BaseFilter;
+    use Illuminate\Contracts\Support\Htmlable;
+    use Illuminate\Database\Eloquent\Builder;
+
+    class AdvancedFilter extends BaseFilter
     {
+        protected function getColumnType(Column $column): string
+        {
+        }
+
+        protected function getTextColumnFilter(Column $column): BaseFilter
+        {
+        }
     }
 
-    public function column(Column $column): static
+    class TextFilter extends BaseFilter
     {
-    }
+        public static function make(string $name): static
+        {
+        }
 
-    public function label(Htmlable|string $label): static
-    {
-    }
+        public function column(Column $column): static
+        {
+        }
 
-    public function apply(Builder $builder, array $data = []): Builder
-    {
-    }
+        public function label(Htmlable|string $label): static
+        {
+        }
 
-    public function getFormSchema(): array
-    {
-    }
+        public function apply(Builder $builder, array $data = []): Builder
+        {
+        }
 
-    protected function getOperators(): array
-    {
-    }
+        public function getFormSchema(): array
+        {
+        }
 
-    protected function formFilled(array $data): bool
-    {
-    }
+        protected function getOperators(): array
+        {
+        }
 
-    protected function getFilterIndicator(TextFilter $filter, array $data): array
-    {
-    }
+        protected function formFilled(array $data): bool
+        {
+        }
 
-    protected function getQueryColumn(Builder $builder): string
-    {
-    }
+        protected function getFilterIndicator(TextFilter $filter, array $data): array
+        {
+        }
 
-    protected function getColumn(): ?Column
-    {
+        protected function getQueryColumn(Builder $builder): string
+        {
+        }
+
+        protected function getColumn(): ?Column
+        {
+        }
     }
 }
