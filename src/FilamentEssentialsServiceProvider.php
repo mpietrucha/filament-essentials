@@ -6,6 +6,7 @@ namespace Mpietrucha\Filament\Essentials;
 
 use Filament\Actions\Action;
 use Filament\Actions\AttachAction;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -23,6 +24,7 @@ use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
 use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
+use Mpietrucha\Filament\Essentials\Mixins\CheckboxListMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
@@ -57,6 +59,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             TextInput::class => TextInputMixin::class,
             TextColumn::class => TextColumnMixin::class,
             ImageColumn::class => ImageColumnMixin::class,
+            CheckboxList::class => CheckboxListMixin::class,
             AttachAction::class => AttachActionMixin::class,
             SelectFilter::class => SelectFilterMixin::class,
             Component::class => LivewireComponentMixin::class,

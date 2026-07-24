@@ -16,7 +16,7 @@ class GeneratePolicies extends Command
      * @var string
      */
     #[\Override]
-    protected $signature = 'essentials:policies
+    protected $signature = 'essentials:generate-policies
                             {--model=App\Models\User : The User model class to use in generated policies}
                             {--panel=default : The panel ID to generate policies for}';
 
