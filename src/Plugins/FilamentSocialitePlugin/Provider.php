@@ -1,6 +1,6 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Plugins\SocialitePlugin;
+namespace Mpietrucha\Filament\Essentials\Plugins\FilamentSocialitePlugin;
 
 use Mpietrucha\Laravel\Essentials\Blade\Icon;
 
