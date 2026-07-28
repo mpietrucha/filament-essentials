@@ -1,3 +1,4 @@
 providers:
     - Mpietrucha\Laravel\Essentials\LaravelEssentialsServiceProvider
     - Mpietrucha\Filament\Essentials\FilamentEssentialsServiceProvider
+    - OwenVoke\BladeFontAwesome\BladeFontAwesomeServiceProvider

@@ -6,6 +6,7 @@ namespace Mpietrucha\Filament\Essentials\Plugins;
 
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Closure;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
 use Filament\Panel;
 use Outerweb\FilamentTranslatableFields\TranslatableFieldsPlugin;
 
@@ -16,6 +17,8 @@ class EssentialsPlugin extends Plugin
     protected bool|Closure $shield = true;
 
     protected bool|Closure $discounts = true;
+
+    protected bool|Closure $socialite = true;
 
     protected bool|Closure $translations = true;
 
@@ -59,6 +62,20 @@ class EssentialsPlugin extends Plugin
     public function withoutDiscounts(): static
     {
         $this->discounts = false;
+
+        return $this;
+    }
+
+    public function withSocialite(?Closure $socialite = null): static
+    {
+        $this->socialite = $socialite ?? true;
+
+        return $this;
+    }
+
+    public function withoutSocialite(): static
+    {
+        $this->socialite = false;
 
         return $this;
     }
@@ -113,6 +130,12 @@ class EssentialsPlugin extends Plugin
 
         if ($translstions = $this->translations) {
             value($translstions, $plugin = TranslationsPlugin::make());
+
+            $panel->plugin($plugin);
+        }
+
+        if ($socialite = $this->socialite) {
+            value($socialite, $plugin = FilamentSocialitePlugin::make());
 
             $panel->plugin($plugin);
         }
