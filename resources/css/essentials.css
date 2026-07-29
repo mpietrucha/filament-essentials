@@ -1,3 +1,5 @@
+@source "../../../../guava/filament-modal-relation-managers/resources/**/*";
+
 .fi-fo-checkbox-list-options.fi-fo-checkbox-list-options-disabled-hidden
     .fi-fo-checkbox-list-option-ctn:has([disabled="disabled"]) {
     @apply hidden;
@@ -9,4 +11,8 @@
 
 .fi-modal-image-icon .fi-modal-icon-ctn .fi-modal-icon-bg {
     @apply p-0;
+}
+
+.fi-relation-manager-modal.invisible [wire\:partial="action-modals"] {
+    visibility: visible;
 }

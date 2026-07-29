@@ -19,6 +19,7 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Guava\FilamentModalRelationManagers\Actions\RelationManagerAction;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
 use Mpietrucha\Filament\Essentials\Commands\UpgradeFilament;
@@ -30,6 +31,7 @@ use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
 use Mpietrucha\Filament\Essentials\Mixins\LivewireComponentMixin;
+use Mpietrucha\Filament\Essentials\Mixins\RelationManagerActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ResourceMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
@@ -64,6 +66,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             SelectFilter::class => SelectFilterMixin::class,
             Component::class => LivewireComponentMixin::class,
             IsRelatedToOperator::class => IsRelatedToOperatorMixin::class,
+            RelationManagerAction::class => RelationManagerActionMixin::class,
         ]);
 
         $package->hasCommands([
