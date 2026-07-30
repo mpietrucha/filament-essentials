@@ -49,8 +49,8 @@ class ColorVariant implements Stringable
             return $color;
         }
 
-        $color = $this->name |> FilamentColor::getColor(...);
+        $color = FilamentColor::getColor($name = $this->name);
 
-        return $this->color = $color ?? RuntimeException::throw('Variant `%s` is not registered as Filament color');
+        return $this->color = $color ?? RuntimeException::throw('Variant `%s` is not registered as Filament color', $name);
     }
 }
