@@ -14,7 +14,7 @@
 /README.md export-ignore
 /.github export-ignore
 /analyze export-ignore
-/phpstan export-ignore
+/phpstan/stubs export-ignore
 /rector.php export-ignore
 /testbench.yaml export-ignore
 /.prettierignore export-ignore
