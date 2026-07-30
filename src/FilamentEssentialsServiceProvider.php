@@ -6,6 +6,7 @@ namespace Mpietrucha\Filament\Essentials;
 
 use Filament\Actions\Action;
 use Filament\Actions\AttachAction;
+use Filament\Actions\Exports\ExportColumn;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Select;
@@ -27,6 +28,7 @@ use Mpietrucha\Filament\Essentials\Mixins\ActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\AttachActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\CheckboxListMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ColumnMixin;
+use Mpietrucha\Filament\Essentials\Mixins\ExportColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\FieldMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ImageColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\IsRelatedToOperatorMixin;
@@ -64,6 +66,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
             CheckboxList::class => CheckboxListMixin::class,
             AttachAction::class => AttachActionMixin::class,
             SelectFilter::class => SelectFilterMixin::class,
+            ExportColumn::class => ExportColumnMixin::class,
             Component::class => LivewireComponentMixin::class,
             IsRelatedToOperator::class => IsRelatedToOperatorMixin::class,
             RelationManagerAction::class => RelationManagerActionMixin::class,
