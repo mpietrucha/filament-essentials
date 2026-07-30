@@ -16,7 +16,7 @@ class ColorVariant implements Stringable
      */
     protected ?array $color = null;
 
-    public function __construct(protected string $name)
+    public function __construct(public readonly string $value)
     {
     }
 
@@ -37,7 +37,7 @@ class ColorVariant implements Stringable
     {
         $this->get();
 
-        return $this->name;
+        return $this->value;
     }
 
     /**
@@ -49,8 +49,8 @@ class ColorVariant implements Stringable
             return $color;
         }
 
-        $color = FilamentColor::getColor($name = $this->name);
+        $color = FilamentColor::getColor($value = $this->value);
 
-        return $this->color = $color ?? RuntimeException::throw('Variant `%s` is not registered as Filament color', $name);
+        return $this->color = $color ?? RuntimeException::throw('Variant `%s` is not registered as Filament color', $value);
     }
 }
