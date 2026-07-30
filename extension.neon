@@ -1,0 +1,5 @@
+services:
+    -
+        class: Mpietrucha\PHPStan\Methods\ColorVariantExtension
+        tags:
+            - phpstan.broker.methodsClassReflectionExtension

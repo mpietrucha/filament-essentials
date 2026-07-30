@@ -55,7 +55,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Mpietrucha\\Filament\\Essentials\\": "src/"
+            "Mpietrucha\\Filament\\Essentials\\": "src/",
+            "Mpietrucha\\PHPStan\\": "phpstan/src/"
         },
         "files": [
             "overrides/Filament/Support/Concerns/EvaluatesClosures.php"
@@ -74,6 +75,11 @@
         "laravel": {
             "providers": [
                 "Mpietrucha\\Filament\\Essentials\\FilamentEssentialsServiceProvider"
+            ]
+        },
+        "phpstan": {
+            "includes": [
+                "extension.neon"
             ]
         }
     },
