@@ -14,16 +14,11 @@ trait HasPrice
 {
     public static function priceWithConversion(
         ?string $relation = null,
-        ?string $label = null,
         string $priceAttribute = 'price',
         string $convertedPriceAttribute = 'converted_price',
         string $currencyAttribute = 'currency',
     ): static {
         $component = Record::attribute($priceAttribute, $relation) |> static::make(...);
-
-        if (is_string($label)) {
-            $component->label($label);
-        }
 
         $convertedPrice = Record::attribute($convertedPriceAttribute, $relation) |> Record::money(...);
 
@@ -35,16 +30,13 @@ trait HasPrice
             $component->description($convertedPrice);
         }
 
-        Record::get(
-            Record::attribute($currencyAttribute, $relation)
-        ) |> $component->money(...);
+        Record::get(Record::attribute($currencyAttribute, $relation)) |> $component->money(...);
 
         return $component;
     }
 
     public static function priceWithDiscount(
         ?string $relation = null,
-        ?string $label = null,
         string $discountedPriceAttribute = 'discounted_price',
         string $referencePriceAttribute = 'reference_price',
         string $convertedDiscountedPriceAttribute = 'converted_discounted_price',
@@ -52,7 +44,6 @@ trait HasPrice
     ): static {
         $component = static::priceWithConversion(
             $relation,
-            $label,
             $discountedPriceAttribute,
             $convertedDiscountedPriceAttribute,
             $currencyAttribute,
