@@ -9,6 +9,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
+use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishDiscountAction extends Action
@@ -23,7 +24,7 @@ class FinishDiscountAction extends Action
 
         $this->icon(Heroicon::XMark);
 
-        $this->color('danger');
+        ColorVariant::danger()->name() |> $this->color(...);
 
         $this->requiresConfirmation();
 

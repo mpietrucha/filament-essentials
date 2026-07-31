@@ -7,6 +7,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Actions;
 use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
+use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
 
 class UseQuotaAction extends Action
@@ -19,7 +20,7 @@ class UseQuotaAction extends Action
 
         $this->icon(Heroicon::Plus);
 
-        $this->color('warning');
+        ColorVariant::warning()->name() |> $this->color(...);
 
         $this->cancelParentActions();
 

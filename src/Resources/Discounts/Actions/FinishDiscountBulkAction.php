@@ -8,6 +8,7 @@ use Filament\Actions\BulkAction;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 
 class FinishDiscountBulkAction extends BulkAction
@@ -20,7 +21,7 @@ class FinishDiscountBulkAction extends BulkAction
 
         $this->icon(Heroicon::XMark);
 
-        $this->color('danger');
+        ColorVariant::danger()->name() |> $this->color(...);
 
         $this->requiresConfirmation();
 

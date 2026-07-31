@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Livewire\Component as LivewireComponent;
 use Mpietrucha\Filament\Essentials\Blade;
+use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\QuotaType;
 use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
@@ -121,7 +122,7 @@ class DiscountForm
                             Action::make('finish_quota')
                                 ->label(__('filament-essentials::discounts-plugin.form.quota.finish'))
                                 ->icon(Heroicon::XMark)
-                                ->color('danger')
+                                ->color(ColorVariant::danger()->name())
                                 ->requiresConfirmation()
                                 ->cancelParentActions()
                                 ->visible(static fn (Get $get): bool => $get('quota_id') |> filled(...))
