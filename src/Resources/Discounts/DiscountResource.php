@@ -74,12 +74,12 @@ class DiscountResource extends FilamentResource
         return FinishDiscountAction::make();
     }
 
-    public static function getFinishDiscountBulkAction(): FinishDiscountBulkAction
+    public static function getFinishBulkAction(): FinishDiscountBulkAction
     {
         return FinishDiscountBulkAction::make();
     }
 
-    public static function getCreateDiscountBulkAction(): CreateDiscountBulkAction
+    public static function getCreateBulkAction(): CreateDiscountBulkAction
     {
         return CreateDiscountBulkAction::make();
     }

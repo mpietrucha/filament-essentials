@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas;
 
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -242,8 +243,11 @@ class DiscountForm
             return null;
         }
 
-        /** @phpstan-ignore method.nonObject */
-        $record = $mountedAction->getParentRecord() ?? $livewire->getFilamentRecord();
+        $record = match (true) {
+            /** @phpstan-ignore method.notFound */
+            $mountedAction instanceof CreateAction => $mountedAction->getParentRecord(),
+            default => null,
+        } ?? $livewire->getFilamentRecord();
 
         /** @phpstan-ignore property.nonObject, return.type, nullsafe.neverNull */
         return $record?->discountable ?? $record;
