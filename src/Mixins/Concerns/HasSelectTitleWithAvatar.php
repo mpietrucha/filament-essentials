@@ -9,12 +9,12 @@ use Mpietrucha\Filament\Essentials\Record;
 /**
  * @internal
  */
-trait HasAvatarBuilderClosure
+trait HasSelectTitleWithAvatar
 {
     /**
      * @param  Closure(): (null|string)  $title
      */
-    public static function getAvatarBuilderClosure(?string $attribute, Closure $title): Closure
+    public static function getSelectTitleWithAvatar(?string $attribute, Closure $title): Closure
     {
         return Record::pipe(static function (Record $record) use ($attribute, $title): string {
             $avatar = $record->avatar($attribute);

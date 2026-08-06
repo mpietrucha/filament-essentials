@@ -3,18 +3,18 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\QueryBuilder\Constraints\RelationshipConstraint\Operators\IsRelatedToOperator;
-use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasAvatarBuilderClosure;
+use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasSelectTitleWithAvatar;
 
 /**
  * @phpstan-require-extends IsRelatedToOperator
  */
 trait IsRelatedToOperatorMixin
 {
-    use HasAvatarBuilderClosure;
+    use HasSelectTitleWithAvatar;
 
     public function withAvatars(?string $attribute = null): static
     {
-        return static::getAvatarBuilderClosure(
+        return static::getSelectTitleWithAvatar(
             $attribute,
             $this->getTitleAttribute(...)
         ) |> $this->getOptionLabelFromRecordUsing(...);

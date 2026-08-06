@@ -13,6 +13,6 @@
     @apply p-0;
 }
 
-.fi-relation-manager-modal.invisible [wire\:partial="action-modals"] {
-    visibility: visible;
+.hides-for-nested-modals.invisible [wire\:partial="action-modals"] {
+    @apply visible;
 }

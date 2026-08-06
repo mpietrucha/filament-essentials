@@ -9,11 +9,11 @@ use Guava\FilamentModalRelationManagers\Actions\RelationManagerAction;
  */
 trait RelationManagerActionMixin
 {
-    public function overlaysNestedModals(): static
+    public function hidesForNestedModals(): static
     {
         $this->extraModalWindowAttributes([
             'x-hides-for-nested-modals' => true,
-            'class' => 'fi-relation-manager-modal',
+            'class' => 'fi-hides-for-nested-modals',
         ]);
 
         return $this;

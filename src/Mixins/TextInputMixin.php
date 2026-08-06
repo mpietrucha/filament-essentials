@@ -15,4 +15,15 @@ trait TextInputMixin
 
         return $this;
     }
+
+    public function decimal(int $fractionDigits = 2): static
+    {
+        $this->inputMode('decimal');
+
+        sprintf('numeric:%s', $fractionDigits) |> $this->rule(...);
+
+        $this->extraInputAttributes(['x-decimal' => $fractionDigits]);
+
+        return $this;
+    }
 }

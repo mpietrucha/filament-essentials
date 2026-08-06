@@ -10,13 +10,13 @@ use Mpietrucha\Filament\Essentials\Record;
 /**
  * @internal
  */
-trait HasPrice
+trait InteractsWithPrice
 {
     public static function priceWithConversion(
-        ?string $relation = null,
         string $priceAttribute = 'price',
         string $convertedPriceAttribute = 'converted_price',
         string $currencyAttribute = 'currency',
+        ?string $relation = null,
     ): static {
         $component = Record::attribute($priceAttribute, $relation) |> static::make(...);
 
@@ -36,17 +36,17 @@ trait HasPrice
     }
 
     public static function priceWithDiscount(
-        ?string $relation = null,
         string $discountedPriceAttribute = 'discounted_price',
         string $referencePriceAttribute = 'reference_price',
         string $convertedDiscountedPriceAttribute = 'converted_discounted_price',
         string $currencyAttribute = 'currency',
+        ?string $relation = null,
     ): static {
         $component = static::priceWithConversion(
-            $relation,
             $discountedPriceAttribute,
             $convertedDiscountedPriceAttribute,
             $currencyAttribute,
+            $relation,
         );
 
         return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relation, $currencyAttribute): ?HtmlString {
