@@ -2,7 +2,7 @@ export default Alpine => {
     Alpine.directive('decimal', (el, { expression }, { evaluate }) => {
         const fractionDigits = expression ? evaluate(expression) : 2
 
-        el.addEventListener('change', () => {
+        const format = () => {
             const value = convertToDecimal(el.value)
 
             if (isNaN(value)) {
@@ -10,7 +10,10 @@ export default Alpine => {
             }
 
             el.value = value.toFixed(fractionDigits)
-        })
+        }
+
+        format()
+        el.addEventListener('change', format)
     })
 }
 
