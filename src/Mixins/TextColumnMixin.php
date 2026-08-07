@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\InteractsWithPrice;
+use Mpietrucha\Support\Backtrace;
+use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends TextColumn
@@ -14,6 +16,22 @@ use Mpietrucha\Filament\Essentials\Mixins\Concerns\InteractsWithPrice;
 trait TextColumnMixin
 {
     use InteractsWithPrice;
+
+    public function asNeighbor(?string $label = null): static
+    {
+        $this->label(static function () use ($label): string {
+            if ($label === null) {
+                return Str::none();
+            }
+
+            return Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 5)
+                ->map
+                ->getFunction()
+                ->doesntContain('mapTableColumnToArray') ? Str::none() : $label;
+        });
+
+        return $this->width('1%');
+    }
 
     public function withLimitBadge(): static
     {

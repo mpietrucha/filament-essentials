@@ -3,27 +3,20 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Columns\ImageColumn;
-use Mpietrucha\Support\Backtrace;
-use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends ImageColumn
+ *
+ * @mixin TextColumnMixin
  */
 trait ImageColumnMixin
 {
     public function asAvatar(?string $label = null): static
     {
-        $this->label(static function () use ($label): string {
-            if ($label === null) {
-                return Str::none();
-            }
+        $this->circular();
 
-            return Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 5)
-                ->map
-                ->getFunction()
-                ->doesntContain('mapTableColumnToArray') ? Str::none() : $label;
-        });
+        $this->asNeighbor($label);
 
-        return $this->circular()->width('1%');
+        return $this;
     }
 }
