@@ -6,8 +6,6 @@ use Filament\Tables\Columns\ImageColumn;
 
 /**
  * @phpstan-require-extends ImageColumn
- *
- * @mixin TextColumnMixin
  */
 trait ImageColumnMixin
 {
@@ -15,8 +13,6 @@ trait ImageColumnMixin
     {
         $this->circular();
 
-        $this->asNeighbor($label);
-
-        return $this;
+        return $this->asNeighbor($label);
     }
 }

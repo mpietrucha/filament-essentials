@@ -5,6 +5,8 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 use Closure;
 use Filament\Tables\Columns\Column;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
+use Mpietrucha\Support\Backtrace;
+use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends Column
@@ -16,5 +18,21 @@ trait ColumnMixin
         TableColumnAction::make()->resolveActionUsing($resolveActionUsing) |> $this->action(...);
 
         return $this;
+    }
+
+    public function asNeighbor(?string $label = null): static
+    {
+        $this->label(static function () use ($label): string {
+            if ($label === null) {
+                return Str::none();
+            }
+
+            return Backtrace::get(DEBUG_BACKTRACE_IGNORE_ARGS, 5)
+                ->map
+                ->getFunction()
+                ->doesntContain('mapTableColumnToArray') ? Str::none() : $label;
+        });
+
+        return $this->width('1%');
     }
 }
