@@ -1,6 +1,6 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
-    "version": "1.0.35",
+    "version": "1.0.36",
     "private": true,
     "type": "module",
     "scripts": {
