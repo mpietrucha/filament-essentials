@@ -6,10 +6,10 @@ namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
-use Mpietrucha\Support\Str;
 
 class UpgradeFilament extends Command
 {

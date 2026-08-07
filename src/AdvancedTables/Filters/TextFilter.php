@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 use Mpietrucha\Support\Exception\RuntimeException;
-use Mpietrucha\Support\Str;
 use Throwable;
 
 if (class_exists(ArchilexTextFilter::class)) {

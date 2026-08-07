@@ -5,9 +5,9 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Mpietrucha\Laravel\Essentials\Enums\Contracts\LocaleInterface;
 use Mpietrucha\Laravel\Essentials\Locale;
-use Mpietrucha\Support\Str;
 
 /**
  * @method static|\Filament\Schemas\Components\Tabs translatable(bool|\Closure $translatable = true, ?\Closure $modifyLocalizedFieldUsing = null, MixedArray|\Closure|null $supportedLocales = null, string|\Closure|null $defaultLocale = null)

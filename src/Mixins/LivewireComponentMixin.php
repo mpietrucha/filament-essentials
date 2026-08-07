@@ -6,12 +6,12 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Js;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
 use Mpietrucha\Support\Exception\RuntimeException;
-use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends Component

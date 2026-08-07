@@ -4,8 +4,8 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasSelectTitleWithAvatar;
-use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends SelectFilter

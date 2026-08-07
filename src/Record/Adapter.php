@@ -5,10 +5,10 @@ namespace Mpietrucha\Filament\Essentials\Record;
 use BackedEnum;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Mpietrucha\Support\Exception\BadMethodCallException;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
 use Mpietrucha\Support\Instance;
-use Mpietrucha\Support\Str;
 use Stringable;
 
 /**

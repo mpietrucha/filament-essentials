@@ -6,10 +6,10 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Support\Components\Component;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Support\Concerns\Compatible;
 use Mpietrucha\Support\Forward\Concerns\Forwardable;
-use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-import-type RecordComponent from Record

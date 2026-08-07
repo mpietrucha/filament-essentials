@@ -2,8 +2,8 @@
 
 namespace Mpietrucha\Filament\Essentials\Concerns;
 
+use Illuminate\Support\Str;
 use Mpietrucha\Support\ClassNamespace;
-use Mpietrucha\Support\Str;
 
 /**
  * @internal
