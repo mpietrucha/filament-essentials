@@ -9,6 +9,8 @@ export default Alpine => {
                 return
             }
 
+            el.value = ''
+
             el.value = value.toFixed(fractionDigits)
         }
 

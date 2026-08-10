@@ -18,9 +18,10 @@ trait TextInputMixin
 
     public function decimal(int $fractionDigits = 2): static
     {
+        $this->isNumeric = true;
         $this->inputMode('decimal');
 
-        sprintf('numeric:%s', $fractionDigits) |> $this->rule(...);
+        sprintf('decimal:%s', $fractionDigits) |> $this->rule(...);
 
         $this->extraInputAttributes(['x-decimal' => $fractionDigits]);
 
