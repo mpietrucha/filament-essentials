@@ -1,5 +1,7 @@
 export default Alpine => {
-    Alpine.directive('decimal', (el, { expression }, { evaluate }) => {
+    Alpine.directive('decimal', (el, { expression }, { evaluate, cleanup }) => {
+        const componentId = evaluate('$wire.__instance.id')
+
         const fractionDigits = expression ? evaluate(expression) : 2
 
         const format = () => {
@@ -16,6 +18,16 @@ export default Alpine => {
 
         format()
         el.addEventListener('change', format)
+
+        const stopListening = Livewire.hook('commit', ({ component, succeed }) => {
+            if (component.id !== componentId) {
+                return
+            }
+
+            succeed(() => format())
+        })
+
+        cleanup(() => stopListening())
     })
 }
 
