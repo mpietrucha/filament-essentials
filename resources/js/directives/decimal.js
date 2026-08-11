@@ -24,7 +24,13 @@ export default Alpine => {
                 return
             }
 
-            succeed(() => format())
+            succeed(() => {
+                if (document.activeElement === el) {
+                    return
+                }
+
+                format()
+            })
         })
 
         cleanup(() => stopListening())
