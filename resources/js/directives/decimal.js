@@ -24,13 +24,7 @@ export default Alpine => {
                 return
             }
 
-            succeed(() => {
-                if (document.activeElement === el) {
-                    return
-                }
-
-                format()
-            })
+            succeed(() => document.activeElement !== el && format())
         })
 
         cleanup(() => stopListening())
