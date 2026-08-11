@@ -3,6 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\TextInput;
+use Illuminate\Support\Str;
 
 /**
  * @phpstan-require-extends TextInput
@@ -20,6 +21,8 @@ trait TextInputMixin
     {
         $this->isNumeric = true;
         $this->inputMode('decimal');
+
+        sprintf('0.%s', Str::padLeft('1', $fractionDigits, '0')) |> $this->step(...);
 
         sprintf('decimal:%s', $fractionDigits) |> $this->rule(...);
 
