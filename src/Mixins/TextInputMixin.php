@@ -19,14 +19,11 @@ trait TextInputMixin
 
     public function decimal(int $decimalPlaces = 2): static
     {
-        $this->isNumeric = true;
-        $this->inputMode('decimal');
-
-        sprintf('decimal:0,%s', $decimalPlaces) |> $this->rule(...);
-
-        sprintf('0.%s', Str::padLeft('1', $decimalPlaces, '0')) |> $this->step(...);
+        $this->numeric();
 
         $this->extraInputAttributes(['x-decimal' => $decimalPlaces]);
+
+        sprintf('0.%s', Str::padLeft('1', $decimalPlaces, '0')) |> $this->step(...);
 
         return $this;
     }
