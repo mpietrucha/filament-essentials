@@ -17,16 +17,16 @@ trait TextInputMixin
         return $this;
     }
 
-    public function decimal(int $fractionDigits = 2): static
+    public function decimal(int $decimalPlaces = 2): static
     {
         $this->isNumeric = true;
         $this->inputMode('decimal');
 
-        sprintf('0.%s', Str::padLeft('1', $fractionDigits, '0')) |> $this->step(...);
+        sprintf('decimal:0,%s', $decimalPlaces) |> $this->rule(...);
 
-        sprintf('decimal:%s', $fractionDigits) |> $this->rule(...);
+        sprintf('0.%s', Str::padLeft('1', $decimalPlaces, '0')) |> $this->step(...);
 
-        $this->extraInputAttributes(['x-decimal' => $fractionDigits]);
+        $this->extraInputAttributes(['x-decimal' => $decimalPlaces]);
 
         return $this;
     }

@@ -2,7 +2,7 @@ export default Alpine => {
     Alpine.directive('decimal', (el, { expression }, { evaluate, cleanup }) => {
         const componentId = evaluate('$wire.__instance.id')
 
-        const fractionDigits = expression ? evaluate(expression) : 2
+        const decimalPlaces = expression ? evaluate(expression) : 2
 
         const format = () => {
             const value = convertToDecimal(el.value)
@@ -13,7 +13,7 @@ export default Alpine => {
 
             el.value = ''
 
-            el.value = value.toFixed(fractionDigits)
+            el.value = value.toFixed(decimalPlaces)
         }
 
         format()
