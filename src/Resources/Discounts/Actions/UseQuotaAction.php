@@ -22,8 +22,6 @@ class UseQuotaAction extends Action
 
         ColorVariant::warning()->name() |> $this->color(...);
 
-        $this->cancelParentActions();
-
         $this->hidden(static function (?Quota $record): bool {
             if (! $record instanceof Quota) {
                 return true;

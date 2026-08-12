@@ -41,13 +41,11 @@ return [
     ],
 
     'form' => [
-        'details' => 'Szczegóły',
         'discount' => 'Zniżka',
         'price' => 'Cena',
         'discount_percentage' => 'Procent',
-        'activity' => 'Aktywność',
-        'active_from' => 'Od',
-        'active_to' => 'Do',
+        'active_from' => 'Aktywna od',
+        'active_to' => 'Aktywna do',
         'quota' => [
             'label' => 'Pakiet',
             'none' => 'Brak',
@@ -57,8 +55,8 @@ return [
             'new' => 'Nowy',
             'name' => 'Nazwa',
             'limit' => 'Limit',
-            'active_from' => 'Od',
-            'active_to' => 'Do',
+            'active_from' => 'Aktywny od',
+            'active_to' => 'Aktywny do',
             'notes' => 'Notatki',
         ],
     ],

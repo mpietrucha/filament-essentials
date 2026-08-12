@@ -42,7 +42,7 @@ class DiscountForm
     protected static function components(): array
     {
         return [
-            Fieldset::make(__('filament-essentials::discounts-plugin.form.details'))
+            Fieldset::make(__('filament-essentials::discounts-plugin.form.discount'))
                 ->columnSpanFull()
                 ->schema([
                     TextInput::make('price')
@@ -76,11 +76,7 @@ class DiscountForm
                         ->maxValue(100)
                         ->requiredWithout('price')
                         ->suffix('%'),
-                ]),
 
-            Fieldset::make(__('filament-essentials::discounts-plugin.form.activity'))
-                ->columnSpanFull()
-                ->schema([
                     DatePicker::make('active_from')
                         ->label(__('filament-essentials::discounts-plugin.form.active_from')),
 

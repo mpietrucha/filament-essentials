@@ -41,12 +41,11 @@ return [
     ],
 
     'form' => [
-        'details' => 'Details',
+        'discount' => 'Discount',
         'price' => 'Price',
         'discount_percentage' => 'Percentage',
-        'activity' => 'Activity',
-        'active_from' => 'From',
-        'active_to' => 'To',
+        'active_from' => 'Active from',
+        'active_to' => 'Active to',
         'quota' => [
             'label' => 'Quota',
             'none' => 'None',
@@ -56,8 +55,8 @@ return [
             'new' => 'New',
             'name' => 'Name',
             'limit' => 'Limit',
-            'active_from' => 'From',
-            'active_to' => 'To',
+            'active_from' => 'Active from',
+            'active_to' => 'Active to',
             'notes' => 'Notes',
         ],
     ],
