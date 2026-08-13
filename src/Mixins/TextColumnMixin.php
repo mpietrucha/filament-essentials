@@ -58,12 +58,14 @@ trait TextColumnMixin
     {
         MixinProperty::set($this, 'iconAction', $action);
 
-        return $this->icon(static function (TextColumn $textColumn, ?Model $record, mixed $state) use ($action): ?Htmlable {
+        $icon = (clone $this)->getIcon(...);
+
+        return $this->icon(static function (TextColumn $textColumn, ?Model $record, mixed $state) use ($icon, $action): ?Htmlable {
             if (! $record instanceof Model) {
                 return null;
             }
 
-            $icon = $textColumn->getIcon($state) ?? $action->getIcon();
+            $icon = $icon($state) ?? $action->getIcon();
 
             if ($icon === null) {
                 return null;
@@ -72,7 +74,7 @@ trait TextColumnMixin
             $componentAttributeBag = new ComponentAttributeBag()->merge([
                 'class' => 'cursor-pointer',
                 /** @phpstan-ignore argument.type */
-                'wire:click.stop' => sprintf('mountTableAction("%s", "%s")', $action->getName(), $record->getKey()),
+                'wire:click.prevent.stop' => sprintf("mountTableAction('%s', '%s')", $action->getName(), $record->getKey()),
             ], false);
 
             return generate_icon_html($icon, attributes: $componentAttributeBag);
