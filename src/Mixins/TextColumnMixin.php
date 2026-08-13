@@ -58,14 +58,17 @@ trait TextColumnMixin
     {
         MixinProperty::set($this, 'iconAction', $action);
 
-        $icon = (clone $this)->getIcon(...);
+        $existingIconClosure = match (true) {
+            $this->hasIcon() => (clone $this)->getIcon(...),
+            default => null
+        };
 
-        return $this->icon(static function (TextColumn $textColumn, ?Model $record, mixed $state) use ($icon, $action): ?Htmlable {
+        return $this->icon(static function (TextColumn $textColumn, ?Model $record, mixed $state) use ($existingIconClosure, $action): ?Htmlable {
             if (! $record instanceof Model) {
                 return null;
             }
 
-            $icon = $icon($state) ?? $action->getIcon();
+            $icon = value($existingIconClosure, $state) ?? $action->getIcon();
 
             if ($icon === null) {
                 return null;
