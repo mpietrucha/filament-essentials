@@ -20,6 +20,7 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 use Guava\FilamentModalRelationManagers\Actions\RelationManagerAction;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Commands\GeneratePolicies;
@@ -37,6 +38,7 @@ use Mpietrucha\Filament\Essentials\Mixins\RelationManagerActionMixin;
 use Mpietrucha\Filament\Essentials\Mixins\ResourceMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectFilterMixin;
 use Mpietrucha\Filament\Essentials\Mixins\SelectMixin;
+use Mpietrucha\Filament\Essentials\Mixins\TableMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextColumnMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextEntryMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextInputMixin;
@@ -54,6 +56,7 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
         $package->hasBladeAnonymousComponents();
 
         $package->hasMixins([
+            Table::class => TableMixin::class,
             Field::class => FieldMixin::class,
             Action::class => ActionMixin::class,
             Column::class => ColumnMixin::class,
