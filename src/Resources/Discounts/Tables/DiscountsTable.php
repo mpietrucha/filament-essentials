@@ -12,8 +12,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 
 class DiscountsTable
 {

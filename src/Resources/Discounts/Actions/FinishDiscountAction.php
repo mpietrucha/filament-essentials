@@ -10,7 +10,7 @@ use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
 use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 
 class FinishDiscountAction extends Action
 {

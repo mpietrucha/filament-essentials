@@ -8,7 +8,7 @@ use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
 use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount\Quota;
 
 class UseQuotaAction extends Action
 {

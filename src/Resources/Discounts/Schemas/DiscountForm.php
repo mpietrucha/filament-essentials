@@ -25,8 +25,8 @@ use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\DiscountResource;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Enums\QuotaType;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount\Quota;
 use Symfony\Component\Intl\Currencies;
 
 class DiscountForm

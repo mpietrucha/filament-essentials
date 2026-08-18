@@ -23,7 +23,7 @@ use Mpietrucha\Filament\Essentials\Resources\Discounts\Pages\ManageDiscounts;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountInfolist;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Tables\DiscountsTable;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 use Mpietrucha\Support\Enum;
 
 /**

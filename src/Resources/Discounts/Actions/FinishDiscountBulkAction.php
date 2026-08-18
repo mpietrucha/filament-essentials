@@ -9,7 +9,7 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 
 class FinishDiscountBulkAction extends BulkAction
 {

@@ -10,8 +10,8 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Mpietrucha\Filament\Essentials\Plugins\DiscountsPlugin;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 
 class DiscountInfolist
 {

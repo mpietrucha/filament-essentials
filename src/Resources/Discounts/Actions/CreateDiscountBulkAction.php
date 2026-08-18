@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Mpietrucha\Filament\Essentials\Resources\Discounts\Schemas\DiscountForm;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount;
-use Mpietrucha\Laravel\Essentials\Eloquent\Models\Discount\Quota;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
+use Mpietrucha\Laravel\Essentials\Money\Models\Discount\Quota;
 
 class CreateDiscountBulkAction extends BulkAction
 {
