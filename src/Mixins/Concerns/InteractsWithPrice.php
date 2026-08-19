@@ -18,9 +18,9 @@ trait InteractsWithPrice
         string $currencyAttribute = 'currency',
         ?string $relation = null,
     ): static {
-        $component = Record::attribute($priceAttribute, $relation) |> static::make(...);
+        $component = Record::buildRelationAttribue($priceAttribute, $relation) |> static::make(...);
 
-        $convertedPrice = Record::attribute($convertedPriceAttribute, $relation) |> Record::money(...);
+        $convertedPrice = Record::buildRelationAttribue($convertedPriceAttribute, $relation) |> Record::money(...);
 
         if ($component instanceof TextEntry) { /** @phpstan-ignore instanceof.alwaysTrue, instanceof.alwaysFalse */
             $component->belowContent($convertedPrice);
@@ -30,7 +30,7 @@ trait InteractsWithPrice
             $component->description($convertedPrice);
         }
 
-        Record::get(Record::attribute($currencyAttribute, $relation)) |> $component->money(...);
+        Record::get(Record::buildRelationAttribue($currencyAttribute, $relation)) |> $component->money(...);
 
         return $component;
     }
@@ -51,8 +51,8 @@ trait InteractsWithPrice
 
         return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relation, $currencyAttribute): ?HtmlString {
             $money = $record->money(
-                Record::attribute($referencePriceAttribute, $relation),
-                Record::attribute($currencyAttribute, $relation) |> $record->get(...),
+                Record::buildRelationAttribue($referencePriceAttribute, $relation),
+                Record::buildRelationAttribue($currencyAttribute, $relation) |> $record->get(...),
             );
 
             if ($money === '') {
