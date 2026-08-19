@@ -66,6 +66,7 @@ class GeneratePolicies extends Command
 
     protected function rewrite(): void
     {
+        /** @phpstan-ignore argument.type */
         $directory = $this->option('policies') |> base_path(...);
 
         /** @var string */
