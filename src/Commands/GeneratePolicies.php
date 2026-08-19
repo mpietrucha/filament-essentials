@@ -19,7 +19,7 @@ class GeneratePolicies extends Command
     protected $signature = 'essentials:generate-policies
                             {--model=App\Models\User : The User model class to use in generated policies}
                             {--panel=default : The panel ID to generate policies for}
-                            {--policies= : The directory path to scan and rewrite generated policies (default: app/Policies)}';
+                            {--policies=app/Policies : The directory path to scan and rewrite generated policies}';
 
     /**
      * @var string
@@ -66,7 +66,7 @@ class GeneratePolicies extends Command
 
     protected function rewrite(): void
     {
-        $directory = $this->option('policies') ?? app_path('Policies');
+        $directory = $this->option('policies') |> base_path(...);
 
         /** @var string */
         $model = $this->option('model');
