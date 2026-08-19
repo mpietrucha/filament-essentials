@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Arr;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
 use Mpietrucha\Support\Exception\RuntimeException;
+use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-implements Plugin
@@ -70,7 +71,8 @@ trait HasResource
             return $defaultResource;
         }
 
-        if (! is_a($resource, $defaultResource, true)) {
+        /** @phpstan-ignore staticMethod.impossibleType */
+        if (Instance::isNot($resource, $defaultResource)) {
             InvalidArgumentException::throw('Plugin resource must be `%s`', $defaultResource);
         }
 

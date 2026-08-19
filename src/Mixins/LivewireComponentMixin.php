@@ -12,6 +12,7 @@ use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
 use Mpietrucha\Support\Exception\RuntimeException;
+use Mpietrucha\Support\Instance;
 
 /**
  * @phpstan-require-extends Component
@@ -27,8 +28,8 @@ trait LivewireComponentMixin
     {
         $component = static::class;
 
-        /** @phpstan-ignore function.impossibleType */
-        if (is_a($component, RelationManager::class, true)) {
+        /** @phpstan-ignore staticMethod.impossibleType */
+        if (Instance::is($component, RelationManager::class)) {
             /** @var null|FilamentResource */
             return $component::getRelatedResource();
         }
@@ -39,7 +40,7 @@ trait LivewireComponentMixin
             return null;
         }
 
-        if (! is_a($resource, Resource::class, true)) {
+        if (Instance::isNot($resource, Resource::class)) {
             return null;
         }
 
