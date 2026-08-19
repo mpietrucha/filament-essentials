@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Mpietrucha\Filament\Essentials\Enums\Contracts;
+namespace Mpietrucha\Filament\Essentials\Locale\Enums\Contracts;
 
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
-use Mpietrucha\Laravel\Essentials\Enums\Contracts\LocaleInterface as LaravelEssentialsLocaleInterface;
+use Mpietrucha\Filament\Essentials\Enums\Contracts\EnumInterface;
+use Mpietrucha\Laravel\Essentials\Locale\Enums\Contracts\LocaleInterface as LaravelEssentialsLocaleInterface;
 
 interface LocaleInterface extends EnumInterface, LaravelEssentialsLocaleInterface
 {

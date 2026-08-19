@@ -1,12 +1,13 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
+namespace Mpietrucha\Filament\Essentials\Locale\Enums\Concerns;
 
 use Filament\Schemas\Schema;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
-use Mpietrucha\Filament\Essentials\Enums\Contracts\LocaleInterface;
+use Mpietrucha\Filament\Essentials\Enums\Concerns\InteractsWithEnum;
+use Mpietrucha\Filament\Essentials\Locale\Enums\Contracts\LocaleInterface;
 use Mpietrucha\Filament\Essentials\Locale\IntlDatePatternGenerator;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 
@@ -16,7 +17,7 @@ use Mpietrucha\Laravel\Essentials\Locale\Currency;
 trait InteractsWithLocale
 {
     use InteractsWithEnum;
-    use \Mpietrucha\Laravel\Essentials\Enums\Concerns\InteractsWithLocale;
+    use \Mpietrucha\Laravel\Essentials\Locale\Enums\Concerns\InteractsWithLocale;
 
     public static function configure(): void
     {
