@@ -19,9 +19,10 @@ namespace Archilex\AdvancedTables {
 }
 
 namespace Archilex\AdvancedTables\Filters {
+    use Arrayable;
+    use Closure;
     use Filament\Tables\Columns\Column;
     use Filament\Tables\Filters\BaseFilter;
-    use Filament\Tables\Filters\SelectFilter as BaseSelectFilter;
     use Illuminate\Contracts\Support\Htmlable;
     use Illuminate\Database\Eloquent\Builder;
 
@@ -34,10 +35,6 @@ namespace Archilex\AdvancedTables\Filters {
         protected function getTextColumnFilter(Column $column): BaseFilter
         {
         }
-    }
-
-    class SelectFilter extends BaseSelectFilter
-    {
     }
 
     class TextFilter extends BaseFilter
@@ -79,6 +76,17 @@ namespace Archilex\AdvancedTables\Filters {
         }
 
         protected function getColumn(): ?Column
+        {
+        }
+    }
+
+    class SelectFilter extends BaseFilter
+    {
+        public function searchable(): static
+        {
+        }
+
+        public function options(null|array|Arrayable|Closure|string $options): static
         {
         }
     }
