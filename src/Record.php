@@ -33,7 +33,7 @@ class Record extends Context
      */
     public function __call(string $method, array $arguments): mixed
     {
-        $adapter = $this->getAdapter();
+        $adapter = $this->adapter();
 
         return static::forward($adapter)->eval($method, $arguments);
     }
@@ -47,7 +47,7 @@ class Record extends Context
         return sprintf('%s.%s', $relation, $attribute);
     }
 
-    public function getAdapter(): Adapter
+    public function adapter(): Adapter
     {
         return $this->adapter ??= Adapter::make(...$this->toArray());
     }
