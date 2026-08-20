@@ -258,11 +258,7 @@ if (class_exists(ArchilexTextFilter::class)) {
         {
             $value = Arr::get($data, $attribute);
 
-            if (is_string($value)) {
-                return $value;
-            }
-
-            return Str::none();
+            return is_string($value) ? $value : Str::none();
         }
 
         /**
