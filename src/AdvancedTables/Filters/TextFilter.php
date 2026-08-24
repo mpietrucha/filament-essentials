@@ -200,7 +200,7 @@ if (class_exists(ArchilexTextFilter::class)) {
         /**
          * @param  EloquentBuilder  $builder
          */
-        protected function getRelationshipName(Builder $builder): ?string
+        protected function getColumnRelationshipName(Builder $builder): ?string
         {
             $column = $this->getColumn();
 
@@ -308,7 +308,7 @@ if (class_exists(ArchilexTextFilter::class)) {
 
             $builder->reorder();
 
-            $relationship = $this->getRelationshipName($builder);
+            $relationship = $this->getColumnRelationshipName($builder);
 
             if ($relationship === null) {
                 $builder->orderByRaw($expression, $bindings);
@@ -347,7 +347,7 @@ if (class_exists(ArchilexTextFilter::class)) {
             $isInListOperator = $this->isInListOperator($data);
 
             $column = $this->getQueryColumn($builder);
-            $relationship = $this->getRelationshipName($builder);
+            $relationship = $this->getColumnRelationshipName($builder);
 
             if ($relationship === null) {
                 return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
