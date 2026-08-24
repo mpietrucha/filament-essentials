@@ -95,12 +95,12 @@ if (class_exists(ArchilexTextFilter::class)) {
             /** @phpstan-ignore property.notFound */
             $isInputHidden = $invadedInput->isHidden;
 
-            $isListOperator = static fn (Get $get): bool => static::isListOperator([
-                $operator = TextAttribute::OPERATOR => $get($operator),
-            ]);
+            $isListVisible = fn (Get $get): bool => [
+                TextAttribute::OPERATOR => TextAttribute::OPERATOR |> $get(...),
+            ] |> $this->isListOperator(...);
 
-            $input->hidden(static function (Get $get) use ($isInputHidden, $isListOperator): bool {
-                if ($isListOperator($get)) {
+            $input->hidden(static function (Get $get) use ($isInputHidden, $isListVisible): bool {
+                if ($isListVisible($get)) {
                     return true;
                 }
 
@@ -111,14 +111,14 @@ if (class_exists(ArchilexTextFilter::class)) {
                 ...$gridComponents,
                 Textarea::make(TextAttribute::LIST)
                     ->hiddenLabel()
-                    ->visible($isListOperator)
+                    ->visible($isListVisible)
                     ->columnSpan(
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
                     ),
                 Toggle::make(TextAttribute::SORT_BY_LIST)
                     ->label(__('filament-essentials::advanced-tables.text.sort_by_list'))
                     ->default(true)
-                    ->visible($isListOperator)
+                    ->visible($isListVisible)
                     ->columnSpan(
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
                     ),
@@ -186,14 +186,14 @@ if (class_exists(ArchilexTextFilter::class)) {
 
             $indicator = sprintf(
                 'filament-essentials::advanced-tables.text.%s.indicator',
-                static::getOperatorValue($data)
+                $this->getOperatorValue($data)
             ) |> __(...);
 
             return sprintf(
                 '%s %s (%s)',
                 $label,
                 $indicator,
-                static::getListValues($data)->count()
+                $this->getListValues($data)->count()
             ) |> Arr::wrap(...);
         }
 
@@ -214,17 +214,17 @@ if (class_exists(ArchilexTextFilter::class)) {
         /**
          * @param  FormData  $data
          */
-        protected function getOperatorValue(array $data): string
+        protected function getOperatorValue(array $data): ?string
         {
-            return Arr::string($data, TextAttribute::OPERATOR);
+            return Arr::tryString($data, TextAttribute::OPERATOR);
         }
 
         /**
          * @param  FormData  $data
          */
-        protected function getListValue(array $data): string
+        protected function getListValue(array $data): ?string
         {
-            return Arr::string($data, TextAttribute::LIST);
+            return Arr::tryString($data, TextAttribute::LIST);
         }
 
         /**
@@ -263,7 +263,7 @@ if (class_exists(ArchilexTextFilter::class)) {
         {
             $values = explode(
                 Str::eol(), /** @phpstan-ignore argument.type */
-                $this->getListValue($data)
+                $this->getListValue($data) ?? Str::none()
             );
 
             return collect($values)->map(Str::squish(...))->filter();
