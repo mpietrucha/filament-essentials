@@ -31,7 +31,7 @@ trait SelectFilterMixin
             $relationship,
             function (Builder $builder) use ($attribute, $data): void {
                 /** @phpstan-ignore method.nonObject, argument.templateType */
-                $value = collect($data)->flatten()->when($isMultiple = $this->isMultiple())->first();
+                $value = collect($data)->flatten()->unless($isMultiple = $this->isMultiple())->first();
 
                 if (blank($value)) {
                     return;
