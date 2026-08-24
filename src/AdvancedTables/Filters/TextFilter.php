@@ -216,15 +216,19 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getOperatorValue(array $data): ?string
         {
-            return Arr::tryString($data, TextAttribute::OPERATOR);
+            $value = Arr::get($data, TextAttribute::OPERATOR);
+
+            return is_string($value) ? $value : null;
         }
 
         /**
          * @param  FormData  $data
          */
-        protected function getListValue(array $data): ?string
+        protected function getListValue(array $data): string
         {
-            return Arr::tryString($data, TextAttribute::LIST);
+            $value = Arr::get($data, TextAttribute::OPERATOR);
+
+            return is_string($value) ? $value : Str::none();
         }
 
         /**
@@ -263,7 +267,7 @@ if (class_exists(ArchilexTextFilter::class)) {
         {
             $values = explode(
                 Str::eol(), /** @phpstan-ignore argument.type */
-                $this->getListValue($data) ?? Str::none()
+                $this->getListValue($data)
             );
 
             return collect($values)->map(Str::squish(...))->filter();
