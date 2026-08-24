@@ -226,7 +226,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getListValue(array $data): string
         {
-            $value = Arr::get($data, TextAttribute::OPERATOR);
+            $value = Arr::get($data, TextAttribute::LIST);
 
             return is_string($value) ? $value : Str::none();
         }
