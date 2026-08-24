@@ -14,14 +14,14 @@ if (class_exists(ArchilexAdvancedFilter::class)) {
     {
         protected function getTextColumnFilter(Column $column): BaseFilter
         {
-            if ($this->shouldBuildTextFilter($column)) {
+            if ($this->qualifiesToTextFilter($column)) {
                 return TextFilter::fromColumn($column);
             }
 
             return parent::getTextColumnFilter($column);
         }
 
-        protected function shouldBuildTextFilter(Column $column): bool
+        protected function qualifiesToTextFilter(Column $column): bool
         {
             if ($this->aggregatesRelationship($column)) {
                 return false;

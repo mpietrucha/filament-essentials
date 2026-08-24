@@ -18,6 +18,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
+use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Attributes\TextAttribute;
+use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Operators\TextOperator;
 use Mpietrucha\Support\Exception\RuntimeException;
 use Throwable;
 
@@ -31,10 +33,6 @@ if (class_exists(ArchilexTextFilter::class)) {
      */
     class TextFilter extends ArchilexTextFilter
     {
-        public const string IN_LIST = 'in_list';
-
-        public const string NOT_IN_LIST = 'not_in_list';
-
         public static function fromColumn(Column $column): static
         {
             $textFilter = $column->getName() |> static::make(...);
@@ -49,32 +47,13 @@ if (class_exists(ArchilexTextFilter::class)) {
          * @param  FormData  $data
          * @return EloquentBuilder
          */
-        #[\Override]
         public function applyToBaseQuery(Builder $builder, array $data = []): Builder
         {
-            if (! static::isListOperator($data)) {
+            if (! $this->isInListOperator($data)) {
                 return parent::applyToBaseQuery($builder, $data);
             }
 
-            if (! static::isInListOperator($data) || ! static::isSortByList($data)) {
-                return parent::applyToBaseQuery($builder, $data);
-            }
-
-            $values = static::getListValues($data);
-
-            if ($values->isEmpty()) {
-                return parent::applyToBaseQuery($builder, $data);
-            }
-
-            $column = $this->getQueryColumn($builder);
-
-            $relationship = $this->getColumn()?->getRelationshipName(
-                $builder->getModel()
-            );
-
-            static::applyListOrder($builder, $column, $values, $relationship);
-
-            return $builder;
+            return $this->applyListOrderToBaseQuery($builder, $data);
         }
 
         /**
@@ -82,41 +61,15 @@ if (class_exists(ArchilexTextFilter::class)) {
          * @param  FormData  $data
          * @return EloquentBuilder
          */
-        #[\Override]
         public function apply(Builder $builder, array $data = []): Builder
         {
-            if (! static::isListOperator($data)) {
+            if (! $this->isListOperator($data)) {
                 return parent::apply($builder, $data);
             }
 
-            $values = static::getListValues($data);
-
-            if ($values->isEmpty()) {
-                return $builder;
-            }
-
-            $isInListOperator = static::isInListOperator($data);
-
-            $column = $this->getQueryColumn($builder);
-
-            $relationship = $this->getColumn()?->getRelationshipName(
-                $builder->getModel()
-            );
-
-            if ($relationship === null) {
-                return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
-                    $column,
-                    $values,
-                );
-            }
-
-            return $builder->{$isInListOperator ? 'whereHas' : 'whereDoesntHave'}(
-                $relationship,
-                static fn (Builder $builder): Builder => $builder->whereIn($column, $values)
-            );
+            return $this->applyListFilter($builder, $data);
         }
 
-        #[\Override]
         public function getFormSchema(): array
         {
             $schema = parent::getFormSchema();
@@ -143,7 +96,7 @@ if (class_exists(ArchilexTextFilter::class)) {
             $isInputHidden = $invadedInput->isHidden;
 
             $isListOperator = static fn (Get $get): bool => static::isListOperator([
-                $operator = static::getOperatorAttribute() => $get($operator),
+                $operator = TextAttribute::OPERATOR => $get($operator),
             ]);
 
             $input->hidden(static function (Get $get) use ($isInputHidden, $isListOperator): bool {
@@ -156,13 +109,13 @@ if (class_exists(ArchilexTextFilter::class)) {
 
             $grid->schema([
                 ...$gridComponents,
-                Textarea::make(static::getListAttribute())
+                Textarea::make(TextAttribute::LIST)
                     ->hiddenLabel()
                     ->visible($isListOperator)
                     ->columnSpan(
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
                     ),
-                Toggle::make(static::getSortByListAttribute())
+                Toggle::make(TextAttribute::SORT_BY_LIST)
                     ->label(__('filament-essentials::advanced-tables.text.sort_by_list'))
                     ->default(true)
                     ->visible($isListOperator)
@@ -174,7 +127,6 @@ if (class_exists(ArchilexTextFilter::class)) {
             return $schema;
         }
 
-        #[\Override]
         protected function hasBaseQueryModificationCallback(): bool
         {
             return true;
@@ -187,8 +139,8 @@ if (class_exists(ArchilexTextFilter::class)) {
         {
             /** @var OperatorArray */
             return parent::getOperators() + [
-                static::IN_LIST => __('filament-essentials::advanced-tables.text.in_list.option'),
-                static::NOT_IN_LIST => __('filament-essentials::advanced-tables.text.not_in_list.option'),
+                TextOperator::IN_LIST => __('filament-essentials::advanced-tables.text.in_list.option'),
+                TextOperator::NOT_IN_LIST => __('filament-essentials::advanced-tables.text.not_in_list.option'),
             ];
         }
 
@@ -197,11 +149,11 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function formFilled(array $data): bool
         {
-            if (! static::isListOperator($data)) {
+            if (! $this->isListOperator($data)) {
                 return parent::formFilled($data);
             }
 
-            return static::getListValue($data) |>  filled(...);
+            return $this->getListValue($data) |> filled(...);
         }
 
         /**
@@ -210,7 +162,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getFilterIndicator(ArchilexTextFilter $archilexTextFilter, array $data): array
         {
-            if (! static::isListOperator($data)) {
+            if (! $this->isListOperator($data)) {
                 /** @var IndicatorArray */
                 return parent::getFilterIndicator($archilexTextFilter, $data);
             }
@@ -245,84 +197,73 @@ if (class_exists(ArchilexTextFilter::class)) {
             ) |> Arr::wrap(...);
         }
 
-        protected static function getOperatorAttribute(): string
+        /**
+         * @param  EloquentBuilder  $builder
+         */
+        protected function getRelationshipName(Builder $builder): ?string
         {
-            return 'operator';
-        }
+            $column = $this->getColumn();
 
-        protected static function getListAttribute(): string
-        {
-            return 'list';
-        }
+            if (! $column instanceof Column) {
+                return null;
+            }
 
-        protected static function getSortByListAttribute(): string
-        {
-            return 'sort_by_list';
+            return $builder->getModel() |> $column->getRelationshipName(...);
         }
 
         /**
          * @param  FormData  $data
          */
-        protected static function getAttributeStringValue(array $data, string $attribute): string
+        protected function getOperatorValue(array $data): string
         {
-            $value = Arr::get($data, $attribute);
-
-            return is_string($value) ? $value : Str::none();
+            return Arr::string($data, TextAttribute::OPERATOR);
         }
 
         /**
          * @param  FormData  $data
          */
-        protected static function getOperatorValue(array $data): string
+        protected function getListValue(array $data): string
         {
-            return static::getAttributeStringValue($data, static::getOperatorAttribute());
+            return Arr::string($data, TextAttribute::LIST);
         }
 
         /**
          * @param  FormData  $data
          */
-        protected static function getListValue(array $data): string
+        protected function isInListOperator(array $data): bool
         {
-            return static::getAttributeStringValue($data, static::getListAttribute());
+            return $this->getOperatorValue($data) === TextOperator::IN_LIST;
         }
 
         /**
          * @param  FormData  $data
          */
-        protected static function isInListOperator(array $data): bool
+        protected function isNotInListOperator(array $data): bool
         {
-            return static::getOperatorValue($data) === static::IN_LIST;
+            return $this->getOperatorValue($data) === TextOperator::NOT_IN_LIST;
         }
 
         /**
          * @param  FormData  $data
          */
-        protected static function isNotInListOperator(array $data): bool
+        protected function isListOperator(array $data): bool
         {
-            return static::getOperatorValue($data) === static::NOT_IN_LIST;
-        }
-
-        /**
-         * @param  FormData  $data
-         */
-        protected static function isListOperator(array $data): bool
-        {
-            if (static::isInListOperator($data)) {
+            if ($this->isInListOperator($data)) {
                 return true;
             }
 
-            return static::isNotInListOperator($data);
+            return $this->isNotInListOperator($data);
         }
 
         /**
          * @param  FormData  $data
          * @return ListCollection
          */
-        protected static function getListValues(array $data): Collection
+        protected function getListValues(array $data): Collection
         {
             $values = explode(
                 Str::eol(), /** @phpstan-ignore argument.type */
-                static::getListValue($data)
+                $this->getListValue($data)
             );
 
             return collect($values)->map(Str::squish(...))->filter();
@@ -331,17 +272,28 @@ if (class_exists(ArchilexTextFilter::class)) {
         /**
          * @param  FormData  $data
          */
-        protected static function isSortByList(array $data): bool
+        protected function isSortedByList(array $data): bool
         {
-            return (bool) Arr::get($data, static::getSortByListAttribute(), true);
+            return (bool) Arr::get($data, TextAttribute::SORT_BY_LIST, true);
         }
 
         /**
          * @param  EloquentBuilder  $builder
-         * @param  ListCollection  $values
+         * @param  FormData  $data
+         * @return EloquentBuilder
          */
-        protected static function applyListOrder(Builder $builder, string $column, Collection $values, ?string $relationship): void
+        protected function applyListOrderToBaseQuery(Builder $builder, array $data): Builder
         {
+            if (! $this->isSortedByList($data)) {
+                return $builder;
+            }
+
+            $values = $this->getListValues($data);
+
+            if ($values->isEmpty()) {
+                return $builder;
+            }
+
             $bindings = $values->values()->all();
 
             $cases = Str::space() |> $values
@@ -349,15 +301,19 @@ if (class_exists(ArchilexTextFilter::class)) {
                 ->map(static fn (string $value, int $index): string => sprintf('WHEN ? THEN %d', $index))
                 ->implode(...);
 
+            $column = $this->getQueryColumn($builder);
+
             /** @var literal-string $expression */
             $expression = sprintf('CASE %s %s END', $column, $cases);
 
             $builder->reorder();
 
+            $relationship = $this->getRelationshipName($builder);
+
             if ($relationship === null) {
                 $builder->orderByRaw($expression, $bindings);
 
-                return;
+                return $builder;
             }
 
             /** @var Relation<Model, Model, *> $relation */
@@ -372,7 +328,38 @@ if (class_exists(ArchilexTextFilter::class)) {
             $subquery->getQuery()->columns = null;
             $subquery->selectRaw($expression, $bindings);
 
-            $builder->orderBy($subquery);
+            return $builder->orderBy($subquery);
+        }
+
+        /**
+         * @param  EloquentBuilder  $builder
+         * @param  FormData  $data
+         * @return EloquentBuilder
+         */
+        protected function applyListFilter(Builder $builder, array $data): Builder
+        {
+            $values = $this->getListValues($data);
+
+            if ($values->isEmpty()) {
+                return $builder;
+            }
+
+            $isInListOperator = $this->isInListOperator($data);
+
+            $column = $this->getQueryColumn($builder);
+            $relationship = $this->getRelationshipName($builder);
+
+            if ($relationship === null) {
+                return $builder->{$isInListOperator ? 'whereIn' : 'whereNotIn'}(
+                    $column,
+                    $values,
+                );
+            }
+
+            return $builder->{$isInListOperator ? 'whereHas' : 'whereDoesntHave'}(
+                $relationship,
+                static fn (Builder $builder): Builder => $builder->whereIn($column, $values)
+            );
         }
     }
 } else {
