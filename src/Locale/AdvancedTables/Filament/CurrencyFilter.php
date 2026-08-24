@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Mpietrucha\Filament\Essentials\Locale\AdvancedTables\Filters;
+namespace Mpietrucha\Filament\Essentials\Locale\AdvancedTables\Filament;
 
-use Archilex\AdvancedTables\Filters\SelectFilter as ArchilexSelectFilter;
+use Archilex\AdvancedTables\Filament\SelectFilter as ArchilexSelectFilter;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
-use Mpietrucha\Laravel\Essentials\Locale\Currency;
+use Mpietrucha\Filament\Essentials\Locale\Filters\CurrencyFilter as FilamentCurrencyFilter;
 
 if (class_exists(ArchilexSelectFilter::class)) {
     class CurrencyFilter extends ArchilexSelectFilter
@@ -15,9 +15,7 @@ if (class_exists(ArchilexSelectFilter::class)) {
         {
             parent::setUp();
 
-            $this->searchable();
-
-            Currency::enum() |> $this->options(...);
+            FilamentCurrencyFilter::configureSelectFilter($this);
         }
     }
 } else {

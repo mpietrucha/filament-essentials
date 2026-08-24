@@ -22,23 +22,16 @@ trait SelectFilterMixin
         ) |> $this->getOptionLabelFromRecordUsing(...);
     }
 
-    public function queryRelationship(): static
+    public function queryThroughRelationship(): static
     {
-        $relationship = Str::beforeLast(
-            $attribute = $this->getAttribute(),
-            $indicator = '.'
-        );
-
+        $relationship = Str::beforeLast($attribute = $this->getAttribute(), $indicator = '.');
         $attribute = Str::afterLast($attribute, $indicator);
 
         return $this->query(fn (Builder $builder, array $data): Builder => $builder->whereHas(
             $relationship,
             function (Builder $builder) use ($attribute, $data): void {
-                $value = collect($data)->flatten();
-
-                if (false === $isMultiple = $this->isMultiple()) {
-                    $value = $value->first();
-                }
+                /** @phpstan-ignore method.nonObject, argument.templateType */
+                $value = collect($data)->flatten()->when($isMultiple = $this->isMultiple())->first();
 
                 if (blank($value)) {
                     return;

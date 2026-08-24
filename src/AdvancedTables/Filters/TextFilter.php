@@ -35,6 +35,15 @@ if (class_exists(ArchilexTextFilter::class)) {
 
         public const string NOT_IN_LIST = 'not_in_list';
 
+        public static function fromColumn(Column $column): static
+        {
+            $textFilter = $column->getName() |> static::make(...);
+
+            $label = $column->getLabel();
+
+            return $textFilter->label($label)->column($column);
+        }
+
         /**
          * @param  EloquentBuilder  $builder
          * @param  FormData  $data
@@ -266,10 +275,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected static function getOperatorValue(array $data): string
         {
-            return static::getAttributeStringValue(
-                $data,
-                static::getOperatorAttribute()
-            );
+            return static::getAttributeStringValue($data, static::getOperatorAttribute());
         }
 
         /**
@@ -277,10 +283,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected static function getListValue(array $data): string
         {
-            return static::getAttributeStringValue(
-                $data,
-                static::getListAttribute()
-            );
+            return static::getAttributeStringValue($data, static::getListAttribute());
         }
 
         /**
@@ -330,11 +333,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected static function isSortByList(array $data): bool
         {
-            return (bool) Arr::get(
-                $data,
-                static::getSortByListAttribute(),
-                true
-            );
+            return (bool) Arr::get($data, static::getSortByListAttribute(), true);
         }
 
         /**

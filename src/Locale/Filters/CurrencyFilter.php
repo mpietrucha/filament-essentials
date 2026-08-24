@@ -13,10 +13,15 @@ class CurrencyFilter extends SelectFilter
     {
         parent::setUp();
 
-        $this->multiple();
+        static::configureSelectFilter($this);
+    }
 
-        $this->searchable();
+    public static function configureSelectFilter(SelectFilter $selectFilter): void
+    {
+        $selectFilter->multiple();
 
-        Currency::enum() |> $this->options(...);
+        $selectFilter->searchable();
+
+        Currency::enum() |> $selectFilter->options(...);
     }
 }

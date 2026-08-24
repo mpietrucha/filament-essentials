@@ -19,16 +19,17 @@ namespace Archilex\AdvancedTables {
 }
 
 namespace Archilex\AdvancedTables\Filters {
-    use Arrayable;
-    use Closure;
     use Filament\Tables\Columns\Column;
     use Filament\Tables\Filters\BaseFilter;
-    use Illuminate\Contracts\Support\Htmlable;
     use Illuminate\Database\Eloquent\Builder;
 
     class AdvancedFilter extends BaseFilter
     {
         protected function getColumnType(Column $column): string
+        {
+        }
+
+        protected function aggregatesRelationship(Column $column): bool
         {
         }
 
@@ -39,23 +40,11 @@ namespace Archilex\AdvancedTables\Filters {
 
     class TextFilter extends BaseFilter
     {
-        public static function make(string $name): static
-        {
-        }
-
         public function column(Column $column): static
         {
         }
 
-        public function label(Htmlable|string $label): static
-        {
-        }
-
-        public function apply(Builder $builder, array $data = []): Builder
-        {
-        }
-
-        public function getFormSchema(): array
+        protected function getColumn(): ?Column
         {
         }
 
@@ -67,27 +56,20 @@ namespace Archilex\AdvancedTables\Filters {
         {
         }
 
-        protected function getFilterIndicator(TextFilter $filter, array $data): array
-        {
-        }
-
         protected function getQueryColumn(Builder $builder): string
         {
         }
 
-        protected function getColumn(): ?Column
+        protected function getFilterIndicator(TextFilter $filter, array $data): array
         {
         }
     }
+}
 
-    class SelectFilter extends BaseFilter
+namespace Archilex\AdvancedTables\Filament {
+    use Filament\Tables\Filters\SelectFilter as FilamentSelectFilter;
+
+    class SelectFilter extends FilamentSelectFilter
     {
-        public function searchable(): static
-        {
-        }
-
-        public function options(null|array|Arrayable|Closure|string $options): static
-        {
-        }
     }
 }

@@ -14,16 +14,20 @@ if (class_exists(ArchilexAdvancedFilter::class)) {
     {
         protected function getTextColumnFilter(Column $column): BaseFilter
         {
-            $type = $this->getColumnType($column);
-
-            if ($type !== 'text') {
-                return parent::getTextColumnFilter($column);
+            if ($this->shouldBuildTextFilter($column)) {
+                return TextFilter::fromColumn($column);
             }
 
-            $name = $column->getName();
-            $label = $column->getLabel();
+            return parent::getTextColumnFilter($column);
+        }
 
-            return TextFilter::make($name)->column($column)->label($label);
+        protected function shouldBuildTextFilter(Column $column): bool
+        {
+            if ($this->aggregatesRelationship($column)) {
+                return false;
+            }
+
+            return $this->getColumnType($column) === 'text';
         }
     }
 } else {
