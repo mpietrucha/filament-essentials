@@ -25,6 +25,20 @@ namespace Archilex\AdvancedTables\Filters {
 
     class AdvancedFilter extends BaseFilter
     {
+        /**
+         * @return array<BaseFilter>
+         */
+        public function getFilters(): array
+        {
+        }
+
+        /**
+         * @return array<BaseFilter>
+         */
+        public function getCollectedFilters(): array
+        {
+        }
+
         protected function getColumnType(Column $column): string
         {
         }
@@ -63,6 +77,10 @@ namespace Archilex\AdvancedTables\Filters {
         protected function getFilterIndicator(TextFilter $filter, array $data): array
         {
         }
+    }
+
+    class NumericFilter extends BaseFilter
+    {
     }
 }
 
