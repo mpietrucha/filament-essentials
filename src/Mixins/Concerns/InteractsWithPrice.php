@@ -6,6 +6,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
 /**
  * @internal
@@ -13,11 +14,17 @@ use Mpietrucha\Filament\Essentials\Record;
 trait InteractsWithPrice
 {
     public static function priceWithConversion(
-        string $priceAttribute = 'price',
-        string $convertedPriceAttribute = 'converted_price',
-        string $currencyAttribute = 'currency',
+        ?string $priceAttribute = null,
+        ?string $convertedPriceAttribute = null,
+        ?string $currencyAttribute = null,
+        ?string $indicator = null,
         ?string $relation = null,
     ): static {
+        $priceAttribute ??= PriceAttribute::getPrice($indicator);
+        $convertedPriceAttribute ??= PriceAttribute::getConvertedPrice($indicator);
+
+        $currencyAttribute ??= PriceAttribute::getCurrency();
+
         $component = Record::buildRelationAttribute($priceAttribute, $relation) |> static::make(...);
 
         $convertedPrice = Record::buildRelationAttribute($convertedPriceAttribute, $relation) |> Record::money(...);
@@ -36,12 +43,19 @@ trait InteractsWithPrice
     }
 
     public static function priceWithDiscount(
-        string $discountedPriceAttribute = 'discounted_price',
-        string $referencePriceAttribute = 'reference_price',
-        string $convertedDiscountedPriceAttribute = 'converted_discounted_price',
-        string $currencyAttribute = 'currency',
+        ?string $discountedPriceAttribute = null,
+        ?string $referencePriceAttribute = null,
+        ?string $convertedDiscountedPriceAttribute = null,
+        ?string $currencyAttribute = null,
+        ?string $indicator = null,
         ?string $relation = null,
     ): static {
+        $discountedPriceAttribute ??= PriceAttribute::getDiscountedPrice($indicator);
+        $referencePriceAttribute ??= PriceAttribute::getReferencePrice($indicator);
+        $convertedDiscountedPriceAttribute ??= PriceAttribute::getConvertedDiscountedPrice($indicator);
+
+        $currencyAttribute ??= PriceAttribute::getCurrency();
+
         $component = static::priceWithConversion(
             $discountedPriceAttribute,
             $convertedDiscountedPriceAttribute,
