@@ -216,9 +216,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getOperatorValue(array $data): ?string
         {
-            $value = Arr::get($data, TextAttribute::OPERATOR);
-
-            return is_string($value) ? $value : null;
+            return is_string($value = Arr::get($data, TextAttribute::OPERATOR)) ? $value : null;
         }
 
         /**
@@ -226,9 +224,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getListValue(array $data): string
         {
-            $value = Arr::get($data, TextAttribute::LIST);
-
-            return is_string($value) ? $value : Str::none();
+            return is_string($value = Arr::get($data, TextAttribute::OPERATOR)) ? $value : Str::none();
         }
 
         /**

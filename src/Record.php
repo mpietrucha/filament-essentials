@@ -38,7 +38,7 @@ class Record extends Context
         return static::forward($adapter)->eval($method, $arguments);
     }
 
-    public static function buildRelationAttribue(string $attribute, ?string $relation = null): string
+    public static function buildRelationAttribute(string $attribute, ?string $relation = null): string
     {
         if ($relation === null) {
             return $attribute;
