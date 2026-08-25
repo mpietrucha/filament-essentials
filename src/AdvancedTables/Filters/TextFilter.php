@@ -216,7 +216,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getOperatorValue(array $data): ?string
         {
-            return is_string($value = Arr::get($data, TextAttribute::OPERATOR)) ? $value : null;
+            return Arr::tryString($data, TextAttribute::OPERATOR);
         }
 
         /**
@@ -224,7 +224,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getListValue(array $data): string
         {
-            return is_string($value = Arr::get($data, TextAttribute::OPERATOR)) ? $value : Str::none();
+            return Arr::tryString($data, TextAttribute::OPERATOR, Str::none());
         }
 
         /**
@@ -274,7 +274,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function isSortedByList(array $data): bool
         {
-            return (bool) Arr::get($data, TextAttribute::SORT_BY_LIST, true);
+            return Arr::tryBoolean($data, TextAttribute::SORT_BY_LIST, true);
         }
 
         /**

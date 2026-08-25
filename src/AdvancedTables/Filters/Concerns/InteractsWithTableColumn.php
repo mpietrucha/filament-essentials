@@ -18,6 +18,10 @@ trait InteractsWithTableColumn
 
     protected function getDefaultTableColumn(): Column
     {
-        return $this->getName() |> TextColumn::make(...);
+        $defaultColumn = $this->getName() |> TextColumn::make(...);
+
+        $this->getLabel() |> $defaultColumn->label(...);
+
+        return $defaultColumn;
     }
 }

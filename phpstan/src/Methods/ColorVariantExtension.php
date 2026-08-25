@@ -10,9 +10,9 @@ use Throwable;
 
 final class ColorVariantExtension implements MethodsClassReflectionExtension
 {
-    public function hasMethod(ClassReflection $reflection, string $method): bool
+    public function hasMethod(ClassReflection $classReflection, string $method): bool
     {
-        if (! $reflection->is(ColorVariant::class)) {
+        if (! $classReflection->is(ColorVariant::class)) {
             return false;
         }
 
@@ -25,8 +25,8 @@ final class ColorVariantExtension implements MethodsClassReflectionExtension
         }
     }
 
-    public function getMethod(ClassReflection $reflection, string $method): ColorVariantReflection
+    public function getMethod(ClassReflection $classReflection, string $method): ColorVariantReflection
     {
-        return new ColorVariantReflection($reflection, $method);
+        return new ColorVariantReflection($classReflection, $method);
     }
 }
