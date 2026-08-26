@@ -25,11 +25,11 @@ use Throwable;
 
 if (class_exists(ArchilexTextFilter::class)) {
     /**
-     * @phpstan-type ListCollection Collection<int, non-falsy-string>
-     * @phpstan-type FormData array<string, mixed>
-     * @phpstan-type EloquentBuilder Builder<Model>
-     * @phpstan-type OperatorArray array<string, string>
-     * @phpstan-type IndicatorArray array<string>
+     * @phpstan-import-type ListCollection from AdvancedFilter
+     * @phpstan-import-type FormData from AdvancedFilter
+     * @phpstan-import-type EloquentBuilder from AdvancedFilter
+     * @phpstan-import-type OperatorArray from AdvancedFilter
+     * @phpstan-import-type IndicatorArray from AdvancedFilter
      */
     class TextFilter extends ArchilexTextFilter
     {
