@@ -19,6 +19,7 @@ namespace Archilex\AdvancedTables {
 }
 
 namespace Archilex\AdvancedTables\Filters {
+    use Archilex\AdvancedTables\Filters\Concerns\HasColumn;
     use Filament\Tables\Columns\Column;
     use Filament\Tables\Filters\BaseFilter;
     use Illuminate\Database\Eloquent\Builder;
@@ -52,15 +53,28 @@ namespace Archilex\AdvancedTables\Filters {
         }
     }
 
+    class BooleanFilter extends BaseFilter
+    {
+    }
+
+    class DateFilter extends BaseFilter
+    {
+        use HasColumn;
+    }
+
+    class NumericFilter extends BaseFilter
+    {
+        use HasColumn;
+    }
+
+    class SelectFilter extends BaseFilter
+    {
+        use HasColumn;
+    }
+
     class TextFilter extends BaseFilter
     {
-        public function column(Column $column): static
-        {
-        }
-
-        protected function getColumn(): ?Column
-        {
-        }
+        use HasColumn;
 
         protected function getOperators(): array
         {
@@ -78,10 +92,6 @@ namespace Archilex\AdvancedTables\Filters {
         {
         }
     }
-
-    class NumericFilter extends BaseFilter
-    {
-    }
 }
 
 namespace Archilex\AdvancedTables\Filament {
@@ -89,5 +99,20 @@ namespace Archilex\AdvancedTables\Filament {
 
     class SelectFilter extends FilamentSelectFilter
     {
+    }
+}
+
+namespace Archilex\AdvancedTables\Filters\Concerns {
+    use Filament\Tables\Columns\Column;
+
+    trait HasColumn
+    {
+        public function column(Column $column): static
+        {
+        }
+
+        public function getColumn(): ?Column
+        {
+        }
     }
 }

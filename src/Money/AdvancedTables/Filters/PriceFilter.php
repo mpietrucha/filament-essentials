@@ -6,15 +6,19 @@ namespace Mpietrucha\Filament\Essentials\Money\AdvancedTables\Filters;
 
 use Archilex\AdvancedTables\Filters\NumericFilter as ArchilexNumericFilter;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
-use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Concerns\InteractsWithTableColumn;
-use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Contracts\InteractsWithTableColumnInterface;
+use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Concerns\InteractsWithFilters;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
 if (class_exists(ArchilexNumericFilter::class)) {
-    class PriceFilter extends ArchilexNumericFilter implements InteractsWithTableColumnInterface
+    class PriceFilter extends ArchilexNumericFilter
     {
-        use InteractsWithTableColumn;
+        use InteractsWithFilters;
+
+        protected function setUp(): void
+        {
+            parent::setUp();
+        }
 
         public static function make(?string $name = null, ?string $indicator = null, ?string $relation = null): static
         {

@@ -60,6 +60,7 @@ trait InteractsWithPrice
             $discountedPriceAttribute,
             $convertedDiscountedPriceAttribute,
             $currencyAttribute,
+            $indicator,
             $relation,
         );
 
