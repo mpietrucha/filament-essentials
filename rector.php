@@ -48,6 +48,7 @@ return RectorConfig::configure()
             'src/Mixins/ResourceMixin.php',
             'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
             'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
+            'src/AdvancedTables/Filters/Concerns/InteractsWithFilters.php',
         ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',

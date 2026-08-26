@@ -3,15 +3,18 @@
 namespace Archilex\AdvancedTables {
     trait AdvancedTables
     {
+        public ?string $activeUserView = null;
+
         public ?string $activePresetView = null;
 
         public function resetTable(): void
         {
         }
 
-        /**
-         * @param  null|array<mixed>  $filters
-         */
+        public function loadUserView(string $userView, ?array $filters = null, bool $resetTable = true, bool $isActive = true): void
+        {
+        }
+
         public function loadPresetView(string $presetView, ?array $filters = null, bool $resetTable = true, bool $isActive = true): void
         {
         }
@@ -26,16 +29,10 @@ namespace Archilex\AdvancedTables\Filters {
 
     class AdvancedFilter extends BaseFilter
     {
-        /**
-         * @return array<BaseFilter>
-         */
         public function getFilters(): array
         {
         }
 
-        /**
-         * @return array<BaseFilter>
-         */
         public function getCollectedFilters(): array
         {
         }
