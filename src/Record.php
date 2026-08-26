@@ -38,13 +38,13 @@ class Record extends Context
         return static::forward($adapter)->eval($method, $arguments);
     }
 
-    public static function buildRelationAttribute(string $attribute, ?string $relation = null): string
+    public static function buildRelationshipAttribute(string $attribute, ?string $relationship = null): string
     {
-        if ($relation === null) {
+        if ($relationship === null) {
             return $attribute;
         }
 
-        return sprintf('%s.%s', $relation, $attribute);
+        return sprintf('%s.%s', $relationship, $attribute);
     }
 
     public function adapter(): Adapter

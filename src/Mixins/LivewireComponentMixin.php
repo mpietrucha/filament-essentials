@@ -55,23 +55,23 @@ trait LivewireComponentMixin
         return static::getFilamentResource() ?? RuntimeException::throw('Related resource cannot be empty');
     }
 
-    public static function getViewAction(?string $relation = null): ViewAction
+    public static function getViewAction(?string $relationship = null): ViewAction
     {
-        $viewAction = static::getActionsResource()::getViewAction($relation);
+        $viewAction = static::getActionsResource()::getViewAction($relationship);
 
         $viewAction->withFormActionsLivewire(static::class);
 
         return $viewAction;
     }
 
-    public static function getEditAction(?string $relation = null): EditAction
+    public static function getEditAction(?string $relationship = null): EditAction
     {
-        return static::getActionsResource()::getEditAction($relation);
+        return static::getActionsResource()::getEditAction($relationship);
     }
 
-    public static function getCreateAction(?string $relation = null): CreateAction
+    public static function getCreateAction(?string $relationship = null): CreateAction
     {
-        return static::getActionsResource()::getCreateAction($relation);
+        return static::getActionsResource()::getCreateAction($relationship);
     }
 
     public function getFilamentRecord(): ?Model

@@ -92,7 +92,12 @@ namespace Archilex\AdvancedTables\Filters {
 }
 
 namespace Archilex\AdvancedTables\Filament {
+    use Filament\Tables\Filters\Filter as FilamentFilter;
     use Filament\Tables\Filters\SelectFilter as FilamentSelectFilter;
+
+    class Filter extends FilamentFilter
+    {
+    }
 
     class SelectFilter extends FilamentSelectFilter
     {

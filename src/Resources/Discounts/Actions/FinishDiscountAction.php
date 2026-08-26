@@ -8,13 +8,13 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Support\Icons\Heroicon;
 use Livewire\Component;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelationship;
 use Mpietrucha\Filament\Essentials\Colors\ColorVariant;
 use Mpietrucha\Laravel\Essentials\Money\Models\Discount;
 
 class FinishDiscountAction extends Action
 {
-    use ResolvesRecordFromRelation;
+    use ResolvesRecordFromRelationship;
 
     protected function setUp(): void
     {

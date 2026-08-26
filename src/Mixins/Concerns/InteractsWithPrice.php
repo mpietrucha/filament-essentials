@@ -18,16 +18,16 @@ trait InteractsWithPrice
         ?string $convertedPriceAttribute = null,
         ?string $currencyAttribute = null,
         ?string $indicator = null,
-        ?string $relation = null,
+        ?string $relationship = null,
     ): static {
         $priceAttribute ??= PriceAttribute::getPrice($indicator);
         $convertedPriceAttribute ??= PriceAttribute::getConvertedPrice($indicator);
 
         $currencyAttribute ??= PriceAttribute::getCurrency();
 
-        $component = Record::buildRelationAttribute($priceAttribute, $relation) |> static::make(...);
+        $component = Record::buildRelationshipAttribute($priceAttribute, $relationship) |> static::make(...);
 
-        $convertedPrice = Record::buildRelationAttribute($convertedPriceAttribute, $relation) |> Record::money(...);
+        $convertedPrice = Record::buildRelationshipAttribute($convertedPriceAttribute, $relationship) |> Record::money(...);
 
         if ($component instanceof TextEntry) { /** @phpstan-ignore instanceof.alwaysTrue, instanceof.alwaysFalse */
             $component->belowContent($convertedPrice);
@@ -37,7 +37,7 @@ trait InteractsWithPrice
             $component->description($convertedPrice);
         }
 
-        Record::get(Record::buildRelationAttribute($currencyAttribute, $relation)) |> $component->money(...);
+        Record::get(Record::buildRelationshipAttribute($currencyAttribute, $relationship)) |> $component->money(...);
 
         return $component;
     }
@@ -48,7 +48,7 @@ trait InteractsWithPrice
         ?string $convertedDiscountedPriceAttribute = null,
         ?string $currencyAttribute = null,
         ?string $indicator = null,
-        ?string $relation = null,
+        ?string $relationship = null,
     ): static {
         $discountedPriceAttribute ??= PriceAttribute::getDiscountedPrice($indicator);
         $referencePriceAttribute ??= PriceAttribute::getReferencePrice($indicator);
@@ -61,13 +61,13 @@ trait InteractsWithPrice
             $convertedDiscountedPriceAttribute,
             $currencyAttribute,
             $indicator,
-            $relation,
+            $relationship,
         );
 
-        return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relation, $currencyAttribute): ?HtmlString {
+        return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relationship, $currencyAttribute): ?HtmlString {
             $money = $record->money(
-                Record::buildRelationAttribute($referencePriceAttribute, $relation),
-                Record::buildRelationAttribute($currencyAttribute, $relation) |> $record->get(...),
+                Record::buildRelationshipAttribute($referencePriceAttribute, $relationship),
+                Record::buildRelationshipAttribute($currencyAttribute, $relationship) |> $record->get(...),
             );
 
             if ($money === '') {

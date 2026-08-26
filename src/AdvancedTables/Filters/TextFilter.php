@@ -116,7 +116,7 @@ if (class_exists(ArchilexTextFilter::class)) {
                         $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
                     ),
                 Toggle::make(TextAttribute::SORT_BY_LIST)
-                    ->label(__('filament-essentials::advanced-tables.text.sort_by_list'))
+                    ->label(__('filament-essentials::advanced-tables.filter.text.sort_by_list'))
                     ->default(true)
                     ->visible($isListVisible)
                     ->columnSpan(
@@ -139,8 +139,8 @@ if (class_exists(ArchilexTextFilter::class)) {
         {
             /** @var OperatorArray */
             return parent::getOperators() + [
-                TextOperator::IN_LIST => __('filament-essentials::advanced-tables.text.in_list.option'),
-                TextOperator::NOT_IN_LIST => __('filament-essentials::advanced-tables.text.not_in_list.option'),
+                TextOperator::IN_LIST => __('filament-essentials::advanced-tables.filter.text.in_list.option'),
+                TextOperator::NOT_IN_LIST => __('filament-essentials::advanced-tables.filter.text.not_in_list.option'),
             ];
         }
 
@@ -185,7 +185,7 @@ if (class_exists(ArchilexTextFilter::class)) {
             }
 
             $indicator = sprintf(
-                'filament-essentials::advanced-tables.text.%s.indicator',
+                'filament-essentials::advanced-tables.filter.text.%s.indicator',
                 $this->getOperatorValue($data)
             ) |> __(...);
 

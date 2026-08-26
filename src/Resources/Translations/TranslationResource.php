@@ -58,7 +58,7 @@ class TranslationResource extends FilamentResource
         ];
     }
 
-    public static function configureCreateAction(Action $action, ?string $relation = null): Action
+    public static function configureCreateAction(Action $action, ?string $relationship = null): Action
     {
         parent::configureCreateAction($action);
 

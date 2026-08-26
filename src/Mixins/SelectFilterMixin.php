@@ -24,8 +24,13 @@ trait SelectFilterMixin
 
     public function queryThroughRelationship(): static
     {
-        $relationship = Str::beforeLast($attribute = $this->getAttribute(), $indicator = '.');
-        $attribute = Str::afterLast($attribute, $indicator);
+        $relationship = Str::relationshipName($attribute = $this->getAttribute());
+
+        if ($relationship === null) {
+            return $this;
+        }
+
+        $attribute = Str::relationshipAttribute($attribute);
 
         return $this->query(fn (Builder $builder, array $data): Builder => $builder->whereHas(
             $relationship,

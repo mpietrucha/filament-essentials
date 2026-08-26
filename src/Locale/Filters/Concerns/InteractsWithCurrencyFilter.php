@@ -21,14 +21,15 @@ trait InteractsWithCurrencyFilter
         $this->searchable();
 
         Currency::enum() |> $this->options(...);
+        Currency::enum()::default() |> $this->default(...);
     }
 
-    public static function make(?string $name = null, ?string $relation = null): static
+    public static function make(?string $name = null, ?string $relationship = null): static
     {
         if ($name === null) {
             $name = PriceAttribute::getCurrency();
         }
 
-        return Record::buildRelationAttribute($name, $relation) |> parent::make(...);
+        return Record::buildRelationshipAttribute($name, $relationship) |> parent::make(...);
     }
 }

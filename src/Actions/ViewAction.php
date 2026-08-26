@@ -10,7 +10,7 @@ use Filament\Resources\Resource;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelationship;
 
 /**
  * @phpstan-type FormActionsResource class-string<Resource>
@@ -18,7 +18,7 @@ use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
  */
 class ViewAction extends FilamentViewAction
 {
-    use ResolvesRecordFromRelation;
+    use ResolvesRecordFromRelationship;
 
     /**
      * @var null|FormActionsResource

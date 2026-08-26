@@ -89,9 +89,9 @@ class DiscountResource extends FilamentResource
         return UseQuotaAction::make();
     }
 
-    public static function configureEditAction(Action $action, ?string $relation = null): Action
+    public static function configureEditAction(Action $action, ?string $relationship = null): Action
     {
-        parent::configureEditAction($action, $relation);
+        parent::configureEditAction($action, $relationship);
 
         $action->hidden(static function (Discount $discount): bool {
             return $discount->isFinished();
@@ -104,9 +104,9 @@ class DiscountResource extends FilamentResource
         return $action;
     }
 
-    public static function configureCreateAction(Action $action, ?string $relation = null): Action
+    public static function configureCreateAction(Action $action, ?string $relationship = null): Action
     {
-        parent::configureCreateAction($action, $relation);
+        parent::configureCreateAction($action, $relationship);
 
         if ($action instanceof CreateAction) {
             $action->createAnother(false);
@@ -128,9 +128,9 @@ class DiscountResource extends FilamentResource
         return $action;
     }
 
-    public static function configureAction(Action $action, ?string $relation = null): Action
+    public static function configureAction(Action $action, ?string $relationship = null): Action
     {
-        parent::configureAction($action, $relation);
+        parent::configureAction($action, $relationship);
 
         $action->modalWidth(Width::Large);
 

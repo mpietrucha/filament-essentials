@@ -10,7 +10,7 @@ use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Operation;
 use Filament\Support\Enums\Width;
 use Illuminate\Database\Eloquent\Model;
-use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelation;
+use Mpietrucha\Filament\Essentials\Actions\Concerns\ResolvesRecordFromRelationship;
 use Mpietrucha\Filament\Essentials\Actions\CreateAction;
 use Mpietrucha\Filament\Essentials\Actions\EditAction;
 use Mpietrucha\Filament\Essentials\Actions\ViewAction;
@@ -21,24 +21,24 @@ use Mpietrucha\Support\Instance;
  */
 trait ResourceMixin
 {
-    public static function getViewAction(?string $relation = null): ViewAction
+    public static function getViewAction(?string $relationship = null): ViewAction
     {
-        $viewAction = ViewAction::make($relation);
+        $viewAction = ViewAction::make($relationship);
 
-        if (is_string($relation)) {
-            static::configureActionRelation($viewAction, $relation, static::infolist(...));
+        if (is_string($relationship)) {
+            static::configureActionRelation($viewAction, $relationship, static::infolist(...));
         }
 
-        static::configureViewAction($viewAction, $relation);
+        static::configureViewAction($viewAction, $relationship);
 
         return $viewAction;
     }
 
-    public static function configureViewAction(Action $action, ?string $relation = null): Action
+    public static function configureViewAction(Action $action, ?string $relationship = null): Action
     {
         Operation::View |> $action->operation(...);
 
-        static::configureAction($action, $relation);
+        static::configureAction($action, $relationship);
 
         if ($action instanceof ViewAction) {
             $action->withFormActionsResource(static::class);
@@ -47,46 +47,46 @@ trait ResourceMixin
         return $action;
     }
 
-    public static function getEditAction(?string $relation = null): EditAction
+    public static function getEditAction(?string $relationship = null): EditAction
     {
-        $editAction = EditAction::make($relation);
+        $editAction = EditAction::make($relationship);
 
-        if (is_string($relation)) {
-            static::configureActionRelation($editAction, $relation);
+        if (is_string($relationship)) {
+            static::configureActionRelation($editAction, $relationship);
         }
 
-        static::configureEditAction($editAction, $relation);
+        static::configureEditAction($editAction, $relationship);
 
         return $editAction;
     }
 
-    public static function configureEditAction(Action $action, ?string $relation = null): Action
+    public static function configureEditAction(Action $action, ?string $relationship = null): Action
     {
         Operation::Edit |> $action->operation(...);
 
-        static::configureAction($action, $relation);
+        static::configureAction($action, $relationship);
 
         return $action;
     }
 
-    public static function getCreateAction(?string $relation = null): CreateAction
+    public static function getCreateAction(?string $relationship = null): CreateAction
     {
-        $createAction = CreateAction::make($relation);
+        $createAction = CreateAction::make($relationship);
 
-        if (is_string($relation)) {
-            static::configureActionRelation($createAction, $relation);
+        if (is_string($relationship)) {
+            static::configureActionRelation($createAction, $relationship);
         }
 
-        static::configureCreateAction($createAction, $relation);
+        static::configureCreateAction($createAction, $relationship);
 
         return $createAction;
     }
 
-    public static function configureCreateAction(Action $action, ?string $relation = null): Action
+    public static function configureCreateAction(Action $action, ?string $relationship = null): Action
     {
         Operation::Create |> $action->operation(...);
 
-        static::configureAction($action, $relation);
+        static::configureAction($action, $relationship);
 
         $action->modalHeading(static function (): string {
             $label = static::getTitleCaseModelLabel();
@@ -99,7 +99,7 @@ trait ResourceMixin
         return $action;
     }
 
-    public static function configureAction(Action $action, ?string $relation = null): Action
+    public static function configureAction(Action $action, ?string $relationship = null): Action
     {
         $action->slideOver();
 
@@ -117,11 +117,11 @@ trait ResourceMixin
     /**
      * @param  null|Closure(Schema): Schema  $resourceSchema
      */
-    public static function configureActionRelation(Action $action, string $relation, ?Closure $resourceSchema = null): Action
+    public static function configureActionRelation(Action $action, string $relationship, ?Closure $resourceSchema = null): Action
     {
-        if (Instance::traits($action)->contains(ResolvesRecordFromRelation::class)) {
+        if (Instance::traits($action)->contains(ResolvesRecordFromRelationship::class)) {
             /** @phpstan-ignore method.notFound */
-            $action->relation($relation);
+            $action->relationship($relationship);
         }
 
         static::configureActionSchema($action, $resourceSchema);
