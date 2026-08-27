@@ -21,7 +21,6 @@ trait InteractsWithCurrencyFilter
         $this->searchable();
 
         Currency::enum() |> $this->options(...);
-        Currency::enum()::default() |> $this->default(...);
     }
 
     public static function make(?string $name = null, ?string $relationship = null): static

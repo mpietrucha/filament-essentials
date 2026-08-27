@@ -7,11 +7,13 @@ namespace Mpietrucha\Filament\Essentials\Money\AdvancedTables\Filters;
 use Archilex\AdvancedTables\Filament\Filter as ArchilexFilter;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Concerns\InteractsWithFilters;
 use Mpietrucha\Filament\Essentials\Locale\AdvancedTables\Filament\CurrencyFilter;
 use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
 if (class_exists(ArchilexFilter::class)) {
@@ -37,10 +39,7 @@ if (class_exists(ArchilexFilter::class)) {
                 /** @phpstan-ignore method.notFound, offsetAccess.nonOffsetAccessible, method.nonObject */
                 $numericFilterSchema[0]->getDefaultChildComponents()[1]->hiddenLabel();
 
-                return [
-                    $this->getCurrencyFilter()->getFormField(),
-                    ...$numericFilterSchema,
-                ];
+                return Arr::prepend($numericFilterSchema, $this->getCurrencyFilter()->getFormField());
             });
 
             $this->query(function (Builder $builder, array $data): void {
@@ -78,16 +77,25 @@ if (class_exists(ArchilexFilter::class)) {
                 return null;
             }
 
-            $currencyFilter = CurrencyFilter::make(
+            $defaultCurrencyFilter = CurrencyFilter::make(
                 PriceAttribute::getCurrency(),
                 $relationship = $this->getName() |> Str::relationshipName(...)
             );
 
-            __('filament-essentials::money.filter.text.price_filter.currency') |> $currencyFilter->label(...);
+            __('filament-essentials::money.filter.text.price_filter.currency') |> $defaultCurrencyFilter->label(...);
 
-            $maybeCurrencyFilter = value($this->withCurrency, $currencyFilter, $relationship);
+            $maybeCurrencyFilter = value($this->withCurrency, $defaultCurrencyFilter, $relationship);
 
-            return $this->currencyFilter = $maybeCurrencyFilter instanceof CurrencyFilter ? $maybeCurrencyFilter : $currencyFilter;
+            $currencyFilter = match (true) {
+                $maybeCurrencyFilter instanceof CurrencyFilter => $maybeCurrencyFilter,
+                default => $defaultCurrencyFilter
+            };
+
+            $currencyFilter->multiple(false);
+
+            Currency::enum()::default()->value |> $currencyFilter->default(...);
+
+            return $this->currencyFilter = $currencyFilter;
         }
     }
 } else {

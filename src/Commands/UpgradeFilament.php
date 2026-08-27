@@ -31,6 +31,9 @@ class UpgradeFilament extends Command
         $this->selectFilter();
         $this->isRelatedToOperator();
         $this->interactsWithActions();
+        $this->advancedTablesDateFilter();
+        $this->advancedTablesTextFilter();
+        $this->advancedTablesNumericFilter();
 
         $this->info('Filament upgraded successfully.');
     }
@@ -74,6 +77,41 @@ class UpgradeFilament extends Command
             base_path('vendor/filament/actions/src/Concerns/InteractsWithActions.php'),
             $indicator,
             sprintf('$resolvedAction = %s::resolve(%s)', $tableColumnAction, $indicator),
+        );
+    }
+
+    protected function advancedTablesDateFilter(): void
+    {
+        $dateFilter = base_path('vendor/archilex/filament-filter-sets/src/Filters/DateFilter.php');
+
+        $this->replace(
+            $dateFilter,
+            $indicator = "Select::make('operator')",
+            sprintf('%s->searchable()', $indicator),
+        );
+
+        $this->replace(
+            $dateFilter,
+            $indicator = "Select::make('unit')",
+            sprintf('%s->searchable()', $indicator),
+        );
+    }
+
+    protected function advancedTablesTextFilter(): void
+    {
+        $this->replace(
+            base_path('vendor/archilex/filament-filter-sets/src/Filters/TextFilter.php'),
+            $indicator = "Select::make('operator')",
+            sprintf('%s->searchable()', $indicator),
+        );
+    }
+
+    protected function advancedTablesNumericFilter(): void
+    {
+        $this->replace(
+            base_path('vendor/archilex/filament-filter-sets/src/Filters/NumericFilter.php'),
+            $indicator = "Select::make('operator')",
+            sprintf('%s->searchable()', $indicator),
         );
     }
 
