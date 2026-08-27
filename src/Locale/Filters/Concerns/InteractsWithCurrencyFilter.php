@@ -25,10 +25,14 @@ trait InteractsWithCurrencyFilter
 
     public static function make(?string $name = null, ?string $relationship = null): static
     {
-        if ($name === null) {
-            $name = PriceAttribute::getCurrency();
+        $name ??= PriceAttribute::getCurrency();
+
+        $selectFilter = Record::buildRelationshipAttribute($name, $relationship) |> parent::make(...);
+
+        if ($relationship) {
+            $selectFilter->queryThroughRelationship();
         }
 
-        return Record::buildRelationshipAttribute($name, $relationship) |> parent::make(...);
+        return $selectFilter;
     }
 }
