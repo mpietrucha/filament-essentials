@@ -101,7 +101,7 @@ if (class_exists(ArchilexFilter::class)) {
                     return null;
                 }
 
-                return Indicator::make($indicator)->transformKey();
+                return Indicator::make($indicator)->as(TextAttribute::OPERATOR);
             });
         }
 

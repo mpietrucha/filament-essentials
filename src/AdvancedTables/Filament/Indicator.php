@@ -5,27 +5,35 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\AdvancedTables\Filament;
 
 use Archilex\AdvancedTables\Filament\Indicator as ArchilexIndicator;
+use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 
 if (class_exists(ArchilexIndicator::class)) {
     class Indicator extends ArchilexIndicator
     {
-        protected bool $transformKey = false;
+        protected ?string $attribute = null;
 
-        public function transformKey(bool $transformKey = true): static
+        public function attribute(string $attribute): static
         {
-            $this->transformKey = $transformKey;
+            $this->attribute = $attribute;
 
             return $this;
         }
 
+        public function as(string $attribute): static
+        {
+            return $this->attribute($attribute);
+        }
+
         public function getTransformedKey(string $key): string
         {
-            if (! $this->transformKey) {
+            if (null === $attribute = $this->attribute) {
                 return $key;
             }
 
-            dd($key);
+            $indicator = Str::dot();
+
+            return Str::beforeLast($key, $indicator) . $indicator . $attribute;
         }
     }
 } else {
