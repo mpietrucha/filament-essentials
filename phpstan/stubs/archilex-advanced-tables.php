@@ -29,11 +29,7 @@ namespace Archilex\AdvancedTables\Filters {
 
     class AdvancedFilter extends BaseFilter
     {
-        public function getFilters(): array
-        {
-        }
-
-        public function getCollectedFilters(): array
+        protected function getFilterIndicators(AdvancedFilter $filter, array $data): array
         {
         }
 
@@ -93,6 +89,7 @@ namespace Archilex\AdvancedTables\Filters {
 
 namespace Archilex\AdvancedTables\Filament {
     use Filament\Tables\Filters\Filter as FilamentFilter;
+    use Filament\Tables\Filters\Indicator as FilamentIndicator;
     use Filament\Tables\Filters\SelectFilter as FilamentSelectFilter;
 
     class Filter extends FilamentFilter
@@ -100,6 +97,10 @@ namespace Archilex\AdvancedTables\Filament {
     }
 
     class SelectFilter extends FilamentSelectFilter
+    {
+    }
+
+    class Indicator extends FilamentIndicator
     {
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
+use Mpietrucha\Filament\Essentials\AdvancedTables\Filament\Indicator;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\AdvancedFilter;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Attributes\TextAttribute;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Concerns\InteractsWithFilters;
@@ -47,12 +48,12 @@ if (class_exists(ArchilexFilter::class)) {
 
                 $numericFilterSchema = $this->getNumericFilter()->getFormSchema();
 
+                /** @phpstan-ignore method.notFound, offsetAccess.nonOffsetAccessible, method.nonObject */
+                $this->getLabel() |> $numericFilterSchema[0]->getDefaultChildComponents()[1]->label(...);
+
                 if (! $sourceCurrencyFilter) {
                     return $numericFilterSchema;
                 }
-
-                /** @phpstan-ignore method.notFound, offsetAccess.nonOffsetAccessible, method.nonObject */
-                $this->getLabel() |> $numericFilterSchema[0]->getDefaultChildComponents()[1]->label(...);
 
                 return Arr::prepend(
                     $numericFilterSchema,
@@ -77,7 +78,7 @@ if (class_exists(ArchilexFilter::class)) {
                 ));
             });
 
-            $this->indicateUsing(function (array $data): array {
+            $this->indicateUsing(function (array $data): Indicator {
                 $numericFilter = $this->getNumericFilter();
 
                 /** @phpstan-ignore property.notFound */
@@ -88,12 +89,14 @@ if (class_exists(ArchilexFilter::class)) {
                 /** @var FormData $data */
                 $sourceCurrency = $this->getSourceCurrencyValue($data);
 
-                /** @var IndicatorArray */
-                return $indicateUsing($numericFilter, $this->replaceFormPriceValues( /* @phpstan-ignore callable.nonCallable */
+                /** @var string $indicator */
+                $indicator = $indicateUsing($numericFilter, $this->replaceFormPriceValues( /* @phpstan-ignore callable.nonCallable */
                     $data,
                     $this->getConvertedPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
                     $this->getConvertedEndPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
                 ));
+
+                return Indicator::make($indicator)->transformKey();
             });
         }
 

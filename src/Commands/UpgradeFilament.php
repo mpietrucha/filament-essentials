@@ -31,6 +31,7 @@ class UpgradeFilament extends Command
         $this->selectFilter();
         $this->isRelatedToOperator();
         $this->interactsWithActions();
+
         $this->advancedTablesDateFilter();
         $this->advancedTablesTextFilter();
         $this->advancedTablesNumericFilter();
@@ -86,13 +87,13 @@ class UpgradeFilament extends Command
 
         $this->replace(
             $dateFilter,
-            $indicator = "Select::make('operator')",
+            $indicator = "Select::make('unit')",
             sprintf('%s->searchable()', $indicator),
         );
 
         $this->replace(
             $dateFilter,
-            $indicator = "Select::make('unit')",
+            $indicator = "Select::make('operator')",
             sprintf('%s->searchable()', $indicator),
         );
     }
