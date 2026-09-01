@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Money\AdvancedTables\Filters;
 
 use Archilex\AdvancedTables\Filament\Filter as ArchilexFilter;
 use Brick\Money\Money;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -23,6 +24,7 @@ use Throwable;
 if (class_exists(ArchilexFilter::class)) {
     /**
      * @phpstan-import-type FormData from AdvancedFilter
+     * @phpstan-import-type IndicatorArray from AdvancedFilter
      */
     class PriceFilter extends ArchilexFilter
     {
@@ -88,13 +90,14 @@ if (class_exists(ArchilexFilter::class)) {
                 /** @var FormData $data */
                 $sourceCurrency = $this->getSourceCurrencyValue($data);
 
-                /** @var string $indicator */
-                $indicator = $indicateUsing($numericFilter, $this->replaceFormPriceValues( /** @phpstan-ignore callable.nonCallable */
+                /** @var Closure(): IndicatorArray $indicateUsing */
+                $indicator = $indicateUsing($numericFilter, $this->replaceFormPriceValues( /** @phpstan-ignore arguments.count */
                     $data,
                     $this->getConvertedPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
                     $this->getConvertedEndPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
-                )) |> Arr::first(...); /** @phpstan-ignore argument.type, argument.templateType */
+                )) |> Arr::first(...);
 
+                /** @var string $indicator */
                 return Indicator::make($indicator)->transformKey();
             });
         }
