@@ -23,7 +23,6 @@ use Throwable;
 if (class_exists(ArchilexFilter::class)) {
     /**
      * @phpstan-import-type FormData from AdvancedFilter
-     * @phpstan-import-type IndicatorArray from AdvancedFilter
      */
     class PriceFilter extends ArchilexFilter
     {
@@ -90,11 +89,11 @@ if (class_exists(ArchilexFilter::class)) {
                 $sourceCurrency = $this->getSourceCurrencyValue($data);
 
                 /** @var string $indicator */
-                $indicator = $indicateUsing($numericFilter, $this->replaceFormPriceValues( /* @phpstan-ignore callable.nonCallable */
+                $indicator = $indicateUsing($numericFilter, $this->replaceFormPriceValues( /** @phpstan-ignore callable.nonCallable */
                     $data,
                     $this->getConvertedPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
                     $this->getConvertedEndPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
-                ));
+                )) |> Arr::first(...); /** @phpstan-ignore argument.type, argument.templateType */
 
                 return Indicator::make($indicator)->transformKey();
             });
