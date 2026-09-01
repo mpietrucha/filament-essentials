@@ -79,7 +79,7 @@ if (class_exists(ArchilexFilter::class)) {
                 ));
             });
 
-            $this->indicateUsing(function (array $data): Indicator {
+            $this->indicateUsing(function (array $data): ?Indicator {
                 $numericFilter = $this->getNumericFilter();
 
                 /** @phpstan-ignore property.notFound */
@@ -97,7 +97,10 @@ if (class_exists(ArchilexFilter::class)) {
                     $this->getConvertedEndPriceValue($data, $sourceCurrency)?->formatToLocale($locale),
                 )) |> Arr::first(...);
 
-                /** @var string $indicator */
+                if ($indicator === null) {
+                    return null;
+                }
+
                 return Indicator::make($indicator)->transformKey();
             });
         }
