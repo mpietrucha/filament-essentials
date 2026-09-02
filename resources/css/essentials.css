@@ -16,3 +16,7 @@
 .fi-hides-for-nested-modals.invisible [wire\:partial="action-modals"] {
     @apply visible;
 }
+
+.fi-icon:has(> .fi-icon-action) {
+    @apply cursor-pointer align-text-top;
+}

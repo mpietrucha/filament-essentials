@@ -4,7 +4,6 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Closure;
 use Filament\Actions\Action;
-use Filament\Support\View\ComponentAttributeBag;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
@@ -74,13 +73,14 @@ trait TextColumnMixin
                 return null;
             }
 
-            $componentAttributeBag = new ComponentAttributeBag()->merge([
-                'class' => 'cursor-pointer',
+            /** @phpstan-ignore property.notFound, argument.type */
+            invade($icon = generate_icon_html($icon))->attributes = [
+                'class' => 'fi-icon-action',
                 /** @phpstan-ignore argument.type */
                 'wire:click.prevent.stop' => sprintf("mountTableAction('%s', '%s')", $action->getName(), $record->getKey()),
-            ], false);
+            ];
 
-            return generate_icon_html($icon, attributes: $componentAttributeBag);
+            return $icon;
         });
     }
 
