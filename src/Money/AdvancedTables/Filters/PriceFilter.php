@@ -52,7 +52,7 @@ if (class_exists(ArchilexFilter::class)) {
                 /** @phpstan-ignore method.notFound, offsetAccess.nonOffsetAccessible, method.nonObject */
                 $this->getLabel() |> $numericFilterSchema[0]->getDefaultChildComponents()[1]->label(...);
 
-                if (! $sourceCurrencyFilter) {
+                if (! $sourceCurrencyFilter instanceof CurrencyFilter) {
                     return $numericFilterSchema;
                 }
 

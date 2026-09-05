@@ -12,7 +12,18 @@ trait TextInputMixin
 {
     public function pasteSpreadsheet(): static
     {
-        $this->extraAttributes(['x-paste-spreadsheet' => true]);
+        $this->extraFieldWrapperAttributes([
+            'x-paste-spreadsheet' => true,
+        ]);
+
+        return $this;
+    }
+
+    public function finishPasteSpreadsheet(): static
+    {
+        $this->extraFieldWrapperAttributes([
+            'x-paste-spreadsheet-finish' => true,
+        ]);
 
         return $this;
     }
