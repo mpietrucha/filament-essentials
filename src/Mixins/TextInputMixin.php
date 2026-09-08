@@ -14,7 +14,7 @@ trait TextInputMixin
     {
         $this->extraFieldWrapperAttributes([
             'x-paste-spreadsheet' => true,
-        ]);
+        ], true);
 
         return $this;
     }
@@ -23,7 +23,7 @@ trait TextInputMixin
     {
         $this->extraFieldWrapperAttributes([
             'x-paste-spreadsheet-finish' => true,
-        ]);
+        ], true);
 
         return $this;
     }

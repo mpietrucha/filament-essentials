@@ -3,26 +3,26 @@ export default Alpine => {
         Alpine.nextTick(() => {
             const id = el.closest('.fi-modal')?.id
 
-            if (id === undefined) {
+            if (!id) {
                 return
             }
 
-            const controller = new AbortController()
+            const abortController = new AbortController()
 
             window.addEventListener(
                 'modal-closed',
-                e => {
-                    if (e.detail.id !== id) {
+                event => {
+                    if (event.detail.id !== id) {
                         return
                     }
 
-                    controller.abort()
+                    abortController.abort()
 
                     evaluate('$wire.unmountAction(true)')
 
-                    e.stopImmediatePropagation()
+                    event.stopImmediatePropagation()
                 },
-                { capture: true, signal: controller.signal },
+                { capture: true, signal: abortController.signal },
             )
         })
     })

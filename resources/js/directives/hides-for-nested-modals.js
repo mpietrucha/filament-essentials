@@ -1,7 +1,7 @@
 export default Alpine => {
     Alpine.directive('hides-for-nested-modals', (el, _, { cleanup }) => {
-        const onModalClosed = e => {
-            const modal = document.getElementById(e.detail.id)
+        const onModalClosed = event => {
+            const modal = document.getElementById(event.detail.id)
 
             if (!el.contains(modal)) {
                 return
@@ -10,8 +10,8 @@ export default Alpine => {
             el.classList.remove('invisible')
         }
 
-        const onModalOpened = e => {
-            const modal = document.getElementById(e.detail.id)
+        const onModalOpened = event => {
+            const modal = document.getElementById(event.detail.id)
 
             if (!el.contains(modal)) {
                 return
