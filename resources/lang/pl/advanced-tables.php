@@ -3,15 +3,17 @@
 declare(strict_types=1);
 
 return [
-    'text' => [
-        'in_list' => [
-            'option' => 'jest na liście',
-            'indicator' => 'jest na liście',
+    'filter' => [
+        'text' => [
+            'in_list' => [
+                'option' => 'jest na liście',
+                'indicator' => 'jest na liście',
+            ],
+            'not_in_list' => [
+                'option' => 'nie jest na liście',
+                'indicator' => 'nie jest na liście',
+            ],
+            'sort_by_list' => 'Sortuj wg kolejności listy',
         ],
-        'not_in_list' => [
-            'option' => 'nie jest na liście',
-            'indicator' => 'nie jest na liście',
-        ],
-        'sort_by_list' => 'Sortuj wg kolejności listy',
     ],
 ];

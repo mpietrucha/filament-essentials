@@ -224,7 +224,7 @@ if (class_exists(ArchilexTextFilter::class)) {
          */
         protected function getListValue(array $data): string
         {
-            return Arr::tryString($data, TextAttribute::OPERATOR, Str::none());
+            return Arr::tryString($data, TextAttribute::LIST, Str::none());
         }
 
         /**
