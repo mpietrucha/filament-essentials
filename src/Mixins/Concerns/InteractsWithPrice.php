@@ -6,6 +6,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
 /**
@@ -25,9 +26,9 @@ trait InteractsWithPrice
 
         $currencyAttribute ??= PriceAttribute::getCurrency();
 
-        $component = Record::buildRelationshipAttribute($priceAttribute, $relationship) |> static::make(...);
+        $component = AttributeQualifier::build($priceAttribute, $relationship) |> static::make(...);
 
-        $convertedPrice = Record::buildRelationshipAttribute($convertedPriceAttribute, $relationship) |> Record::money(...);
+        $convertedPrice = AttributeQualifier::build($convertedPriceAttribute, $relationship) |> Record::money(...);
 
         if ($component instanceof TextEntry) { /** @phpstan-ignore instanceof.alwaysTrue, instanceof.alwaysFalse */
             $component->belowContent($convertedPrice);
@@ -37,7 +38,7 @@ trait InteractsWithPrice
             $component->description($convertedPrice);
         }
 
-        Record::get(Record::buildRelationshipAttribute($currencyAttribute, $relationship)) |> $component->money(...);
+        Record::get(AttributeQualifier::build($currencyAttribute, $relationship)) |> $component->money(...);
 
         return $component;
     }
@@ -66,11 +67,11 @@ trait InteractsWithPrice
 
         return Record::pipe(static function (Record $record) use ($referencePriceAttribute, $relationship, $currencyAttribute): ?HtmlString {
             $money = $record->money(
-                Record::buildRelationshipAttribute($referencePriceAttribute, $relationship),
-                Record::buildRelationshipAttribute($currencyAttribute, $relationship) |> $record->get(...),
+                AttributeQualifier::build($referencePriceAttribute, $relationship),
+                AttributeQualifier::build($currencyAttribute, $relationship) |> $record->get(...),
             );
 
-            if ($money === '') {
+            if (blank($money)) {
                 return null;
             }
 

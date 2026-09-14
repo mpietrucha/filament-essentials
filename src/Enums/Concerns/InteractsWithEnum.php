@@ -6,6 +6,7 @@ use BackedEnum;
 use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Enums\Contracts\EnumInterface;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Laravel\Essentials\Translations\Qualifiers\KeyQualifier;
 
 /**
  * @phpstan-require-implements EnumInterface
@@ -33,7 +34,7 @@ trait InteractsWithEnum
         if ($prefix = static::getLabelTranslationPrefix()) {
             $value = Str::lower($value);
 
-            return sprintf('%s.%s', $prefix, $value) |> __(...);
+            return KeyQualifier::build($prefix, $value) |> __(...);
         }
 
         if (Str::upper($value) === $value) {

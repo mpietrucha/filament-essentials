@@ -1,16 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials;
 
 use Closure;
-use Filament\Schemas\Components\Component;
-use Filament\Tables\Columns\Column;
 use Mpietrucha\Filament\Essentials\Record\Adapter;
 use Mpietrucha\Filament\Essentials\Record\Context;
 
 /**
- * @phpstan-type RecordComponent Component|Column
- *
  * @mixin Adapter
  */
 class Record extends Context
@@ -24,7 +22,7 @@ class Record extends Context
     {
         return static::pipe(static fn (self $record): mixed => static::forward($record)->eval(
             $method,
-            $arguments
+            $arguments,
         ));
     }
 
@@ -38,17 +36,12 @@ class Record extends Context
         return static::forward($adapter)->eval($method, $arguments);
     }
 
-    public static function buildRelationshipAttribute(string $attribute, ?string $relationship = null): string
-    {
-        if ($relationship === null) {
-            return $attribute;
-        }
-
-        return sprintf('%s.%s', $relationship, $attribute);
-    }
-
     public function adapter(): Adapter
     {
-        return $this->adapter ??= Adapter::make(...$this->toArray());
+        if ($this->adapter instanceof Adapter) {
+            return $this->adapter;
+        }
+
+        return $this->adapter = $this->record |> Adapter::make(...);
     }
 }

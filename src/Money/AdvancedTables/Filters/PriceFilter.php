@@ -14,7 +14,7 @@ use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\AdvancedFilter;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Attributes\TextAttribute;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Concerns\InteractsWithFilters;
 use Mpietrucha\Filament\Essentials\Locale\Filters\CurrencyFilter;
-use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\CurrencyConverter;
@@ -109,7 +109,7 @@ if (class_exists(ArchilexFilter::class)) {
         {
             $name ??= PriceAttribute::getNormalizedPrice($indicator);
 
-            return Record::buildRelationshipAttribute($name, $relationship) |> parent::make(...);
+            return AttributeQualifier::build($name, $relationship) |> parent::make(...);
         }
 
         public function withSourceCurrencyFilter(mixed $sourceCurrencyFilter): static
@@ -201,7 +201,7 @@ if (class_exists(ArchilexFilter::class)) {
 
             $getDefaultTargetCurrency = sprintf(
                 'getDefault%sTargetCurrency',
-                $this->getName() |> Str::relationshipAttribute(...) |> Str::studly(...)
+                $this->getName() |> AttributeQualifier::attribute(...) |> Str::studly(...)
             );
 
             try {

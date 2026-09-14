@@ -37,12 +37,12 @@ class Adapter extends Context
 
         $state = Arr::string($arguments, 0) |> $this->get(...);
 
-        return StateFormatter::format($this->component, $method, $state, array_slice($arguments, 1));
+        return StateFormatter::format($method, $state, array_slice($arguments, 1));
     }
 
     public function get(string $attribute): string
     {
-        $value = data_get($model = $this->model, $attribute);
+        $value = data_get($record = $this->record, $attribute);
 
         if ($value === null) {
             return Str::none();
@@ -57,7 +57,7 @@ class Adapter extends Context
         }
 
         if (! is_scalar($value)) {
-            InvalidArgumentException::throw('%s::$%s must be a int|float|string|bool', Instance::namespace($model), $attribute);
+            InvalidArgumentException::throw('%s::$%s must be a scalar', Instance::namespace($record), $attribute);
         }
 
         return (string) $value;
@@ -65,12 +65,14 @@ class Adapter extends Context
 
     public function avatar(?string $attribute = null): ?string
     {
-        if (is_string($attribute)) {
+        if ($attribute) {
             return $this->get($attribute);
         }
 
-        $model = $this->model;
+        if (! $this->record instanceof HasAvatar) {
+            return null;
+        }
 
-        return $model instanceof HasAvatar ? $model->getFilamentAvatarUrl() : null;
+        return $this->record->getFilamentAvatarUrl();
     }
 }

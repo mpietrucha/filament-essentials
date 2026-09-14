@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Locale\Filters\Concerns;
 
 use Filament\Tables\Filters\SelectFilter;
-use Mpietrucha\Filament\Essentials\Record;
+use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
@@ -25,14 +25,8 @@ trait InteractsWithCurrencyFilter
 
     public static function make(?string $name = null, ?string $relationship = null): static
     {
-        $name ??= PriceAttribute::getCurrency();
+        $selectFilter = AttributeQualifier::build($name ?? PriceAttribute::getCurrency(), $relationship) |> parent::make(...);
 
-        $selectFilter = Record::buildRelationshipAttribute($name, $relationship) |> parent::make(...);
-
-        if ($relationship) {
-            $selectFilter->queryThroughRelationship();
-        }
-
-        return $selectFilter;
+        return $relationship ? $selectFilter->queryThroughRelationship() : $selectFilter;
     }
 }

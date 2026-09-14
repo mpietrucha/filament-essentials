@@ -2,24 +2,22 @@
 
 namespace Mpietrucha\Filament\Essentials\Record;
 
-use Filament\Infolists\Components\TextEntry;
-use Filament\Support\Components\Component;
-use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Support\Str;
-use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Support\Concerns\Compatible;
 use Mpietrucha\Support\Forward\Concerns\Forwardable;
+use Mpietrucha\Support\Reflection;
 
 /**
- * @phpstan-import-type RecordComponent from Record
- *
  * @internal
  */
 class StateFormatter
 {
     use Compatible;
     use Forwardable;
+
+    protected static ?TextColumn $adapter = null;
 
     /**
      * @var list<string>
@@ -44,35 +42,32 @@ class StateFormatter
     }
 
     /**
-     * @param  RecordComponent  $component
      * @param  array<mixed>  $arguments
      */
-    public static function format(Component $component, string $method, string $state, array $arguments): string
+    public static function format(string $method, string $state, array $arguments): string
     {
-        static::forward(
-            $component = static::component($component)
-        )->eval($method, $arguments);
+        static::forward($adapter = static::adapter())->eval($method, $arguments);
 
-        $value = $component->formatState($state);
+        $value = $adapter->formatState($state);
 
-        if (! is_scalar($value)) {
-            $value = $state;
-        }
-
-        return (string) $value;
+        return is_scalar($value) ? (string) $value : $state;
     }
 
-    /**
-     * @param  RecordComponent  $component
-     */
-    public static function component(Component $component): TextColumn|TextEntry
+    public static function adapter(): TextColumn
     {
-        $name = Str::random(6);
-
-        if ($component instanceof Column) {
-            return $component->getTable() |> TextColumn::make($name)->table(...);
+        if (static::$adapter instanceof TextColumn) {
+            return static::$adapter;
         }
 
-        return $component->getContainer() |> TextEntry::make($name)->container(...);
+        $tableReflection = Reflection::make(Table::class);
+
+        /** @var Table $table */
+        $table = $tableReflection->newInstanceWithoutConstructor();
+
+        $table->configure();
+
+        $name = Str::random(6);
+
+        return static::$adapter = TextColumn::make($name)->table($table);
     }
 }

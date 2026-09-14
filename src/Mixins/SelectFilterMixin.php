@@ -4,8 +4,8 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasSelectTitleWithAvatar;
+use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 
 /**
  * @phpstan-require-extends SelectFilter
@@ -24,13 +24,13 @@ trait SelectFilterMixin
 
     public function queryThroughRelationship(): static
     {
-        $relationship = Str::relationshipName($attribute = $this->getAttribute());
+        $relationship = AttributeQualifier::relationship($attribute = $this->getAttribute());
 
         if ($relationship === null) {
             return $this;
         }
 
-        $attribute = Str::relationshipAttribute($attribute);
+        $attribute = AttributeQualifier::attribute($attribute);
 
         return $this->query(fn (Builder $builder, array $data): Builder => $builder->whereHas(
             $relationship,
