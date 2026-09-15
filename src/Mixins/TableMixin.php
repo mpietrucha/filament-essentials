@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 
 /**
  * @phpstan-require-extends Table
@@ -14,7 +15,7 @@ trait TableMixin
     {
         $columns = $this->getColumns();
 
-        collect($columns)
+        Collection::make($columns)
             ->whereInstanceOf(TextColumn::class)
             ->map
             ->getIconAction()

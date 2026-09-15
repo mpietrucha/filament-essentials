@@ -5,7 +5,7 @@ namespace Mpietrucha\Filament\Essentials\Plugins\Concerns;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Resources\Resource;
-use Illuminate\Support\Arr;
+use Mpietrucha\Support\Arr;
 use Mpietrucha\Support\Exception\InvalidArgumentException;
 use Mpietrucha\Support\Exception\RuntimeException;
 use Mpietrucha\Support\Instance;

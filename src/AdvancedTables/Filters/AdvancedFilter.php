@@ -9,10 +9,10 @@ use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\BaseFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filament\Indicator;
+use Mpietrucha\Support\Arr;
 
 if (class_exists(ArchilexAdvancedFilter::class)) {
     /**

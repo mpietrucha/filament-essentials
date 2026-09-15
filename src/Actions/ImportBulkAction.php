@@ -9,12 +9,13 @@ use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use League\Csv\Reader;
 use League\Csv\Writer;
 use Livewire\Component as LivewireComponent;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Mpietrucha\Support\Arr;
 use Mpietrucha\Support\Exception\RuntimeException;
 use Mpietrucha\Support\Filesystem;
 use SplTempFileObject;
@@ -67,7 +68,7 @@ class ImportBulkAction extends ImportAction
      */
     protected function merge(array $files): TemporaryUploadedFile
     {
-        $files = collect($files);
+        $files = Collection::make($files);
 
         if ($files->containsOneItem()) {
             return $files->firstOrFail();

@@ -3,10 +3,10 @@
 namespace Mpietrucha\Filament\Essentials\Enums\Concerns;
 
 use BackedEnum;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Enums\Contracts\EnumInterface;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Laravel\Essentials\Translations\Qualifiers\KeyQualifier;
+use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-implements EnumInterface

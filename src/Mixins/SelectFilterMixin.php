@@ -4,6 +4,7 @@ namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Mixins\Concerns\HasSelectTitleWithAvatar;
 use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 
@@ -36,7 +37,7 @@ trait SelectFilterMixin
             $relationship,
             function (Builder $builder) use ($attribute, $data): void {
                 /** @phpstan-ignore method.nonObject, argument.templateType */
-                $value = collect($data)->flatten()->unless($isMultiple = $this->isMultiple())->first();
+                $value = Collection::make($data)->flatten()->unless($isMultiple = $this->isMultiple())->first();
 
                 if (blank($value)) {
                     return;

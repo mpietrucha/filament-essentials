@@ -118,7 +118,7 @@ trait InteractsWithLocale
     protected function getIntlDatePatternGenerator(): IntlDatePatternGenerator
     {
         /** @var Collection<int, IntlDatePatternGenerator> */
-        static $generators = collect();
+        static $generators = Collection::make();
 
         $code = $this->code();
 

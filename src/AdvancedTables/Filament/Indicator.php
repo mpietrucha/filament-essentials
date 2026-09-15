@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\AdvancedTables\Filament;
 
 use Archilex\AdvancedTables\Filament\Indicator as ArchilexIndicator;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
+use Mpietrucha\Support\Str;
 
 if (class_exists(ArchilexIndicator::class)) {
     class Indicator extends ArchilexIndicator
@@ -27,13 +27,13 @@ if (class_exists(ArchilexIndicator::class)) {
 
         public function getTransformedKey(string $key): string
         {
-            if (null === $attribute = $this->attribute) {
+            if ($this->attribute === null) {
                 return $key;
             }
 
             $indicator = Str::dot();
 
-            return Str::beforeLast($key, $indicator) . $indicator . $attribute;
+            return Str::beforeLast($key, $indicator) . $indicator . $this->attribute;
         }
     }
 } else {

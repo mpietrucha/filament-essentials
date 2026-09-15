@@ -6,8 +6,6 @@ use Archilex\AdvancedTables\Filament\Filter as ArchilexFilter;
 use Brick\Money\Money;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filament\Indicator;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\AdvancedFilter;
@@ -19,6 +17,8 @@ use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\CurrencyConverter;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
+use Mpietrucha\Support\Arr;
+use Mpietrucha\Support\Str;
 use Throwable;
 
 if (class_exists(ArchilexFilter::class)) {

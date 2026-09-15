@@ -5,13 +5,13 @@ namespace Mpietrucha\Filament\Essentials\GlobalSearch\Providers;
 use Closure;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Laravel\Scout\Builder;
 use Meilisearch\Endpoints\Indexes;
 use Meilisearch\Search\SearchResult;
 use Mpietrucha\Filament\Essentials\GlobalSearch\Providers\Concerns\InteractsWithScout;
+use Mpietrucha\Support\Arr;
 use Mpietrucha\Support\Exception\BadMethodCallException;
 
 /**
@@ -50,7 +50,7 @@ class MeilisearchGlobalSearchProvider extends ScoutGlobalSearchProvider
             /** @var array<int, mixed> $hits */
             $hits = Arr::get($result, 'hits');
 
-            static::$currentSearchHits = static::getScoutKeyName($model) |> collect($hits)->keyBy(...);
+            static::$currentSearchHits = static::getScoutKeyName($model) |> Collection::make($hits)->keyBy(...);
         });
     }
 
@@ -77,7 +77,7 @@ class MeilisearchGlobalSearchProvider extends ScoutGlobalSearchProvider
     {
         $details = parent::getResourceResultDetails($resource, $record);
 
-        return collect($details)->mapWithKeys(static function (string $value, string $name): array {
+        return Collection::make($details)->mapWithKeys(static function (string $value, string $name): array {
             $attribute = Arr::get(static::getCurrentSearchFormattedHit(), $name);
 
             if (! is_string($attribute)) {

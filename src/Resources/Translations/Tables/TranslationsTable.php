@@ -12,10 +12,10 @@ use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\Blade;
 use Mpietrucha\Filament\Essentials\Plugins\TranslationsPlugin;
 use Mpietrucha\Laravel\Essentials\Locale;
+use Mpietrucha\Support\Str;
 use Spatie\TranslationLoader\LanguageLine;
 
 class TranslationsTable
@@ -50,7 +50,7 @@ class TranslationsTable
                     $text = $languageLine->text;
 
                     /** @var array<string, string> $text */
-                    return collect($text)
+                    return Collection::make($text)
                         ->filter()
                         ->map(static function (string $text, string $locale): HtmlString {
                             $locale = Locale::enum()::from($locale);

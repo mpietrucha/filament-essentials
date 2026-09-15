@@ -14,13 +14,13 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Attributes\TextAttribute;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Operators\TextOperator;
+use Mpietrucha\Support\Arr;
 use Mpietrucha\Support\Exception\RuntimeException;
+use Mpietrucha\Support\Str;
 use Throwable;
 
 if (class_exists(ArchilexTextFilter::class)) {
@@ -266,7 +266,7 @@ if (class_exists(ArchilexTextFilter::class)) {
                 $this->getListValue($data)
             );
 
-            return collect($values)->map(Str::squish(...))->filter();
+            return Collection::make($values)->map(Str::squish(...))->filter();
         }
 
         /**

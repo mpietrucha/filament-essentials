@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Filament\Essentials\Blade;
@@ -25,7 +26,7 @@ trait TextColumnMixin
     public function withLimitBadge(): static
     {
         return $this->state(function (Model $record): null|HtmlString|string {
-            $results = $this->getRelationshipResults($record) |> collect(...);
+            $results = $this->getRelationshipResults($record) |> Collection::make(...);
 
             if ($results->isEmpty()) {
                 return null;

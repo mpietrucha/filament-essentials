@@ -3,7 +3,7 @@
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
 use Filament\Forms\Components\TextInput;
-use Illuminate\Support\Str;
+use Mpietrucha\Support\Str;
 
 /**
  * @phpstan-require-extends TextInput

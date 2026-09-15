@@ -29,7 +29,7 @@ class ScoutGlobalSearchProvider implements GlobalSearchProvider
         /** @var array<FilamentResource> $resources */
         $resources = Filament::getResources();
 
-        collect($resources)
+        Collection::make($resources)
             ->sort(static function (string $a, string $b): int {
                 $a = $a::getGlobalSearchSort() ?? 0;
                 $b = $b::getGlobalSearchSort() ?? 0;
