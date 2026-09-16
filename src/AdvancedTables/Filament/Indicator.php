@@ -6,7 +6,7 @@ namespace Mpietrucha\Filament\Essentials\AdvancedTables\Filament;
 
 use Archilex\AdvancedTables\Filament\Indicator as ArchilexIndicator;
 use Mpietrucha\Filament\Essentials\AdvancedTables\Exception\PackageException;
-use Mpietrucha\Support\Str;
+use Mpietrucha\Laravel\Essentials\Qualifier;
 
 if (class_exists(ArchilexIndicator::class)) {
     class Indicator extends ArchilexIndicator
@@ -20,20 +20,13 @@ if (class_exists(ArchilexIndicator::class)) {
             return $this;
         }
 
-        public function as(string $attribute): static
-        {
-            return $this->attribute($attribute);
-        }
-
         public function getTransformedKey(string $key): string
         {
             if ($this->attribute === null) {
                 return $key;
             }
 
-            $indicator = Str::dot();
-
-            return Str::beforeLast($key, $indicator) . $indicator . $this->attribute;
+            return Qualifier::build(Qualifier::prefix($key) ?? $key, $this->attribute);
         }
     }
 } else {

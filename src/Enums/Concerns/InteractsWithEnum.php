@@ -34,7 +34,7 @@ trait InteractsWithEnum
         if ($prefix = static::getLabelTranslationPrefix()) {
             $value = Str::lower($value);
 
-            return KeyQualifier::build($prefix, $value) |> __(...);
+            return KeyQualifier::build($value, $prefix) |> __(...);
         }
 
         if (Str::upper($value) === $value) {
