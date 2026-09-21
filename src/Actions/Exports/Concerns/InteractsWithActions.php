@@ -20,7 +20,7 @@ trait InteractsWithActions
 
     public static function getActionName(): string
     {
-        return static::identify('Exporter');
+        return static::identify();
     }
 
     protected static function configureAction(ExportAction $exportAction): ExportAction

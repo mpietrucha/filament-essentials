@@ -23,7 +23,7 @@ trait InteractsWithActions
 
     public static function getActionName(): string
     {
-        return static::identify('Importer');
+        return static::identify();
     }
 
     protected static function configureBulkAction(ImportBulkAction $importBulkAction): ImportBulkAction
