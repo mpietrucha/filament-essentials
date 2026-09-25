@@ -9,7 +9,7 @@ use Mpietrucha\Filament\Essentials\Concerns\Identifiable;
 /**
  * @phpstan-require-extends Importer
  */
-trait InteractsWithCompletedNotificationBody
+trait HasCompletedNotificationBody
 {
     use Identifiable;
 
