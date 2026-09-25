@@ -6,7 +6,7 @@ namespace Mpietrucha\Filament\Essentials\AdvancedTables\Filters\Attributes;
 
 class TextAttribute
 {
-    public const VALUE = 'value';
+    public const string VALUE = 'value';
 
     public const string OPERATOR = 'operator';
 
