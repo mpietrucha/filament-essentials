@@ -120,7 +120,6 @@ class ImportBulkAction extends ImportAction
 
         __('filament-essentials::filament.import.bulk_action.placeholder') |> $fileUpload->placeholder(...);
 
-        /** @phpstan-ignore-next-line property.notFound */
         $handler = invade($fileUpload)->afterStateUpdated |> Arr::first(...);
 
         $fileUpload->afterStateUpdated(null);
@@ -136,7 +135,6 @@ class ImportBulkAction extends ImportAction
 
     protected function applyFieldsetConfiguration(Fieldset $fieldset): void
     {
-        /** @phpstan-ignore-next-line property.notFound */
         $schema = invade($fieldset)->childComponents |> Arr::first(...);
 
         if (! $schema instanceof Closure) {
@@ -149,7 +147,6 @@ class ImportBulkAction extends ImportAction
         {
             public function __construct(Get $get, protected string $property)
             {
-                /** @phpstan-ignore-next-line property.notFound */
                 invade($get)->component |> parent::__construct(...);
             }
 

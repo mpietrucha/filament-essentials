@@ -92,7 +92,6 @@ if (class_exists(ArchilexTextFilter::class)) {
 
             $invadedInput = invade($input);
 
-            /** @phpstan-ignore property.notFound */
             $isInputHidden = $invadedInput->isHidden;
 
             $isListVisible = fn (Get $get): bool => [
@@ -113,14 +112,14 @@ if (class_exists(ArchilexTextFilter::class)) {
                     ->hiddenLabel()
                     ->visible($isListVisible)
                     ->columnSpan(
-                        $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
+                        $invadedInput->columnSpan  /** @phpstan-ignore argument.type */
                     ),
                 Toggle::make(TextAttribute::SORT_BY_LIST)
                     ->label(__('filament-essentials::advanced-tables.filter.text.sort_by_list'))
                     ->default(true)
                     ->visible($isListVisible)
                     ->columnSpan(
-                        $invadedInput->columnSpan /** @phpstan-ignore argument.type, property.notFound */
+                        $invadedInput->columnSpan /** @phpstan-ignore argument.type */
                     ),
             ]);
 

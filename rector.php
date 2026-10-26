@@ -7,7 +7,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
-use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
@@ -30,26 +29,6 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         SignaturePropertyToSignatureAttributeRector::class,
         DescriptionPropertyToDescriptionAttributeRector::class,
-        RenameParamToMatchTypeRector::class => [
-            'src/Record/Context.php',
-            'src/Mixins/TextColumnMixin.php',
-            'src/Mixins/SelectFilterMixin.php',
-            'src/Actions/ViewAction.php',
-            'src/Resources/Translations/Schemas/TranslationForm.php',
-            'src/Resources/Discounts/Tables/DiscountsTable.php',
-            'src/Resources/Discounts/DiscountResource.php',
-            'src/Actions/Concerns/TransformsRecord.php',
-            'src/Resources/Discounts/Actions/FinishDiscountAction.php',
-            'src/Resources/Discounts/Actions/FinishDiscountBulkAction.php',
-            'src/Resources/Discounts/Actions/UseQuotaAction.php',
-            'src/Resources/Discounts/Actions/CreateDiscountBulkAction.php',
-            'src/Resources/Discounts/Schemas/DiscountForm.php',
-            'src/Actions/ImportBulkAction.php',
-            'src/Mixins/ResourceMixin.php',
-            'src/GlobalSearch/Providers/ScoutGlobalSearchProvider.php',
-            'src/GlobalSearch/Providers/MeilisearchGlobalSearchProvider.php',
-            'src/AdvancedTables/Filters/Concerns/InteractsWithFilters.php',
-        ],
         RemoveUselessVarTagRector::class => [
             'src/Mixins/TextColumnMixin.php',
             'src/Resources/Discounts/Schemas/DiscountForm.php',
@@ -78,7 +57,6 @@ return RectorConfig::configure()
         typeDeclarations: true,
         typeDeclarationDocblocks: true,
         privatization: true,
-        naming: true,
         instanceOf: true,
         earlyReturn: true,
         carbon: true

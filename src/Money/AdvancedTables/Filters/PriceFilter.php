@@ -82,7 +82,6 @@ if (class_exists(ArchilexFilter::class)) {
             $this->indicateUsing(function (array $data): ?Indicator {
                 $numericFilter = $this->getNumericFilter();
 
-                /** @phpstan-ignore property.notFound */
                 $indicateUsing = invade($numericFilter)->indicateUsing;
 
                 $locale = $this->getLocale();
