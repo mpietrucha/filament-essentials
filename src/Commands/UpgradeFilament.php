@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mpietrucha\Filament\Essentials\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
@@ -41,13 +40,26 @@ class UpgradeFilament extends Command
 
     protected function select(): void
     {
-        $indicator = 'o.className="fi-dropdown-header"';
+        $file = public_path('js/filament/forms/components/select.js');
 
-        $this->replace(
-            public_path('js/filament/forms/components/select.js'),
-            sprintf('%s,o.textContent=t', $indicator),
-            sprintf('%s,this.isHtmlAllowed?o.innerHTML=t:o.textContent=t', $indicator)
+        $contents = Filesystem::get($file);
+
+        if (! $contents) {
+            return;
+        }
+
+        $to = preg_replace(
+            '/(\w+)\.className="fi-dropdown-header",\1\.textContent=(\w+)/',
+            '$1.className="fi-dropdown-header",this.isHtmlAllowed?$1.innerHTML=$2:$1.textContent=$2',
+            $contents
         );
+
+        if ($contents === $to) {
+            return;
+        }
+
+        /** @var string $to */
+        Filesystem::put($file, $to);
     }
 
     protected function selectFilter(): void
@@ -116,21 +128,14 @@ class UpgradeFilament extends Command
         );
     }
 
-    /**
-     * @param  string|array<string>  $files
-     */
-    protected function replace(array|string $files, string $from, string $to): void
+    protected function replace(string $file, string $from, string $to): void
     {
-        $files = Collection::wrap($files)->filter(Filesystem::exists(...));
+        $contents = Filesystem::get($file);
 
-        $files->each(static function (string $file) use ($from, $to): void {
-            $contents = Filesystem::get($file);
+        if (Str::contains($contents, $to)) {
+            return;
+        }
 
-            if (Str::contains($contents, $to)) {
-                return;
-            }
-
-            Filesystem::put($file, Str::replace($from, $to, $contents));
-        });
+        Filesystem::put($file, Str::replace($from, $to, $contents));
     }
 }
