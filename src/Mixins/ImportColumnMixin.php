@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
+use Closure;
 use Filament\Actions\Imports\ImportColumn;
 use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Enums\Contracts\EnumInterface;
@@ -25,22 +26,27 @@ trait ImportColumnMixin
 
     public function labeledEnum(string $enum, bool $examples = true): static
     {
-        $enum = Enum::unit($enum, EnumInterface::class);
+        $enum = Enum::backed($enum, EnumInterface::class);
 
         $this->enum($enum);
 
-        $getLabelCollection = static function () use ($enum): Collection {
-            $caseCollection = $enum::collection();
+        /** @var Closure(): Collection<string, string> $getLabelCollection */
+        $getLabelCollection = static fn (): Collection => $enum::collection()->mapWithKeys(static function (EnumInterface $enum): array {
+            $label = $enum->getLabel();
 
-            return is_string(...) |> $caseCollection->map->getLabel()->filter(...);
-        };
+            return is_string($label) ? [$enum->value => $label] : [];
+        })->filter();
 
         $castStateUsing = static function (mixed $state) use (&$castStateUsing, $getLabelCollection): mixed {
             if (is_array($state)) {
                 return Arr::map($state, $castStateUsing);
             }
 
-            if (blank($state) || ! is_string($state)) {
+            if (blank($state)) {
+                return $state;
+            }
+
+            if (! is_string($state)) {
                 return $state;
             }
 
@@ -49,9 +55,14 @@ trait ImportColumnMixin
             /** @phpstan-ignore return.type */
             return $localeEnum::collection()->map(static fn (LocaleInterface $locale): ?string => $localeEnum::with(
                 $locale,
-                /** @phpstan-ignore return.type */
-                static fn (): ?string => $getLabelCollection()->search($state) ?: null
-            ))->first() ?? $state;
+                static fn (): ?string => $getLabelCollection()->search(static function (string $label, string $value) use ($state): bool {
+                    if (strcasecmp($state, $label) === 0) {
+                        return true;
+                    }
+
+                    return strcasecmp($state, $value) === 0;
+                }) ?: null,
+            ))->filter()->first() ?? $state;
         };
 
         $this->castStateUsing($castStateUsing);
