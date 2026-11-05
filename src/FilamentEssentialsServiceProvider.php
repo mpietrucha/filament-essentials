@@ -46,6 +46,7 @@ use Mpietrucha\Filament\Essentials\Mixins\TextEntryMixin;
 use Mpietrucha\Filament\Essentials\Mixins\TextInputMixin;
 use Mpietrucha\Laravel\Essentials\PackageTools\Package;
 use Mpietrucha\Laravel\Essentials\PackageTools\PackageServiceProvider;
+use Mpietrucha\Support\Arr;
 
 class FilamentEssentialsServiceProvider extends PackageServiceProvider
 {
@@ -86,10 +87,17 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        $this->registerPackageFilamentJs();
+    }
+
+    protected function registerPackageFilamentJs(): void
+    {
         $packageName = $this->package->name;
 
-        FilamentAsset::register([
-            Js::make($packageName, $this->package->basePath('../resources/dist/index.js')),
-        ], sprintf('mpietrucha/%s', $packageName));
+        $js = Js::make($packageName, $this->package->basePath('../resources/dist/index.js'));
+
+        $packageVendorName = sprintf('mpietrucha/%s', $packageName);
+
+        FilamentAsset::register(Arr::wrap($js), $packageVendorName);
     }
 }
