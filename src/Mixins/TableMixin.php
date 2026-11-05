@@ -2,6 +2,7 @@
 
 namespace Mpietrucha\Filament\Essentials\Mixins;
 
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
@@ -20,7 +21,7 @@ trait TableMixin
             ->map
             ->getIconAction()
             ->filter()
-            ->all() |> $this->pushRecordActions(...);
+            ->each(fn (Action $action) => $action->table($this) |> $this->cacheAction(...));
 
         return $this;
     }
