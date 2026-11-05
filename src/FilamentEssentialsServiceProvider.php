@@ -86,8 +86,6 @@ class FilamentEssentialsServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        parent::packageBooted();
-
         $packageName = $this->package->name;
 
         FilamentAsset::register([
