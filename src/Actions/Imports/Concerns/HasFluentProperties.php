@@ -27,6 +27,20 @@ trait HasFluentProperties
      */
     protected ?Fluent $fluentOriginalData = null;
 
+    public function remapData(): void
+    {
+        $this->flushRowState();
+
+        parent::remapData();
+    }
+
+    public function castData(): void
+    {
+        parent::castData();
+
+        $this->flushRowState();
+    }
+
     /**
      * @return FluentProperty
      */
@@ -61,5 +75,11 @@ trait HasFluentProperties
         }
 
         return $this->fluentOriginalData = $this->getOriginalData() |> Fluent::make(...);
+    }
+
+    protected function flushRowState(): void
+    {
+        $this->fluentData = null;
+        $this->fluentOriginalData = null;
     }
 }

@@ -24,11 +24,16 @@ trait ImportColumnMixin
         return $this;
     }
 
-    public function labeledEnum(string $enum, bool $examples = true): static
+    public function labeledEnum(string $enum, bool $examples = true, bool $validation = true, bool $exclusive = true): static
     {
+        $examples = $examples && $exclusive;
+        $validation = $validation && $exclusive;
+
         $enum = Enum::backed($enum, EnumInterface::class);
 
-        $this->enum($enum);
+        if ($validation) {
+            $this->enum($enum);
+        }
 
         /** @var Closure(): Collection<string, string> $getLabelCollection */
         $getLabelCollection = static fn (): Collection => $enum::collection()->mapWithKeys(static function (EnumInterface $enum): array {
@@ -71,6 +76,6 @@ trait ImportColumnMixin
             return $this;
         }
 
-        return $getLabelCollection()->all() |> $this->examples(...);
+        return $getLabelCollection()->values()->all() |> $this->examples(...);
     }
 }
