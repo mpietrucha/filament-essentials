@@ -1,10 +1,11 @@
 <?php
 
-namespace Mpietrucha\Filament\Essentials\Commands;
+namespace Mpietrucha\Filament\Essentials\Console\Commands;
 
+use BezhanSalleh\FilamentShield\Commands\GenerateCommand;
 use Filament\Facades\Filament;
-use Illuminate\Console\Command;
-use Mpietrucha\Laravel\Essentials\Commands\Concerns\InteractsWithLint;
+use Mpietrucha\Laravel\Essentials\Console\Command;
+use Mpietrucha\Laravel\Essentials\Console\Commands\Concerns\InteractsWithLint;
 use Mpietrucha\Support\Filesystem;
 use Mpietrucha\Support\Finder;
 
@@ -61,7 +62,7 @@ class GeneratePolicies extends Command
             '--option' => 'policies_and_permissions',
         ];
 
-        $this->callSilently('shield:generate', $arguments);
+        $this->callSilently(GenerateCommand::class, $arguments);
     }
 
     protected function rewrite(): void
@@ -77,20 +78,25 @@ class GeneratePolicies extends Command
             ->files()
             ->get()
             ->keys()
-            ->each(static fn (string $policy): null => Filesystem::replaceInFile(
-                [
-                    'use Illuminate\Foundation\Auth\User as AuthUser;',
-                    'AuthUser',
-                    '$authUser',
-                ],
-                [
-                    sprintf('use %s;', $model),
-                    'User',
-                    '$user',
-                ],
-                $policy
-            ));
+            ->each(fn (string $policy) => $this->replace($policy, $model));
 
         $this->lint($directory);
+    }
+
+    protected function replace(string $policy, string $model): void
+    {
+        $from = [
+            'use Illuminate\Foundation\Auth\User as AuthUser;',
+            'AuthUser',
+            '$authUser',
+        ];
+
+        $to = [
+            sprintf('use %s;', $model),
+            'User',
+            '$user',
+        ];
+
+        Filesystem::replaceInFile($from, $to, $policy);
     }
 }

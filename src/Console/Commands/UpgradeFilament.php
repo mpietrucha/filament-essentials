@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Mpietrucha\Filament\Essentials\Commands;
+namespace Mpietrucha\Filament\Essentials\Console\Commands;
 
-use Illuminate\Console\Command;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
+use Mpietrucha\Laravel\Essentials\Console\Command;
 use Mpietrucha\Support\ClassNamespace;
 use Mpietrucha\Support\Filesystem;
 use Mpietrucha\Support\Str;
