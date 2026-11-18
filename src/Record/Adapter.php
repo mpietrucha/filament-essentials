@@ -63,6 +63,11 @@ class Adapter extends Context
         return (string) $value;
     }
 
+    public function boolean(string $attribute): bool
+    {
+        return (bool) $this->get($attribute);
+    }
+
     public function avatar(?string $attribute = null): ?string
     {
         if ($attribute) {
