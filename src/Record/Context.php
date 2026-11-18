@@ -34,6 +34,12 @@ abstract class Context
 
     public static function pipe(Closure $handler): Closure
     {
-        return static fn (Model $record): mixed => static::make($record) |> $handler;
+        return static function (?Model $record) use ($handler): mixed {
+            if (! $record instanceof Model) {
+                return null;
+            }
+
+            return static::make($record) |> $handler;
+        };
     }
 }
