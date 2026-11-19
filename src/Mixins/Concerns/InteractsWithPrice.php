@@ -7,6 +7,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
+use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
 
 /**
@@ -21,14 +22,32 @@ trait InteractsWithPrice
         ?string $indicator = null,
         ?string $relationship = null,
     ): static {
-        $priceAttribute ??= PriceAttribute::getPrice($indicator);
-        $convertedPriceAttribute ??= PriceAttribute::getConvertedPrice($indicator);
+        $priceAttribute = AttributeQualifier::build(
+            $priceAttribute ?? PriceAttribute::getPrice($indicator),
+            $relationship,
+        );
 
-        $currencyAttribute ??= PriceAttribute::getCurrency();
+        $convertedPriceAttribute = AttributeQualifier::build(
+            $convertedPriceAttribute ?? PriceAttribute::getConvertedPrice($indicator),
+            $relationship,
+        );
 
-        $component = AttributeQualifier::build($priceAttribute, $relationship) |> static::make(...);
+        $currencyAttribute = AttributeQualifier::build(
+            $currencyAttribute ?? PriceAttribute::getCurrency(),
+            $relationship,
+        );
 
-        $convertedPrice = AttributeQualifier::build($convertedPriceAttribute, $relationship) |> Record::money(...);
+        $convertedPrice = Record::pipe(static function (Record $record) use ($convertedPriceAttribute, $currencyAttribute): ?string {
+            $targetCurrency = Currency::get()->code();
+
+            if ($record->get($currencyAttribute) === $targetCurrency) {
+                return null;
+            }
+
+            return $record->money($convertedPriceAttribute, $targetCurrency);
+        });
+
+        $component = static::make($priceAttribute);
 
         if ($component instanceof TextEntry) { /** @phpstan-ignore instanceof.alwaysTrue, instanceof.alwaysFalse */
             $component->belowContent($convertedPrice);
@@ -38,7 +57,7 @@ trait InteractsWithPrice
             $component->description($convertedPrice);
         }
 
-        Record::get(AttributeQualifier::build($currencyAttribute, $relationship)) |> $component->money(...);
+        Record::get($currencyAttribute) |> $component->money(...);
 
         return $component;
     }
