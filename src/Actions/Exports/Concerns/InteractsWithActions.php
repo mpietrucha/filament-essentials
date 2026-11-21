@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Mpietrucha\Filament\Essentials\Actions\Exports\Concerns;
 
 use Filament\Actions\ExportAction;
@@ -25,7 +27,7 @@ trait InteractsWithActions
 
     protected static function configureAction(ExportAction $exportAction): ExportAction
     {
-        $exportAction->exporter(static::class);
+        get_called_class() |> $exportAction->exporter(...);
 
         static::getActionName() |> $exportAction->name(...);
 

@@ -26,7 +26,7 @@ trait LivewireComponentMixin
      */
     public static function getFilamentResource(): ?string
     {
-        $component = static::class;
+        $component = get_called_class();
 
         /** @phpstan-ignore staticMethod.impossibleType */
         if (Instance::is($component, RelationManager::class)) {
@@ -59,7 +59,7 @@ trait LivewireComponentMixin
     {
         $viewAction = static::getActionsResource()::getViewAction($relationship);
 
-        $viewAction->withFormActionsLivewire(static::class);
+        get_called_class() |> $viewAction->withFormActionsLivewire(...);
 
         return $viewAction;
     }

@@ -12,7 +12,7 @@ trait Identifiable
 {
     public static function identify(?string $suffix = null, ?int $level = null): string
     {
-        $class = static::class;
+        $class = get_called_class();
 
         if (is_int($level)) {
             $class = ClassNamespace::parent($class, $level);

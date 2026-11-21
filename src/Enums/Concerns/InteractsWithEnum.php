@@ -20,7 +20,7 @@ trait InteractsWithEnum
      */
     public static function options(): string
     {
-        return static::class;
+        return get_called_class();
     }
 
     public function getLabel(): string

@@ -7,6 +7,7 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\Expression\RemoveDeadStmtRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
+use Rector\Php55\Rector\FuncCall\GetCalledClassToStaticClassRector;
 use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use RectorFilament\Rector\MethodCall\FilamentUtilityInjectionTypeRector;
 use RectorFilament\Rector\MethodCall\LivewireComponentParamNameRector;
@@ -27,6 +28,7 @@ return RectorConfig::configure()
         RemoveNonExistingVarAnnotationRector::class,
         RemoveUselessParamTagRector::class,
         ClosureToArrowFunctionRector::class,
+        GetCalledClassToStaticClassRector::class,
         SignaturePropertyToSignatureAttributeRector::class,
         DescriptionPropertyToDescriptionAttributeRector::class,
         RemoveUselessVarTagRector::class => [

@@ -8,7 +8,7 @@ use Filament\Support\Contracts\HasLabel;
 use Illuminate\Support\Collection;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
-use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
+use Mpietrucha\Laravel\Essentials\Money\Models\Attributes\PriceAttribute;
 use Mpietrucha\Support\Str;
 
 /**
@@ -22,17 +22,22 @@ trait ExportColumnMixin
         ?string $indicator = null,
         ?string $relationship = null,
     ): static {
-        $priceAttribute ??= PriceAttribute::getPrice($indicator);
+        $priceAttribute = AttributeQualifier::build(
+            $priceAttribute ?? PriceAttribute::getPrice($indicator),
+            $relationship
+        );
 
-        $currencyAttribute ??= PriceAttribute::getCurrency();
+        $currencyAttribute = AttributeQualifier::build(
+            $currencyAttribute ?? PriceAttribute::getCurrency(),
+            $relationship,
+        );
 
         $component = AttributeQualifier::build($priceAttribute, $relationship) |> static::make(...);
 
-        return Record::pipe(static function (Record $record) use ($priceAttribute, $relationship, $currencyAttribute): string {
-            return $record->money(
-                AttributeQualifier::build($priceAttribute, $relationship),
-                AttributeQualifier::build($currencyAttribute, $relationship) |> $record->get(...),
-            );
+        return Record::pipe(static function (Record $record) use ($priceAttribute, $currencyAttribute): string {
+            $currency = $record->get($currencyAttribute);
+
+            return $record->money($priceAttribute, $currency);
         }) |> $component->state(...);
     }
 

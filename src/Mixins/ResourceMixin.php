@@ -41,7 +41,7 @@ trait ResourceMixin
         static::configureAction($action, $relationship);
 
         if ($action instanceof ViewAction) {
-            $action->withFormActionsResource(static::class);
+            get_called_class() |> $action->withFormActionsResource(...);
         }
 
         return $action;

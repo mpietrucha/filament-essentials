@@ -8,7 +8,7 @@ use Illuminate\Support\HtmlString;
 use Mpietrucha\Filament\Essentials\Record;
 use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
-use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
+use Mpietrucha\Laravel\Essentials\Money\Models\Attributes\PriceAttribute;
 
 /**
  * @internal
@@ -74,12 +74,10 @@ trait InteractsWithPrice
         $referencePriceAttribute ??= PriceAttribute::getReferencePrice($indicator);
         $convertedDiscountedPriceAttribute ??= PriceAttribute::getConvertedDiscountedPrice($indicator);
 
-        $currencyAttribute ??= PriceAttribute::getCurrency();
-
         $component = static::priceWithConversion(
             $discountedPriceAttribute,
             $convertedDiscountedPriceAttribute,
-            $currencyAttribute,
+            $currencyAttribute ??= PriceAttribute::getCurrency(),
             $indicator,
             $relationship,
         );

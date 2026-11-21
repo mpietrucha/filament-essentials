@@ -16,7 +16,8 @@ use Mpietrucha\Laravel\Essentials\Eloquent\Qualifiers\AttributeQualifier;
 use Mpietrucha\Laravel\Essentials\Locale;
 use Mpietrucha\Laravel\Essentials\Locale\Currency;
 use Mpietrucha\Laravel\Essentials\Money\CurrencyConverter;
-use Mpietrucha\Laravel\Essentials\Money\PriceAttribute;
+use Mpietrucha\Laravel\Essentials\Money\CurrencyFactory;
+use Mpietrucha\Laravel\Essentials\Money\Models\Attributes\PriceAttribute;
 use Mpietrucha\Support\Arr;
 use Mpietrucha\Support\Str;
 use Throwable;
@@ -106,9 +107,10 @@ if (class_exists(ArchilexFilter::class)) {
 
         public static function make(?string $name = null, ?string $indicator = null, ?string $relationship = null): static
         {
-            $name ??= PriceAttribute::getNormalizedPrice($indicator);
-
-            return AttributeQualifier::build($name, $relationship) |> parent::make(...);
+            return AttributeQualifier::build(
+                $name ?? PriceAttribute::getNormalizedPrice($indicator),
+                $relationship,
+            ) |> parent::make(...);
         }
 
         public function withSourceCurrencyFilter(mixed $sourceCurrencyFilter): static
@@ -134,14 +136,14 @@ if (class_exists(ArchilexFilter::class)) {
 
         public function withSourceCurrency(mixed $sourceCurrency): static
         {
-            $this->sourceCurrency = CurrencyConverter::currency($sourceCurrency);
+            $this->sourceCurrency = CurrencyFactory::from($sourceCurrency);
 
             return $this;
         }
 
         public function withTargetCurrency(mixed $targetCurrency): static
         {
-            $this->targetCurrency = CurrencyConverter::currency($targetCurrency);
+            $this->targetCurrency = CurrencyFactory::from($targetCurrency);
 
             return $this;
         }

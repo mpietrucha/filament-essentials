@@ -35,7 +35,7 @@ trait InteractsWithActions
 
     protected static function configureAction(ImportAction $importAction): ImportAction
     {
-        $importAction->importer(static::class);
+        get_called_class() |> $importAction->importer(...);
 
         static::getActionName() |> $importAction->name(...);
 

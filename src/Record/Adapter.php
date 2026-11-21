@@ -32,7 +32,7 @@ class Adapter extends Context
     public function __call(string $method, array $arguments): string
     {
         if (StateFormatter::incompatible($method)) {
-            BadMethodCallException::throw('Call to undefined method %s::%s', static::class, $method);
+            BadMethodCallException::throw('Call to undefined method %s::%s', get_called_class(), $method);
         }
 
         $state = Arr::string($arguments, 0) |> $this->get(...);
