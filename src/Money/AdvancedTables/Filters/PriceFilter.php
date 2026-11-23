@@ -244,15 +244,11 @@ if (class_exists(ArchilexFilter::class)) {
                 return null;
             }
 
-            try {
-                return CurrencyConverter::convert(
-                    (string) $price,
-                    $this->getTargetCurrency(),
-                    $sourceCurrency ?? $this->getSourceCurrencyValue($data)
-                );
-            } catch (Throwable) {
-                return null;
-            }
+            return CurrencyConverter::tryConvert(
+                (string) $price,
+                $this->getTargetCurrency(),
+                $sourceCurrency ?? $this->getSourceCurrencyValue($data)
+            );
         }
 
         /**
