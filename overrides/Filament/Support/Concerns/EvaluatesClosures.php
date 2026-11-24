@@ -183,8 +183,8 @@ trait EvaluatesClosures
     protected function getTypedNamedInjections(): array
     {
         return [
-            EloquentBuilder::class => 'query',
             QueryBuilder::class => 'query',
+            EloquentBuilder::class => 'query',
         ];
     }
 }
