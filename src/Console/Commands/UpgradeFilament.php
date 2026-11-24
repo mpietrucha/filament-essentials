@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mpietrucha\Filament\Essentials\Console\Commands;
 
+use Filament\Tables\Columns\TextColumn;
 use Mpietrucha\Filament\Essentials\Actions\TableColumnAction;
 use Mpietrucha\Laravel\Essentials\Console\Command;
 use Mpietrucha\Support\ClassNamespace;
@@ -26,19 +27,19 @@ class UpgradeFilament extends Command
 
     public function handle(): void
     {
-        $this->select();
-        $this->selectFilter();
-        $this->isRelatedToOperator();
-        $this->interactsWithActions();
+        $this->handleSelectComponent();
+        $this->handleSelectFilter();
+        $this->handleIsRelatedToOperator();
+        $this->handleInteractsWithActions();
 
-        $this->advancedTablesDateFilter();
-        $this->advancedTablesTextFilter();
-        $this->advancedTablesNumericFilter();
+        $this->handleAdvancedTablesDateFilter();
+        $this->handleAdvancedTablesTextFilter();
+        $this->handleAdvancedTablesNumericFilter();
 
         $this->info('Filament upgraded successfully.');
     }
 
-    protected function select(): void
+    protected function handleSelectComponent(): void
     {
         $file = public_path('js/filament/forms/components/select.js');
 
@@ -62,7 +63,7 @@ class UpgradeFilament extends Command
         Filesystem::put($file, $to);
     }
 
-    protected function selectFilter(): void
+    protected function handleSelectFilter(): void
     {
         $this->replace(
             base_path('vendor/filament/tables/src/Filters/SelectFilter.php'),
@@ -71,7 +72,7 @@ class UpgradeFilament extends Command
         );
     }
 
-    protected function isRelatedToOperator(): void
+    protected function handleIsRelatedToOperator(): void
     {
         $this->replace(
             base_path('vendor/filament/query-builder/src/Constraints/RelationshipConstraint/Operators/IsRelatedToOperator.php'),
@@ -80,51 +81,59 @@ class UpgradeFilament extends Command
         );
     }
 
-    protected function interactsWithActions(): void
+    protected function handleInteractsWithActions(): void
     {
-        $indicator = '$resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record)';
+        $interactsWithActions = base_path('vendor/filament/actions/src/Concerns/InteractsWithActions.php');
 
         $tableColumnAction = ClassNamespace::canonicalize(TableColumnAction::class);
 
         $this->replace(
-            base_path('vendor/filament/actions/src/Concerns/InteractsWithActions.php'),
-            $indicator,
-            sprintf('$resolvedAction = %s::resolve(%s)', $tableColumnAction, $indicator),
+            $interactsWithActions,
+            $from = '$resolvedAction->getRootGroup()?->record($record) ?? $resolvedAction->record($record)',
+            sprintf('$resolvedAction = %s::resolve(%s)', $tableColumnAction, $from),
+        );
+
+        $textColumn = ClassNamespace::canonicalize(TextColumn::class);
+
+        $this->replace(
+            $interactsWithActions,
+            $from = '$column->getAction() === $resolvedAction',
+            sprintf('%s || ($column instanceof %s && $column->getIconAction() === $resolvedAction)', $from, $textColumn),
         );
     }
 
-    protected function advancedTablesDateFilter(): void
+    protected function handleAdvancedTablesDateFilter(): void
     {
         $dateFilter = base_path('vendor/archilex/filament-filter-sets/src/Filters/DateFilter.php');
 
         $this->replace(
             $dateFilter,
-            $indicator = "Select::make('unit')",
-            sprintf('%s->searchable()', $indicator),
+            $from = "Select::make('unit')",
+            sprintf('%s->searchable()', $from),
         );
 
         $this->replace(
             $dateFilter,
-            $indicator = "Select::make('operator')",
-            sprintf('%s->searchable()', $indicator),
+            $from = "Select::make('operator')",
+            sprintf('%s->searchable()', $from),
         );
     }
 
-    protected function advancedTablesTextFilter(): void
+    protected function handleAdvancedTablesTextFilter(): void
     {
         $this->replace(
             base_path('vendor/archilex/filament-filter-sets/src/Filters/TextFilter.php'),
-            $indicator = "Select::make('operator')",
-            sprintf('%s->searchable()', $indicator),
+            $from = "Select::make('operator')",
+            sprintf('%s->searchable()', $from),
         );
     }
 
-    protected function advancedTablesNumericFilter(): void
+    protected function handleAdvancedTablesNumericFilter(): void
     {
         $this->replace(
             base_path('vendor/archilex/filament-filter-sets/src/Filters/NumericFilter.php'),
-            $indicator = "Select::make('operator')",
-            sprintf('%s->searchable()', $indicator),
+            $from = "Select::make('operator')",
+            sprintf('%s->searchable()', $from),
         );
     }
 
