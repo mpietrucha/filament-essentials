@@ -59,8 +59,6 @@ return RectorConfig::configure()
         typeDeclarations: true,
         typeDeclarationDocblocks: true,
         privatization: true,
-        instanceOf: true,
-        earlyReturn: true,
         carbon: true
     )
     ->withPhpSets(php85: true)
